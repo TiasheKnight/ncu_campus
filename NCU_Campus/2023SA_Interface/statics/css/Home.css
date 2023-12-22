@@ -1,0 +1,48 @@
+body{
+    background-color: #e6cd9d !important;
+}
+.Tophead{
+    width: 100%;
+    height: 10%; 
+    background: #5e5420; 
+    Top: 0;
+    position: fixed;
+    color: white;
+    z-index: 1;
+}
+#activityList {
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+    display: grid;
+    place-items: center;
+    position:relative;
+    z-index: 0;
+}
+
+.ActivitiesInformation {
+    width: auto; /* 設置適當的寬度 */
+    margin: 20px; /* 設置適當的邊距 */
+  }
+  
+  .activity-detail {
+    display:list-item;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .detail-label {
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 400;
+  }
+  
+  .detail-value {
+    color: black;
+    font-size: 18px;
+    font-family: Inter;
+    font-weight: 400;
+    word-wrap: break-word;
+  }
+  

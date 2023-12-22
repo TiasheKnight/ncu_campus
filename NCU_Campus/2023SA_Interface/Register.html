@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="statics/css/LoginModule.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="statics\js\loadBoostrap.js" defer></script>
+</head>
+<body>
+    <div class="container-fluid p-0">
+        <!-- Blue background area -->
+        <div class="login-area p-4">
+            <!-- Show Information and all function in this interface -->
+            <div class="row mb-2 justify-content-center text-light d-flex flex-column align-items-center h-100" style="height: auto;">
+                <!-- Register.html Welcome Information -->
+                <div class="text-center mb-5">
+                    <h2 class="mt-3 font-monospace">Sing UP</h2>
+                    <h2 class="mb-5" style="font-size: xx-large;color:darkkhaki">中央大學校園雷達</h2>    
+                </div>
+                <!-- Register input personal data -->
+                <form id="registerForm">
+                    <div class="input-group mb-3 ">
+                        <label class="input-group-text" for="LastNameInput">姓：</label>
+                        <input id="LastNameInput" type="text" class="form-control" placeholder="ex:葉" aria-label="LastName" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="FirstNameInput">名：</label>
+                        <input id="FirstNameInput" type="text" class="form-control" placeholder="ex:秋" aria-label="FirstName" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="BirthdayInput">出生日期：</label>
+                        <input id="BirthdayInput" type="text" class="form-control" placeholder="ex:2002-08-12" aria-label="Birthday_Front" required>
+                        <div id="birthdayValidationFeedback" class="invalid-feedback">
+                            請輸入有效的出生日期。
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="EmailInput">Email：</label>
+                        <input id="EmailInput" type="text" class="form-control" placeholder="xxxx@xxxxx.xxx" aria-label="Email" required>
+                        <div id="emailValidationFeedback" class="invalid-feedback">
+                            請輸入有效的 Email 地址。
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="CellphoneInput">電話：</label>
+                        <input id="CellphoneInput" type="text" class="form-control" placeholder="09xx-xxxxxx" aria-label="Cellphone" required>
+                        <div id="cellphoneValidationFeedback" class="invalid-feedback">
+                            請輸入有效的電話號碼。
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="PasswordInput">密碼：</label>
+                        <input id="PasswordInput" type="password" class="form-control" placeholder="xxxxxxxxxx" aria-label="Password" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="UserNameInput">使用者名稱：</label>
+                        <input id="UserNameInput" type="text" class="form-control" placeholder="ex:一夜秋" aria-label="UserName" required>
+                    </div>
+                    <!-- Main Button area-->
+                    <div class="col-md-12 p-0" >
+                        <button id="Submit" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">提交</button>
+                    </div>
+                </form>
+                <!-- Else Button area -->
+                <div class="col-md-6 p-2 ms-auto">
+                    <a href="Login.html" type="button" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(209, 191, 28,0.9);">返回登入</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- JS function -->
+<script>
+    // get email input and verify the feedback element /獲取 email 輸入框和驗證反饋元素
+    const birthdayInput = document.getElementById("BirthdayInput");
+    const birthdayValidationFeedback = document.getElementById("birthdayValidationFeedback");
+    const emailInput = document.getElementById("EmailInput");
+    const emailValidationFeedback = document.getElementById("emailValidationFeedback");
+    const cellphoneInput = document.getElementById("CellphoneInput");
+    const cellphoneValidationFeedback = document.getElementById("cellphoneValidationFeedback");
+
+    // Submit data and check
+    document.getElementById("registerForm").addEventListener("submit", function (event) {
+        // // Use regular expressions to verify the email format /使用正則表達式驗證 email 格式
+        const birthdayPattern = /^\d{4}-\d{2}-\d{2}$/;
+        let isValidBirthday = birthdayPattern.test(birthdayInput.value);
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let isValidEmail = emailPattern.test(emailInput.value);
+        const cellphonePattern = /^09\d{2}-\d{6}$/;
+        let isValidCellphone = cellphonePattern.test(cellphoneInput.value);
+
+        // // Update validation feedback /更新驗證反饋
+        birthdayValidationFeedback.style.display = isValidBirthday ? "none" : "block";
+        emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
+        cellphoneValidationFeedback.style.display = isValidCellphone ? "none" : "block";        
+
+        // Check wether email is fit
+        if(!isValidBirthday || !isValidEmail || !isValidCellphone){
+            // stop submit behavior /阻止表單預設的提交行為
+            event.preventDefault();
+        }
+    });
+</script>
+</html>
