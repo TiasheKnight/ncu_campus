@@ -11,38 +11,22 @@
 </head>
 <body>
     <!-- ActivityList -->
-    <div id="head" class="Tophead container-fluid p-2">
-        <div class="row">
-            <div class="col-1">
-                <div class="col-1">
-                    <a href="">
-                        <iconify-icon icon="mdi:bell" style="color:gray;" width="40" height="40"></iconify-icon>
-                    </a>
-                </div>
-            </div>
-            <div class="col-10 row">
-                <div class="col-2">
-                    <a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">好友</a>
-                </div>
-                <div class="col-2">
-                    <a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">帳號</a>
-                </div>
-                <div class="col-3">
-                    <a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">管理活動</a>
-                </div>
-                <div class="col-2">
-                    <a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">組織</a>
-                </div>
-                <div class="col-2">
-                    <a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">商城</a>
-                </div>
-            </div>
-            <div class="col-1">
-                <div class="row">
-                        <span>訪客</span>
-                        <a href="Login.html" class="btn btn-primary btn-lg mb-3" style="font-size: medium; background-color: #5fa9da;">登入</a>
-                </div>
-            </div>
+    <div id="head" class="Tophead d-flex flex-row align-items-center p-2">
+        <div class="col-1 d-flex justify-content-center">
+            <button type="button" class="btn">
+                <iconify-icon icon="mdi:bell"  style="color:gray;" width="40" height="40"></iconify-icon>
+            </button>
+        </div>
+        <div class="col-10 d-flex justify-content-center">
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">好友</a></div>
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">帳號</a></div>
+            <div class="col-3 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">管理活動</a></div>
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">組織</a></div>
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">商城</a></div>
+        </div>
+        <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+            <span>訪客</span>
+            <a href="Login.html" class="btn btn-primary btn-lg mb-3" style="font-size: medium; background-color: #5fa9da;">登入</a>
         </div>
     </div>
     <div id="activityList" class="container-fluid d-grid">
@@ -74,7 +58,7 @@
                     <td>120</td>
                     <td>無</td>
                     <td>
-                        <div class="btn-group" role="group">
+                        <div class="btn-group d-flex" role="group">
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail">詳細內容</button>
                             <button class="btn btn-primary btn-sm" style="background-color: gray;">參加</button>
                         </div>

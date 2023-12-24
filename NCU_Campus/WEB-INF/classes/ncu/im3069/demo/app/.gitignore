@@ -14,3 +14,11 @@
 /NotificationHelper.class
 /OrganizationHelper.class
 /ReportHelper.class
+/Followship.class
+/Friend.class
+/FriendHelper.class
+/Item.class
+/Member_Item.class
+/Member_Organization.class
+/Message.class
+/Organization.class
