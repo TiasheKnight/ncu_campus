@@ -57,7 +57,7 @@
                     <td>
                         <div class="btn-group d-flex" role="group">
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail">詳細內容</button>
-                            <button class="btn btn-primary btn-sm" style="background-color:rgb(0, 180, 0)">參加</button>
+                            <button class="Join_Button btn btn-primary btn-sm" style="background-color:rgb(0, 180, 0)">參加</button>
                         </div>
                     </td>
                 </tr>
@@ -70,7 +70,7 @@
         <div class="modal-dialog">
             <div class="modal-content" style="max-height: 700px;">
                 <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
-                    <button id="AttenButtn" class="btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
+                    <button class="Join_Button btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <button type="button" class="btn"><iconify-icon icon="ph:heart-bold" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
                         <button type="button" class="btn"><iconify-icon icon="icon-park-outline:people-bottom" style="color: #FFC700;" width="50" height="50"></iconify-icon></button>
@@ -139,7 +139,7 @@
         <div class="modal-dialog">
             <div class="modal-content" style="max-height: 700px;">
                 <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
-                    <button id="AttenButton" class="btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
+                    <button class="Join_Button btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
                     <span style="align-items: center; color: #FFC700;font-size: xx-large;">留言板</span>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
@@ -194,11 +194,9 @@
     <div class="modal fade modal-dialog modal-lg" id="AnnounceBoard" tabindex="-1" aria-labelledby="ActivityDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="max-height: 700px;">
-                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
-                    <span style="align-items: center; color: #FFC700;font-size: xx-large;">通知欄</span>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
-                    </div>
+                <div class="modal-header d-flex justify-content-center" style="align-items: center; background-color: black;">
+                    <h2 style="color: orange;">通知欄</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
                 </div>
                 <div class="modal-body" style="overflow-y: scroll; max-height: fit-content;">
                     <div class="card" style="width: 100%; color: #00656B;">
@@ -222,8 +220,29 @@
             </div>
         </div>
     </div>
+</body>
 <script>
-
+    // 獲取所有擁有 class="Join_Button" 的按鈕
+    var Join_Buttons = document.querySelectorAll(".Join_Button");
+    Join_Buttons.forEach(function(Join_Button) {
+        Join_Button.addEventListener("click", function() {
+            // 獲取元素的背景顏色
+            var computedStyle = window.getComputedStyle(Join_Button);
+            var backgroundColor = computedStyle.backgroundColor;
+            // 判斷元素的背景顏色，進行相應的操作
+            if (backgroundColor === "rgb(0, 180, 0)" || backgroundColor === "#00B400") {
+                Join_Buttons.forEach(function(button) {
+                    button.style.backgroundColor = "#D91621";
+                    button.innerHTML = "取消參加";
+                });
+            } else {
+                Join_Buttons.forEach(function(button) {
+                    button.style.backgroundColor = "#00B400";
+                    button.innerHTML = "參加";
+                });
+            }
+        });
+    });
     // ActivityList Activity data
 
     // function updateTable(data) {
@@ -266,5 +285,4 @@
     //     $("#table > tbody").append(table_html);
     // }     
 </script>
-</body>
 </html>

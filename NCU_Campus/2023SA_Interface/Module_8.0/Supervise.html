@@ -4,11 +4,156 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervise</title>
+    <link rel="stylesheet" href="/statics/css/Home.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="/statics/js/loadBoostrap.js" defer></script>
 </head>
 <body>
-    
+    <div id="head" class="Tophead d-flex flex-row align-items-center p-2">
+        <div class="col-1 d-flex justify-content-center">
+            <button id="Home" class="btn"><iconify-icon icon="ant-design:home-filled" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
+        </div>
+        <div class="col-5 d-flex justify-content-center">
+            <h2 style="color: yellow;">審查舉報</h2>
+        </div>
+        <div class="col-6 d-flex justify-content-center">
+            <div class="col p-2">
+                <a href="AllMemberList.html" class="btn btn-primary container" style=" width: 100%;background-color: #009020;">全用戶列表</a>
+            </div>
+        </div>
+    </div>
+    <div id="ReportActivityList" class="container-fluid d-grid p-2">
+        <table id="ReportActivityTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>活動名稱</th>
+                    <th>活動類型</th>
+                    <th>活動舉辦人</th>
+                    <th>活動地點</th>
+                    <th>日期</th>
+                    <th>時間</th>
+                    <th>目前參與人數</th>
+                    <th>活動人數上限</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SA分享會</td>    
+                    <td>系級活動</td>
+                    <td>xxx</td>
+                    <td>017教室</td>
+                    <td>2020/12/29</td>
+                    <td>13:00-18:00</td>
+                    <td>120</td>
+                    <td>無</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ReportDetailModal">詳細資訊</button>
+                    </td>
+                    <td>
+                        <div class="btn-group d-flex" role="group">
+                            <button type="button" class="btn btn-primary btn-sm" style="background-color: #009020;">合格</button>
+                            <button type="button" class="btn btn-primary btn-sm" style="background-color:#D91621" data-bs-toggle="modal" data-bs-target="#Delete-SendModal">違反規範</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+
+    <!-- ReportDetail Board  ActivityDetail + ReporReason -->
+    <div class="modal fade modal-dialog modal-lg" id="ReportDetailModal" tabindex="-1" aria-labelledby="ReportDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
+                    <div class="col-12 d-flex justify-content-center">
+                        <h2 style="color: yellow;">活動資訊 與 檢舉原因</h2>
+                    </div>
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; word-wrap: break-word;max-height:fit-content;">
+                    <!-- Activity Deatail -->
+                    <div class="ActivitiesInformation">
+                        <div class="activity-detail">
+                          <span class="detail-label">活動名稱：</span>
+                          <span id="ActivityName" class="detail-value">運動會</span>
+                        </div>
+                        <div class="activity-detail">
+                            <span class="detail-label">發布型別：</span>
+                            <span id="PublishType" class="detail-value">一般活動</span>
+                          </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動類型：</span>
+                          <span id="ActivityType" class="detail-value">校級活動</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動發起人：</span>
+                          <span id="Publisher" class="detail-value">xxx</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動日期：</span>
+                          <span id="Date" class="detail-value">2020/12/27</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動時間：</span>
+                          <span id="Time" class="detail-value">oo:oo - oo:oo</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動地點：</span>
+                          <span id="Location" class="detail-value">017教室</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">目前參與人數：</span>
+                          <span id="AttendNumber" class="detail-value">120</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動人數下限：</span>
+                          <span id="MinMember" class="detail-value">無</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動人數上限：</span>
+                          <span id="MaxMember" class="detail-value">無</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動內容：</span>
+                          <span id="ActivityContent" class="detail-value">ssdsxxxxxx</span>
+                        </div>
+                    </div>
+                    <!-- ReportReason -->
+                    <div style="background-color:rgba(2, 250, 250, 0.596);">
+                        <span class="detail-label">檢舉原因：</span>
+                        <span id="ActivityContent" class="detail-value">ssdsdsdsd</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Activity and Send Notice to Every Activity Relationship -->
+    <div class="modal fade modal-dialog modal-lg" id="Delete-SendModal" tabindex="-1" aria-labelledby="Delete-SendModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
+                    <div class="col-12 d-flex justify-content-center">
+                        <h2 style="color: yellow;">是否強制刪除該項活動並寄送通知給每一位活動關係人</h2>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary">確認</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    document.getElementById("Home").addEventListener("click", function() {
+        window.location.href="/HomeList_SystemManager.html";
+    });
+</script>
 </html>
