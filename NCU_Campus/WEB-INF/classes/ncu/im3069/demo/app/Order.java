@@ -1,52 +1,51 @@
 package ncu.im3069.demo.app;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.*;
-
 import org.json.*;
 
 public class Order {
 
-    /** id，訂單編號 */
+    /** id, order number */
     private int id;
 
-    /** first_name，會員姓名 */
+    /** first_name, member name */
     private String first_name;
 
-    /** last_name，會員姓 */
+    /** last_name, member’s last name */
     private String last_name;
 
-    /** email，會員電子郵件信箱 */
+    /** email, member email address */
     private String email;
 
-    /** address，會員地址 */
+    /** address, member address */
     private String address;
 
-    /** phone，會員手機 */
+    /** phone, member’s mobile phone */
     private String phone;
 
-    /** list，訂單列表 */
+    /** list, order list */
     private ArrayList<OrderItem> list = new ArrayList<OrderItem>();
 
-    /** create，訂單創建時間 */
+    /** create, order creation time */
     private Timestamp create;
 
-    /** modify，訂單修改時間 */
+    /** modify, order modification time */
     private Timestamp modify;
 
-    /** oph，OrderItemHelper 之物件與 Order 相關之資料庫方法（Sigleton） */
+    /** oph, OrderItemHelper object and Order-related database method (Sigleton) */
     private OrderItemHelper oph = OrderItemHelper.getHelper();
 
     /**
-     * 實例化（Instantiates）一個新的（new）Order 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於建立訂單資料時，產生一個新的訂單
+     * Instantiates a new Order object<br>
+     * Using the overload method, this constructor is used to generate a new order
+     * when creating order data.
      *
-     * @param first_name 會員名
-     * @param last_name 會員姓
-     * @param email 會員電子信箱
-     * @param address 會員地址
-     * @param phone 會員姓名
+     * @param first_name member name
+     * @param last_name  member’s last name
+     * @param email      member’s email address
+     * @param address    member address
+     * @param phone      member name
      */
     public Order(String first_name, String last_name, String email, String address, String phone) {
         this.first_name = first_name;
@@ -59,18 +58,20 @@ public class Order {
     }
 
     /**
-     * 實例化（Instantiates）一個新的（new）Order 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於修改訂單資料時，新改資料庫已存在的訂單
+     * Instantiates a new Order object<br>
+     * Use the overload method. This constructor is used to modify orders that
+     * already exist in the database when modifying order data.
      *
-     * @param first_name 會員名
-     * @param last_name 會員姓
-     * @param email 會員電子信箱
-     * @param address 會員地址
-     * @param phone 會員姓名
-     * @param create 訂單創建時間
-     * @param modify 訂單修改時間
+     * @param first_name member name
+     * @param last_name  member’s last name
+     * @param email      member’s email address
+     * @param address    member address
+     * @param phone      member name
+     * @param create     order creation time
+     * @param modify     order modification time
      */
-    public Order(int id, String first_name, String last_name, String email, String address, String phone, Timestamp create, Timestamp modify) {
+    public Order(int id, String first_name, String last_name, String email, String address, String phone,
+            Timestamp create, Timestamp modify) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -83,109 +84,110 @@ public class Order {
     }
 
     /**
-     * 新增一個訂單產品及其數量
+     * Add an order product and its quantity
      */
     public void addOrderProduct(Product pd, int quantity) {
         this.list.add(new OrderItem(pd, quantity));
     }
 
     /**
-     * 新增一個訂單產品
+     * Add an order product
      */
     public void addOrderProduct(OrderItem op) {
         this.list.add(op);
     }
 
     /**
-     * 設定訂單編號
+     * Set order number
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * 取得訂單編號
+     * Get order number
      *
-     * @return int 回傳訂單編號
+     * @return int Return order number
      */
     public int getId() {
         return this.id;
     }
 
     /**
-     * 取得訂單會員的名
+     * Get the name of the ordering member
      *
-     * @return String 回傳訂單會員的名
+     * @return String Returns the name of the order member
      */
     public String getFirstName() {
         return this.first_name;
     }
 
     /**
-     * 取得訂單會員的姓
+     * Get the last name of the ordering member
      *
-     * @return String 回傳訂單會員的姓
+     * @return String Returns the last name of the order member
      */
     public String getLastName() {
         return this.last_name;
     }
 
     /**
-     * 取得訂單信箱
+     * Get order mailbox
      *
-     * @return String 回傳訂單信箱
+     * @return String Return order mailbox
      */
     public String getEmail() {
         return this.email;
     }
 
     /**
-     * 取得訂單創建時間
+     * Get the order creation time
      *
-     * @return Timestamp 回傳訂單創建時間
+     * @return Timestamp returns the order creation time
      */
     public Timestamp getCreateTime() {
         return this.create;
     }
 
     /**
-     * 取得訂單修改時間
+     * Get the order modification time
      *
-     * @return Timestamp 回傳訂單修改時間
+     * @return Timestamp returns the order modification time
      */
     public Timestamp getModifyTime() {
         return this.modify;
     }
 
     /**
-     * 取得訂單地址
+     * Get order address
      *
-     * @return String 回傳訂單地址
+     * @return String Return order address
      */
     public String getAddress() {
         return this.address;
     }
 
     /**
-     * 取得訂單電話
+     * Get order phone number
      *
-     * @return String 回傳訂單電話
+     * @return String Return order phone number
      */
     public String getPhone() {
         return this.phone;
     }
 
     /**
-     * 取得該名會員所有資料
+     * Get all the information of the member
      *
-     * @return the data 取得該名會員之所有資料並封裝於JSONObject物件內
+     * @return the data Get all the information of the member and encapsulate it in
+     *         a JSONObject object
      */
     public ArrayList<OrderItem> getOrderProduct() {
         return this.list;
     }
 
     /**
-     * 從 DB 中取得訂單產品
+     * Get order products from DB
      */
     private void getOrderProductFromDB() {
         ArrayList<OrderItem> data = oph.getOrderProductByOrderId(this.id);
@@ -193,9 +195,9 @@ public class Order {
     }
 
     /**
-     * 取得訂單基本資料
+     * Obtain basic order information
      *
-     * @return JSONObject 取得訂單基本資料
+     * @return JSONObject Get the basic information of the order
      */
     public JSONObject getOrderData() {
         JSONObject jso = new JSONObject();
@@ -212,14 +214,14 @@ public class Order {
     }
 
     /**
-     * 取得訂單產品資料
+     * Obtain order product information
      *
-     * @return JSONArray 取得訂單產品資料
+     * @return JSONArray Get order product information
      */
     public JSONArray getOrderProductData() {
         JSONArray result = new JSONArray();
 
-        for(int i=0 ; i < this.list.size() ; i++) {
+        for (int i = 0; i < this.list.size(); i++) {
             result.put(this.list.get(i).getData());
         }
 
@@ -227,9 +229,9 @@ public class Order {
     }
 
     /**
-     * 取得訂單所有資訊
+     * Get all order information
      *
-     * @return JSONObject 取得訂單所有資訊
+     * @return JSONObject Get all order information
      */
     public JSONObject getOrderAllInfo() {
         JSONObject jso = new JSONObject();
@@ -240,10 +242,10 @@ public class Order {
     }
 
     /**
-     * 設定訂單產品編號
+     * Set order product number
      */
     public void setOrderProductId(JSONArray data) {
-        for(int i=0 ; i < this.list.size() ; i++) {
+        for (int i = 0; i < this.list.size(); i++) {
             this.list.get(i).setId((int) data.getLong(i));
         }
     }

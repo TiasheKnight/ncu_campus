@@ -8,35 +8,36 @@ import org.json.*;
 import ncu.im3069.demo.util.DBMgr;
 
 public class OrderHelper {
-    
+
     private static OrderHelper oh;
     private Connection conn = null;
     private PreparedStatement pres = null;
-    private OrderItemHelper oph =  OrderItemHelper.getHelper();
-    
+    private OrderItemHelper oph = OrderItemHelper.getHelper();
+
     private OrderHelper() {
     }
-    
+
     public static OrderHelper getHelper() {
-        if(oh == null) oh = new OrderHelper();
-        
+        if (oh == null)
+            oh = new OrderHelper();
+
         return oh;
     }
-    
+
     public JSONObject create(Order order) {
-        /** 記錄實際執行之SQL指令 */
+        /** Record the actual executed SQL command */
         String exexcute_sql = "";
         long id = -1;
         JSONArray opa = new JSONArray();
-        
+
         try {
-            /** 取得資料庫之連線 */
+            /** Get the connection to the database */
             conn = DBMgr.getConnection();
-            /** SQL指令 */
+            /** SQL command */
             String sql = "INSERT INTO `missa`.`orders`(`last_name`, `first_name`, `email`, `address`, `phone`, `create`, `modify`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?)";
-            
-            /** 取得所需之參數 */
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?)";
+
+            /** Get the required parameters */
             String first_name = order.getFirstName();
             String last_name = order.getLastName();
             String email = order.getEmail();
@@ -44,8 +45,8 @@ public class OrderHelper {
             String phone = order.getPhone();
             Timestamp create = order.getCreateTime();
             Timestamp modify = order.getModifyTime();
-            
-            /** 將參數回填至SQL指令當中 */
+
+            /** Backfill the parameters into the SQL command */
             pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pres.setString(1, last_name);
             pres.setString(2, first_name);
@@ -54,14 +55,14 @@ public class OrderHelper {
             pres.setString(5, phone);
             pres.setTimestamp(6, create);
             pres.setTimestamp(7, modify);
-            
-            /** 執行新增之SQL指令並記錄影響之行數 */
+
+            /** Execute the new SQL command and record the number of affected rows */
             pres.executeUpdate();
-            
-            /** 紀錄真實執行的SQL指令，並印出 **/
+
+            /** Record the actual executed SQL command and print it out **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
+
             ResultSet rs = pres.getGeneratedKeys();
 
             if (rs.next()) {
@@ -70,57 +71,66 @@ public class OrderHelper {
                 opa = oph.createByList(id, opd);
             }
         } catch (SQLException e) {
-            /** 印出JDBC SQL指令錯誤 **/
+            /** Print JDBC SQL command errors **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 若錯誤則印出錯誤訊息 */
+            /** If error occurs, print error message */
             e.printStackTrace();
         } finally {
-            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            /** Close the connection and release all database-related resources **/
             DBMgr.close(pres, conn);
         }
 
-        /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
+        /**
+         * Encapsulate the SQL command, time spent and number of affected rows into
+         * JSONObject and return
+         */
         JSONObject response = new JSONObject();
         response.put("order_id", id);
         response.put("order_product_id", opa);
 
         return response;
     }
-    
+
     public JSONObject getAll() {
         Order o = null;
         JSONArray jsa = new JSONArray();
-        /** 記錄實際執行之SQL指令 */
+        /** Record the actual executed SQL command */
         String exexcute_sql = "";
-        /** 紀錄程式開始執行時間 */
+        /** Record program start execution time */
         long start_time = System.nanoTime();
-        /** 紀錄SQL總行數 */
+        /** Record the total number of SQL rows */
         int row = 0;
-        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        /**
+         * Store the results returned after JDBC retrieves the database, and move to the
+         * next data in pointer mode
+         */
         ResultSet rs = null;
-        
+
         try {
-            /** 取得資料庫之連線 */
+            /** Get the connection to the database */
             conn = DBMgr.getConnection();
-            /** SQL指令 */
+            /** SQL command */
             String sql = "SELECT * FROM `missa`.`orders`";
-            
-            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+
+            /**
+             * Backfill the parameters into the SQL command. If there are none, you only
+             * need to execute prepareStatement
+             */
             pres = conn.prepareStatement(sql);
-            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            /** Execute the SQL command of the query and record the data returned */
             rs = pres.executeQuery();
 
-            /** 紀錄真實執行的SQL指令，並印出 **/
+            /** Record the actual executed SQL command and print it out **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
-            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            while(rs.next()) {
-                /** 每執行一次迴圈表示有一筆資料 */
+
+            /** Move the pointer through the while loop to obtain each returned data */
+            while (rs.next()) {
+                /** Each time the loop is executed, it means there is a piece of data */
                 row += 1;
-                
-                /** 將 ResultSet 之資料取出 */
+
+                /** Take out the data of ResultSet */
                 int id = rs.getInt("id");
                 String first_name = rs.getString("first_name");
                 String last_name = rs.getString("last_name");
@@ -129,30 +139,36 @@ public class OrderHelper {
                 String phone = rs.getString("phone");
                 Timestamp create = rs.getTimestamp("create");
                 Timestamp modify = rs.getTimestamp("modify");
-                
-                /** 將每一筆商品資料產生一名新Product物件 */
+
+                /** Generate a new Product object for each product data */
                 o = new Order(id, first_name, last_name, email, address, phone, create, modify);
-                /** 取出該項商品之資料並封裝至 JSONsonArray 內 */
+                /** Get the product data and package it into JSONsonArray */
                 jsa.put(o.getOrderAllInfo());
             }
 
         } catch (SQLException e) {
-            /** 印出JDBC SQL指令錯誤 **/
+            /** Print JDBC SQL command errors **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 若錯誤則印出錯誤訊息 */
+            /** If error occurs, print error message */
             e.printStackTrace();
         } finally {
-            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            /**
+             * Close the connection and release all database phases
+             * Guanzhi Resources
+             **/
             DBMgr.close(rs, pres, conn);
         }
-        
-        /** 紀錄程式結束執行時間 */
+
+        /** Record program end execution time */
         long end_time = System.nanoTime();
-        /** 紀錄程式執行時間 */
+        /** Record program execution time */
         long duration = (end_time - start_time);
-        
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+
+        /**
+         * Encapsulate the JSONArray of SQL commands, time spent, number of affected
+         * rows and all member data into JSONObject and return
+         */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -161,41 +177,47 @@ public class OrderHelper {
 
         return response;
     }
-    
+
     public JSONObject getById(String order_id) {
         JSONObject data = new JSONObject();
         Order o = null;
-        /** 記錄實際執行之SQL指令 */
+        /** Record the actual executed SQL command */
         String exexcute_sql = "";
-        /** 紀錄程式開始執行時間 */
+        /** Record program start execution time */
         long start_time = System.nanoTime();
-        /** 紀錄SQL總行數 */
+        /** Record the total number of SQL rows */
         int row = 0;
-        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        /**
+         * Store the results returned after JDBC retrieves the database, and move to the
+         * next data in pointer mode
+         */
         ResultSet rs = null;
-        
+
         try {
-            /** 取得資料庫之連線 */
+            /** Get the connection to the database */
             conn = DBMgr.getConnection();
-            /** SQL指令 */
+            /** SQL command */
             String sql = "SELECT * FROM `missa`.`orders` WHERE `orders`.`id` = ?";
-            
-            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+
+            /**
+             * Backfill the parameters into the SQL command. If there are none, you only
+             * need to execute prepareStatement
+             */
             pres = conn.prepareStatement(sql);
             pres.setString(1, order_id);
-            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            /** Execute the SQL command of the query and record the data returned */
             rs = pres.executeQuery();
 
-            /** 紀錄真實執行的SQL指令，並印出 **/
+            /** Record the actual executed SQL command and print it out **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
-            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            while(rs.next()) {
-                /** 每執行一次迴圈表示有一筆資料 */
+
+            /** Move the pointer through the while loop to obtain each returned data */
+            while (rs.next()) {
+                /** Each time the loop is executed, it means there is a piece of data */
                 row += 1;
-                
-                /** 將 ResultSet 之資料取出 */
+
+                /** Take out the data of ResultSet */
                 int id = rs.getInt("id");
                 String first_name = rs.getString("first_name");
                 String last_name = rs.getString("last_name");
@@ -204,31 +226,34 @@ public class OrderHelper {
                 String phone = rs.getString("phone");
                 Timestamp create = rs.getTimestamp("create");
                 Timestamp modify = rs.getTimestamp("modify");
-                
-                /** 將每一筆商品資料產生一名新Product物件 */
+
+                /** Generate a new Product object for each product data */
                 o = new Order(id, first_name, last_name, email, address, phone, create, modify);
-                /** 取出該項商品之資料並封裝至 JSONsonArray 內 */
+                /** Get the product data and package it into JSONsonArray */
                 data = o.getOrderAllInfo();
             }
 
         } catch (SQLException e) {
-            /** 印出JDBC SQL指令錯誤 **/
+            /** Print JDBC SQL command errors **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 若錯誤則印出錯誤訊息 */
+            /** If error occurs, print error message */
             e.printStackTrace();
         } finally {
-            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            /** Close the connection and release all database-related resources **/
             DBMgr.close(rs, pres, conn);
         }
-        
-        /** 紀錄程式結束執行時間 */
+
+        /** Record program end execution time */
         long end_time = System.nanoTime();
-        /** 紀錄程式執行時間 */
+        /** Record program execution time */
         long duration = (end_time - start_time);
-        
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
-        
+
+        /**
+         * Encapsulate the JSONArray of SQL commands, time spent, number of affected
+         * rows and all member data into JSONObject and return
+         */
+
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);

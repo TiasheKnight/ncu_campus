@@ -4,115 +4,116 @@ import org.json.*;
 
 public class Product {
 
-    /** id，會員編號 */
+    /** id, member number */
     private int id;
 
-    /** id，會員編號 */
+    /** id, member number */
     private String name;
 
-    /** id，會員編號 */
+    /** id, member number */
     private double price;
 
-    /** id，會員編號 */
+    /** id, member number */
     private String image;
 
-    /** id，會員編號 */
-	private String describe;
+    /** id, member number */
+    private String describe;
 
     /**
-     * 實例化（Instantiates）一個新的（new）Product 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於新增產品時
+     * Instantiates a new Product object<br>
+     * Using the overload method, this constructor is used when adding new products
      *
-     * @param id 產品編號
+     * @param id product number
      */
-	public Product(int id) {
-		this.id = id;
-	}
+    public Product(int id) {
+        this.id = id;
+    }
 
     /**
-     * 實例化（Instantiates）一個新的（new）Product 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於新增產品時
+     * Instantiates a new Product object<br>
+     * Using the overload method, this constructor is used when adding new products
      *
-     * @param name 產品名稱
-     * @param price 產品價格
-     * @param image 產品圖片
+     * @param name  product name
+     * @param price product price
+     * @param image product image
      */
-	public Product(String name, double price, String image) {
-		this.name = name;
-		this.price = price;
-		this.image = image;
-	}
+    public Product(String name, double price, String image) {
+        this.name = name;
+        this.price = price;
+        this.image = image;
+    }
 
     /**
-     * 實例化（Instantiates）一個新的（new）Product 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於修改產品時
+     * Instantiates a new Product object<br>
+     * Using the overload method, this constructor is used when modifying the
+     * product
      *
-     * @param id 產品編號
-     * @param name 產品名稱
-     * @param price 產品價格
-     * @param image 產品圖片
-     * @param describe 產品敘述
+     * @param id       product number
+     * @param name     product name
+     * @param price    product price
+     * @param image    product image
+     * @param describe product description
      */
-	public Product(int id, String name, double price, String image, String describe) {
-		this.id = id;
-		this.name = name;
-		this.price = price;
-		this.image = image;
-		this.describe = describe;
-	}
+    public Product(int id, String name, double price, String image, String describe) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.image = image;
+        this.describe = describe;
+    }
 
     /**
-     * 取得產品編號
+     * Get product number
      *
-     * @return int 回傳產品編號
+     * @return int returns the product number
      */
-	public int getID() {
-		return this.id;
-	}
+    public int getID() {
+        return this.id;
+    }
 
     /**
-     * 取得產品名稱
+     * Get product name
      *
-     * @return String 回傳產品名稱
+     * @return String Return product name
      */
-	public String getName() {
-		return this.name;
-	}
+    public String getName() {
+        return this.name;
+    }
 
     /**
-     * 取得產品價格
+     * Get product price
      *
-     * @return double 回傳產品價格
+     * @return double Return product price
      */
-	public double getPrice() {
-		return this.price;
-	}
+    public double getPrice() {
+        return this.price;
+    }
 
     /**
-     * 取得產品圖片
+     * Get product pictures
      *
-     * @return String 回傳產品圖片
+     * @return String Return product pictures
      */
-	public String getImage() {
-		return this.image;
-	}
+    public String getImage() {
+        return this.image;
+    }
 
     /**
-     * 取得產品敘述
+     * Get product description
      *
-     * @return String 回傳產品敘述
+     * @return String Return product description
      */
-	public String getDescribe() {
-		return this.describe;
-	}
+    public String getDescribe() {
+        return this.describe;
+    }
 
     /**
-     * 取得產品資訊
+     * Get product information
      *
-     * @return JSONObject 回傳產品資訊
+     * @return JSONObject returns product information
      */
-	public JSONObject getData() {
-        /** 透過JSONObject將該項產品所需之資料全部進行封裝*/
+    public JSONObject getData() {
+        /** Encapsulate all the data required for the product through JSONObject */
         JSONObject jso = new JSONObject();
         jso.put("id", getID());
         jso.put("name", getName());

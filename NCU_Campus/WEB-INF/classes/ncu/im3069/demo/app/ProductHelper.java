@@ -9,84 +9,100 @@ import ncu.im3069.demo.app.Product;
 
 public class ProductHelper {
     private ProductHelper() {
-        
+
     }
-    
+
     private static ProductHelper ph;
     private Connection conn = null;
     private PreparedStatement pres = null;
-    
+
     public static ProductHelper getHelper() {
-        /** Singleton檢查是否已經有ProductHelper物件，若無則new一個，若有則直接回傳 */
-        if(ph == null) ph = new ProductHelper();
-        
+        /**
+         * Singleton checks whether there is already a ProductHelper object, if not, it
+         * creates a new one, and if there is, it returns it directly
+         */
+        if (ph == null)
+            ph = new ProductHelper();
+
         return ph;
     }
-    
+
     public JSONObject getAll() {
-        /** 新建一個 Product 物件之 m 變數，用於紀錄每一位查詢回之商品資料 */
-    	Product p = null;
-        /** 用於儲存所有檢索回之商品，以JSONArray方式儲存 */
+        /**
+         * Create a new m variable of the Product object to record the product
+         * information returned by each query
+         */
+        Product p = null;
+        /** Used to store all retrieved products in JSONArray format */
         JSONArray jsa = new JSONArray();
-        /** 記錄實際執行之SQL指令 */
+        /** Record the actual executed SQL command */
         String exexcute_sql = "";
-        /** 紀錄程式開始執行時間 */
+        /** Record program start execution time */
         long start_time = System.nanoTime();
-        /** 紀錄SQL總行數 */
+        /** Record the total number of SQL rows */
         int row = 0;
-        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        /**
+         * Store the results returned after JDBC retrieves the database, and move to the
+         * next data in pointer mode
+         */
         ResultSet rs = null;
-        
+
         try {
-            /** 取得資料庫之連線 */
+            /** Get the connection to the database */
             conn = DBMgr.getConnection();
-            /** SQL指令 */
+            /** SQL command */
             String sql = "SELECT * FROM `missa`.`products`";
-            
-            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+
+            /**
+             * Backfill the parameters into the SQL command. If there are none, you only
+             * need to execute prepareStatement
+             */
             pres = conn.prepareStatement(sql);
-            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            /** Execute the SQL command of the query and record the data returned */
             rs = pres.executeQuery();
 
-            /** 紀錄真實執行的SQL指令，並印出 **/
+            /** Record the actual executed SQL command and print it out **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
-            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            while(rs.next()) {
-                /** 每執行一次迴圈表示有一筆資料 */
+
+            /** Move the pointer through the while loop to obtain each returned data */
+            while (rs.next()) {
+                /** Each time the loop is executed, it means there is a piece of data */
                 row += 1;
-                
-                /** 將 ResultSet 之資料取出 */
+
+                /** Take out the data of ResultSet */
                 int product_id = rs.getInt("id");
                 String name = rs.getString("name");
                 double price = rs.getDouble("price");
                 String image = rs.getString("image");
                 String describe = rs.getString("describe");
-                
-                /** 將每一筆商品資料產生一名新Product物件 */
+
+                /** Generate a new Product object for each product data */
                 p = new Product(product_id, name, price, image, describe);
-                /** 取出該項商品之資料並封裝至 JSONsonArray 內 */
+                /** Get the product data and package it into JSONsonArray */
                 jsa.put(p.getData());
             }
 
         } catch (SQLException e) {
-            /** 印出JDBC SQL指令錯誤 **/
+            /** Print JDBC SQL command errors **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 若錯誤則印出錯誤訊息 */
+            /** If error occurs, print error message */
             e.printStackTrace();
         } finally {
-            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            /** Close the connection and release all database-related resources **/
             DBMgr.close(rs, pres, conn);
         }
-        
-        /** 紀錄程式結束執行時間 */
+
+        /** Record program end execution time */
         long end_time = System.nanoTime();
-        /** 紀錄程式執行時間 */
+        /** Record program execution time */
         long duration = (end_time - start_time);
-        
-        /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
+
+        /**
+         * Encapsulate the JSONArray of SQL commands, time spent, number of affected
+         * rows and all member data into JSONObject and return
+         */
         JSONObject response = new JSONObject();
         response.put("sql", exexcute_sql);
         response.put("row", row);
@@ -95,133 +111,154 @@ public class ProductHelper {
 
         return response;
     }
-    
+
     public JSONObject getByIdList(String data) {
-      /** 新建一個 Product 物件之 m 變數，用於紀錄每一位查詢回之商品資料 */
-      Product p = null;
-      /** 用於儲存所有檢索回之商品，以JSONArray方式儲存 */
-      JSONArray jsa = new JSONArray();
-      /** 記錄實際執行之SQL指令 */
-      String exexcute_sql = "";
-      /** 紀錄程式開始執行時間 */
-      long start_time = System.nanoTime();
-      /** 紀錄SQL總行數 */
-      int row = 0;
-      /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
-      ResultSet rs = null;
-
-      try {
-          /** 取得資料庫之連線 */
-          conn = DBMgr.getConnection();
-          String[] in_para = DBMgr.stringToArray(data, ",");
-          /** SQL指令 */
-          String sql = "SELECT * FROM `missa`.`products` WHERE `products`.`id`";
-          for (int i=0 ; i < in_para.length ; i++) {
-              sql += (i == 0) ? "in (?" : ", ?";
-              sql += (i == in_para.length-1) ? ")" : "";
-          }
-          
-          /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
-          pres = conn.prepareStatement(sql);
-          for (int i=0 ; i < in_para.length ; i++) {
-            pres.setString(i+1, in_para[i]);
-          }
-          /** 執行查詢之SQL指令並記錄其回傳之資料 */
-          rs = pres.executeQuery();
-
-          /** 紀錄真實執行的SQL指令，並印出 **/
-          exexcute_sql = pres.toString();
-          System.out.println(exexcute_sql);
-          
-          /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-          while(rs.next()) {
-              /** 每執行一次迴圈表示有一筆資料 */
-              row += 1;
-              
-              /** 將 ResultSet 之資料取出 */
-              int product_id = rs.getInt("id");
-              String name = rs.getString("name");
-              double price = rs.getDouble("price");
-              String image = rs.getString("image");
-              String describe = rs.getString("describe");
-              
-              /** 將每一筆商品資料產生一名新Product物件 */
-              p = new Product(product_id, name, price, image, describe);
-              /** 取出該項商品之資料並封裝至 JSONsonArray 內 */
-              jsa.put(p.getData());
-          }
-
-      } catch (SQLException e) {
-          /** 印出JDBC SQL指令錯誤 **/
-          System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
-      } catch (Exception e) {
-          /** 若錯誤則印出錯誤訊息 */
-          e.printStackTrace();
-      } finally {
-          /** 關閉連線並釋放所有資料庫相關之資源 **/
-          DBMgr.close(rs, pres, conn);
-      }
-      
-      /** 紀錄程式結束執行時間 */
-      long end_time = System.nanoTime();
-      /** 紀錄程式執行時間 */
-      long duration = (end_time - start_time);
-      
-      /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
-      JSONObject response = new JSONObject();
-      response.put("sql", exexcute_sql);
-      response.put("row", row);
-      response.put("time", duration);
-      response.put("data", jsa);
-
-      return response;
-  }
-    
-    public Product getById(String id) {
-        /** 新建一個 Product 物件之 m 變數，用於紀錄每一位查詢回之商品資料 */
+        /**
+         * Create a new m variable of the Product object to record the product
+         * information returned by each query
+         */
         Product p = null;
-        /** 記錄實際執行之SQL指令 */
+        /** Used to store all retrieved products in JSONArray format */
+        JSONArray jsa = new JSONArray();
+        /** Record the actual executed SQL command */
         String exexcute_sql = "";
-        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        /** Record program start execution time */
+        long start_time = System.nanoTime();
+        /** Record the total number of SQL rows */
+        int row = 0;
+        /**
+         * Store the results returned after JDBC retrieves the database, and move to the
+         * next data in pointer mode
+         */
         ResultSet rs = null;
-        
+
         try {
-            /** 取得資料庫之連線 */
+            /** Get the connection to the database */
             conn = DBMgr.getConnection();
-            /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`products` WHERE `products`.`id` = ? LIMIT 1";
-            
-            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+            String[] in_para = DBMgr.stringToArray(data, ",");
+            /** SQL command */
+            String sql = "SELECT * FROM `missa`.`products` WHERE `products`.`id`";
+            for (int i = 0; i < in_para.length; i++) {
+                sql += (i == 0) ? "in (?" : ", ?";
+                sql += (i == in_para.length - 1) ? ")" : "";
+            }
+
+            /**
+             * Backfill the parameters into the SQL command. If there are none, you only
+             * need to execute prepareStatement
+             */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, id);
-            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            for (int i = 0; i < in_para.length; i++) {
+                pres.setString(i + 1, in_para[i]);
+            }
+            /** Execute the SQL command of the query and record the data returned */
             rs = pres.executeQuery();
 
-            /** 紀錄真實執行的SQL指令，並印出 **/
+            /** Record the actual executed SQL command and print it out **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
-            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            while(rs.next()) {
-                /** 將 ResultSet 之資料取出 */
+
+            /** Move the pointer through the while loop to obtain each returned data */
+            while (rs.next()) {
+                /** Each time the loop is executed, it means there is a piece of data */
+                row += 1;
+
+                /** Take out the data of ResultSet */
                 int product_id = rs.getInt("id");
                 String name = rs.getString("name");
                 double price = rs.getDouble("price");
                 String image = rs.getString("image");
                 String describe = rs.getString("describe");
-                
-                /** 將每一筆商品資料產生一名新Product物件 */
+
+                /** Generate a new Product object for each product data */
+                p = new Product(product_id, name, price, image, describe);
+                /** Get the product data and package it into JSONsonArray */
+                jsa.put(p.getData());
+            }
+
+        } catch (SQLException e) {
+            /** Print JDBC SQL command errors **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** If error occurs, print error message */
+            e.printStackTrace();
+        } finally {
+            /** Close the connection and release all database-related resources **/
+            DBMgr.close(rs, pres, conn);
+        }
+
+        /** Record program end execution time */
+        long end_time = System.nanoTime();
+        /** Record program execution time */
+        long duration = (end_time - start_time);
+
+        /**
+         * Encapsulate the JSONArray of SQL commands, time spent, number of affected
+         * rows and all member data into JSONObject and return
+         */
+        JSONObject response = new JSONObject();
+        response.put("sql", exexcute_sql);
+        response.put("row", row);
+        response.put("time", duration);
+        response.put("data", jsa);
+
+        return response;
+    }
+
+    public Product getById(String id) {
+        /**
+         * Create a new m variable of the Product object to record the product
+         * information returned by each query
+         */
+        Product p = null;
+        /** Record the actual executed SQL command */
+        String exexcute_sql = "";
+        /**
+         * Store the results returned after JDBC retrieves the database, and move to the
+         * next data in pointer mode
+         */
+        ResultSet rs = null;
+
+        try {
+            /** Get the connection to the database */
+            conn = DBMgr.getConnection();
+            /** SQL command */
+            String sql = "SELECT * FROM `missa`.`products` WHERE `products`.`id` = ? LIMIT 1";
+
+            /**
+             * Backfill the parameters into the SQL command. If there are none, you only
+             * need to execute prepareStatement
+             */
+            pres = conn.prepareStatement(sql);
+            pres.setString(1, id);
+            /** Execute the SQL command of the query and record the data returned */
+            rs = pres.executeQuery();
+
+            /** Record the actual executed SQL command and print it out **/
+            exexcute_sql = pres.toString();
+            System.out.println(exexcute_sql);
+
+            /** Move the pointer through the while loop to obtain each returned data */
+            while (rs.next()) {
+                /** Take out the data of ResultSet */
+                int product_id = rs.getInt("id");
+                String name = rs.getString("name");
+                double price = rs.getDouble("price");
+                String image = rs.getString("image");
+                String describe = rs.getString("describe");
+
+                /** Generate a new Product object for each product data */
                 p = new Product(product_id, name, price, image, describe);
             }
 
         } catch (SQLException e) {
-            /** 印出JDBC SQL指令錯誤 **/
+            /** Print JDBC SQL command errors **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
         } catch (Exception e) {
-            /** 若錯誤則印出錯誤訊息 */
+            /** If error occurs, print error message */
             e.printStackTrace();
         } finally {
-            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            /** Close the connection and release all database-related resources **/
             DBMgr.close(rs, pres, conn);
         }
 
