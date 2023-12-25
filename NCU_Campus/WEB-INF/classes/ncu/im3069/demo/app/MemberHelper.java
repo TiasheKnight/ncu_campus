@@ -45,7 +45,8 @@ public class MemberHelper {
      */
     public static MemberHelper getHelper() {
         /** Singleton檢查是否已經有MemberHelper物件，若無則new一個，若有則直接回傳 */
-        if(mh == null) mh = new MemberHelper();
+        if (mh == null)
+            mh = new MemberHelper();
 
         return mh;
     }
@@ -143,7 +144,7 @@ public class MemberHelper {
             System.out.println(exexcute_sql);
 
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
-            while(rs.next()) {
+            while (rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
 
@@ -160,7 +161,8 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name, login_times, authority);
+                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name,
+                        login_times, authority);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -229,7 +231,7 @@ public class MemberHelper {
 
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
             /** 正確來說資料庫只會有一筆該會員編號之資料，因此其實可以不用使用 while 迴圈 */
-            while(rs.next()) {
+            while (rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
 
@@ -246,7 +248,8 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name, login_times, authority);
+                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name,
+                        login_times, authority);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -303,7 +306,7 @@ public class MemberHelper {
 
             /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
             /** 正確來說資料庫只會有一筆該電子郵件之資料，因此其實可以不用使用 while迴圈 */
-            while(rs.next()) {
+            while (rs.next()) {
                 /** 將 ResultSet 之資料取出 */
                 int login_times = rs.getInt("login_times");
                 String auhtority = rs.getString("authority");
@@ -332,7 +335,7 @@ public class MemberHelper {
      * @param m 一名會員之Member物件
      * @return boolean 若重複註冊回傳False，若該信箱不存在則回傳True
      */
-    public boolean checkDuplicate(Member m){
+    public boolean checkDuplicate(Member m) {
         /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
         int row = -1;
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
@@ -565,7 +568,7 @@ public class MemberHelper {
     /**
      * 更新會員之會員組別
      *
-     * @param m 一名會員之Member物件
+     * @param m      一名會員之Member物件
      * @param status 會員組別之字串（String）
      */
     public void updateStatus(Member m, String status) {
