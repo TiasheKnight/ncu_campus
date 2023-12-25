@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Edit</title>
+    <link rel="stylesheet" href="/statics/css/Home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="/statics/js/loadBoostrap.js" defer></script>
+</head>
+<body>
+    <div id="head" class="Tophead d-flex flex-row align-items-center p-2">
+        <div class="col-2 d-flex justify-content-center">
+            <button id="Home" class="btn"><iconify-icon icon="ant-design:home-filled" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
+            <button id="reback" class="btn"><iconify-icon icon="material-symbols:keyboard-return-rounded" style="color: #9747ff;" width="40" height="40"></iconify-icon></button>
+        </div>
+        <div class="col-10 d-flex justify-content-center">
+            <h2 style="color: yellow;">編輯組織</h2>
+        </div>
+    </div>
+    <div id="OrganizationList" class="container-fluid d-grid p-2">
+        <table id="ReportActivityTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>擁有組織名稱</th>
+                    <th>創辦管理員</th>
+                    <th>組織介紹</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>學生會</td>    
+                    <td>學生會會長</td>
+                    <td>為學生爭取權力</td>
+                    <td>
+                        <div class="btn-group d-flex" role="group">
+                            <a href="Organization_Power_Edit.html" class="btn btn-primary btn-sm" style="background-color: #9747ff;">管理權限</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group d-flex" role="group">
+                            <button type="button" class="btn btn-primary btn-sm" style="background-color:#77A3F3" data-bs-toggle="modal" data-bs-target="#OrganizationEditModal">編輯</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group d-flex" role="group">
+                            <button type="button" class="btn btn-primary btn-sm" style="background-color:#D91621" data-bs-toggle="modal" data-bs-target="#DeleteOrganizationCheckModal">刪除</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Organization Edit -->
+    <div class="modal fade modal-dialog modal-lg" id="OrganizationEditModal" tabindex="-1" aria-labelledby="OrganizationEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header d-flex flex-row" style="justify-content:center; background-color: black;">
+                    <h2 class="col-10 text-center" style="color: orange;">組織詳細訊息</h2>
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; word-wrap: break-word;max-height:fit-content;">
+                    <form id="EditForm">
+                        <div class="input-group mb-2">
+                            <label class="form-text" for="UserName_Edit">組織介紹：</label>
+                            <textarea id="OrganizationInterView_Input" class="form-control" placeholder="為學生爭取權力" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="background-color: #9747ff;">確認</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <!-- DeleteOrganizationCheck -->
+    <div class="modal fade modal-dialog modal-lg" id="DeleteOrganizationCheckModal" tabindex="-1" aria-labelledby="DeleteMemberCheckModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
+                    <div class="col-12 d-flex justify-content-center">
+                        <h2 style="color: yellow;">是否刪除此組織</h2>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary">確認</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>
+<script>
+    document.getElementById("Home").addEventListener("click", function() {
+        // if(authication=="一般使用者"){
+
+        // }
+        // else{}
+        window.location.href = "/HomeList_NormalUser.html";
+    });
+    document.getElementById("reback").addEventListener("click", function() {
+        window.history.back();
+    });
+</script>
+</html>

@@ -1,0 +1,32 @@
+#PersonalInformation {
+    width: 100%;
+    position: absolute;
+}
+#PersonalInformation label,
+#PersonalInformation span {
+    font-size: 40px; /* 調整文字大小，可以根據需要進行調整 */
+    font-weight: 700;
+}
+.ShowProps{
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+.OwnProps{
+    overflow-y: auto;
+    background-color: aliceblue;
+}
+
+.PropDetail{
+    background-color: skyblue;
+    align-items: center;
+    text-align: center;
+}
+.PropDetail.card {
+    background-color:aquamarine; /* 調整透明度，數值範圍為 0（完全透明）到 1（完全不透明） */
+}
+
+.ShowProps .OwnProps img.card-img-top {
+    border-radius: 100px; /* 調整此處的數值以改變圓角的程度 */
+}

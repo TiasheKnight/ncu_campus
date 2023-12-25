@@ -29,3 +29,22 @@ bootstrapScript.crossOrigin = 'anonymous';
 
 // 將 script 元素附加到 HTML 的 head 元素中
 document.head.appendChild(bootstrapScript);
+
+    document.getElementById("EmergencyCYes").addEventListener("click", function() {
+        // 顯示 EmergencyConfirmationModal
+        $('#EmergencyConfirmationModal').modal('show');
+
+        // 檢查道具數量是否足夠，如果不夠，顯示 UnenoughEmergencyPropsModal
+        // 這裡假設你有一個函式 checkPropsSufficiency() 用來檢查道具數量
+        if (!checkPropsSufficiency()) {
+            $('#UnenoughEmergencyPropsModal').modal('show');
+        }
+    });
+
+    // 假設這是檢查道具數量的函式，返回 true 表示足夠，false 表示不足
+    function checkPropsSufficiency() {
+        // 在這裡檢查道具數量，返回 true 或 false
+        // 這裡只是一個示例，你需要根據你的邏輯來實現
+        var propsSufficient = true;
+        return propsSufficient;
+    }

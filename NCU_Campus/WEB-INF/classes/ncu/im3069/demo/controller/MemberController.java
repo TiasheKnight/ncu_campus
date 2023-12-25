@@ -4,80 +4,25 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import org.json.*;
-import ncu.im3069.demo.app.Activity;
-import ncu.im3069.demo.app.ActivityHelper;
+import ncu.im3069.demo.app.Member;
+import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
 
-// TODO: Auto-generated Javadoc
 /**
- * <p>
- * The Class MemberController<br>
+ * The Class MemberController.
  * MemberController類別（class）主要用於處理Member相關之Http請求（Request），繼承HttpServlet
- * </p>
- *
- * @author IPLab
- * @version 1.0.0
- * @since 1.0.0
  */
-
 public class MemberController extends HttpServlet {
-
+    
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-
+    
     /** mh，MemberHelper之物件與Member相關之資料庫方法（Sigleton） */
-    private ActivityHelper mh =  ActivityHelper.getHelper();
+    private MemberHelper mh =  MemberHelper.getHelper();
 
-    /**
-     * 處理Http Method請求POST方法（新增資料）
-     *
-     * @param request Servlet請求之HttpServletRequest之Request物件（前端到後端）
-     * @param response Servlet回傳之HttpServletResponse之Response物件（後端到前端）
-     * @throws ServletException the servlet exception
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
-        JsonReader jsr = new JsonReader(request);
-        JSONObject jso = jsr.getObject();
-
-        /** 取出經解析到JSONObject之Request參數 */
-        String email = jso.getString("email");
-        String password = jso.getString("password");
-        String name = jso.getString("name");
-
-        /** 建立一個新的會員物件 */
-        Activity m = new Activity(email, password, name);
-
-        /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
-        if(email.isEmpty() || password.isEmpty() || name.isEmpty()) {
-            /** 以字串組出JSON格式之資料 */
-            String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
-            /** 透過JsonReader物件回傳到前端（以字串方式） */
-            jsr.response(resp, response);
-        }
-        /** 透過MemberHelper物件的checkDuplicate()檢查該會員電子郵件信箱是否有重複 */
-        else if (!mh.checkDuplicate(m)) {
-            /** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
-            JSONObject data = mh.create(m);
-
-            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
-            JSONObject resp = new JSONObject();
-            resp.put("status", "200");
-            resp.put("message", "成功! 註冊會員資料...");
-            resp.put("response", data);
-
-            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
-            jsr.response(resp, response);
-        }
-        else {
-            /** 以字串組出JSON格式之資料 */
-            String resp = "{\"status\": \'400\', \"message\": \'新增帳號失敗，此E-Mail帳號重複！\', \'response\': \'\'}";
-            /** 透過JsonReader物件回傳到前端（以字串方式） */
-            jsr.response(resp, response);
-        }
-    }
+    /** message，output，用於儲存回傳訊息與結果 */
+    private String message = "";
+    private String output = "";
 
     /**
      * 處理Http Method請求GET方法（取得資料）
@@ -89,36 +34,26 @@ public class MemberController extends HttpServlet {
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);
-        /** 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數，可以直接由此方法取回資料 */
-        String id = jsr.getParameter("id");
-
-        /** 判斷該字串是否存在，若存在代表要取回個別會員之資料，否則代表要取回全部資料庫內會員之資料 */
-        if (id.isEmpty()) {
-            /** 透過MemberHelper物件之getAll()方法取回所有會員之資料，回傳之資料為JSONObject物件 */
+        String ID = jsr.getParameter("ID");
+        
+        if (ID.isEmpty()) {
             JSONObject query = mh.getAll();
-
-            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "所有會員資料取得成功");
             resp.put("response", query);
-
-            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+            message = "所有會員資料取得成功";
+            output = query.toString();
             jsr.response(resp, response);
-        }
-        else {
-            /** 透過MemberHelper物件的getByID()方法自資料庫取回該名會員之資料，回傳之資料為JSONObject物件 */
-            JSONObject query = mh.getByID(id);
-
-            /** 新建一個JSONObject用於將回傳之資料進行封裝 */
+        } else {
+            JSONObject query = mh.getByID(ID);
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "會員資料取得成功");
             resp.put("response", query);
-
-            /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+            message = "會員資料取得成功";
+            output = query.toString();
             jsr.response(resp, response);
         }
     }
@@ -133,24 +68,47 @@ public class MemberController extends HttpServlet {
      */
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
+        // 透過JsonReader類別將Request之JSON格式資料解析並取回
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
+        
+        // 取出經解析到JSONObject之Request參數
+        int deletingUserId = jso.getInt("ID");
+        
+        // 檢查管理員權限
+        if (isAdmin(request)) {
+            // 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件
+            JSONObject query = mh.deleteByID(deletingUserId);
+            
+            // 新建一個JSONObject用於將回傳之資料進行封裝
+            JSONObject resp = new JSONObject();
+            resp.put("status", "200");
+            resp.put("message", "會員移除成功！");
+            resp.put("response", query);
 
-        /** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("id");
+            // 透過JsonReader物件回傳到前端（以JSONObject方式）
+            jsr.response(resp, response);
+        } else {
+            // 若非管理員，回傳權限不足的訊息
+            JSONObject resp = new JSONObject();
+            resp.put("status", "403");
+            resp.put("message", "權限不足，無法執行刪除操作！");
+            jsr.response(resp, response);
+        }
+    }
 
-        /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
-        JSONObject query = mh.deleteByID(id);
-
-        /** 新建一個JSONObject用於將回傳之資料進行封裝 */
-        JSONObject resp = new JSONObject();
-        resp.put("status", "200");
-        resp.put("message", "會員移除成功！");
-        resp.put("response", query);
-
-        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
-        jsr.response(resp, response);
+    /**
+     * 檢查請求的使用者是否為管理員
+     *
+     * @param request HttpServletRequest之Request物件
+     * @return boolean 是否為管理員
+     */
+    private boolean isAdmin(HttpServletRequest request) {
+        // 根據實際情況，可以從request中取得使用者資訊，判斷是否為管理員
+        // 以下僅為示範，實際應用中需要根據具體情況進行修改
+        // 這裡示範如果request中有名為"isAdmin"的參數，且其值為true，則視為管理員
+        String isAdmin = request.getParameter("isAdmin");
+        return isAdmin != null && Boolean.parseBoolean(isAdmin);
     }
 
     /**
@@ -163,29 +121,26 @@ public class MemberController extends HttpServlet {
      */
     public void doPut(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-        /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-
-        /** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("id");
+        int ID = jso.getInt("ID");
+        String Authority = jso.getString("Authority");
+        String FirstName = jso.getString("First_Name");
+        String LastName = jso.getString("Last_Name");
+        String Birthday = jso.getString("Birthday");
         String email = jso.getString("email");
-        String password = jso.getString("password");
-        String name = jso.getString("name");
-
-        /** 透過傳入之參數，新建一個以這些參數之會員Member物件 */
-        Activity m = new Activity(id, email, password, name);
-
-        /** 透過Member物件的update()方法至資料庫更新該名會員資料，回傳之資料為JSONObject物件 */
+        String Phone = jso.getString("Phone");
+        String UserName = jso.getString("User_Name");
+        String Password = jso.getString("Password");
+        Member m = new Member(ID, Authority, FirstName, LastName, Birthday, email, Phone, UserName, Password);
         JSONObject data = m.update();
-
-        /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();
         resp.put("status", "200");
-        resp.put("message", "成功! 更新會員資料...");
+        resp.put("message", "成功! 更新會員資料");
         resp.put("response", data);
-
-        /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
+        message = "成功! 更新會員資料";
+        output = data.toString();
         jsr.response(resp, response);
     }
 }
+
