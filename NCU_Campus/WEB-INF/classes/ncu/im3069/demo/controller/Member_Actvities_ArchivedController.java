@@ -12,7 +12,7 @@ import ncu.im3069.tools.JsonReader;
  * The Class Member_Activity_ArchivedController.
  * Member_Activity_ArchivedController類別主要用於處理Member_Activity_Archived相關之Http請求（Request），繼承HttpServlet
  */
-public class Member_Activity_ArchivedController extends HttpServlet {
+public class Member_Actvities_ArchivedController extends HttpServlet {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;

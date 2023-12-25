@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store</title>
+    <link rel="stylesheet" href="../statics/css/Home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="../statics/js/loadBoostrap.js" defer></script>
+</head>
+<body>
+    <div id="head" class="Tophead col d-flex flex-row align-items-center p-4">
+        <div class="col-1 d-flex justify-content-center">
+            <button id="Home" class="btn"><iconify-icon icon="ant-design:home-filled" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
+        </div>
+        <div class="col-8 d-flex justify-content-center">
+            <h2 style="color: yellow;">道具包</h2>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <iconify-icon icon="noto-v1:money-bag" style="color: #9747ff;" width="50" height="50"></iconify-icon>
+            <p id="ActivityMoney" style="font-weight: 600;font-size: xx-large;">0</p>
+        </div>
+    </div>
+    <div class="row p-3">
+        <button id="Goods1" class="btn col-3" data-bs-toggle="modal" data-bs-target="#GoodsDetailBoard" >
+            <img src="../statics/img/Good1.jpg" alt="a props' picture" class="card-img-top">
+            <div class="card-body">
+                <h3 id="Good1_Name" class="card-title">呼喚的號角</h3>
+                <hr class="Line6" style="border: 2px #043437 solid;">
+                <p id="OwnNumber_Good1" class="card-text">12</p>
+            </div>
+        </button>
+        <button id="Goods2" class="btn col-3">
+            <img src="../statics/img/Good1.jpg" alt="a props' picture" class="card-img-top">
+            <div class="card-body">
+                <h3 id="Good1_Name" class="card-title">呼喚的號角</h3>
+                <hr class="Line6" style="border: 2px #043437 solid;">
+                <p id="OwnNumber_Good1" class="card-text">12</p>
+            </div>
+        </button>
+        <button id="Goods3" class="btn col-3">
+            <img src="../statics/img/Good1.jpg" alt="a props' picture" class="card-img-top">
+            <div class="card-body">
+                <h3 id="Good1_Name" class="card-title">呼喚的號角</h3>
+                <hr class="Line6" style="border: 2px #043437 solid;">
+                <p id="OwnNumber_Good1" class="card-text">12</p>
+            </div>
+        </button>
+    </div>
+
+    <!-- Goods Detail Board -->
+    <div class="modal fade modal-dialog modal-lg" id="GoodsDetailBoard" tabindex="-1" aria-labelledby="GoodsDetaiBoard" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header d-flex justify-content-center" style="align-items: center; background-color: black;">
+                    <h2 style="color: white;">商品詳細資訊</h2>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="overflow-y: scroll; max-height: fit-content;">
+                    <div class="PropDetail d-flex flex-row text-center p-3">
+                        <div class="card accordion-item">
+                            <img src="../statics/img/Good1.jpg" alt="" class="card-img-top">
+                            <div class="card-body">
+                                <h3 id="Good1_Name" class="card-title">呼喚的號角</h3>
+                                <h3 id="Money" class="card-header">15$</h3>
+                                <hr class="Line6" style="border: 2px #043437 solid;">
+                                <p id="GoodStory" class="card-text">能夠發布”緊急任務”的道具。<br>傳說這個號角的聲音曾引來千萬的人潮。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">購買</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById("Home").addEventListener("click", function() {
+        // if(authication=="一般使用者"){
+
+        // }
+        // else{}
+        window.location.href = "../HomeList_NormalUser.html";
+    });
+    document.getElementById("reback").addEventListener("click", function() {
+        window.history.back();
+    });
+</script>
+</html>
