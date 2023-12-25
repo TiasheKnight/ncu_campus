@@ -149,18 +149,14 @@ public class MemberHelper {
 
                 /** 將 ResultSet 之資料取出 */
                 int member_id = rs.getInt("id");
-                String first_name = rs.getString("first_name");
-                String last_name = rs.getString("last_name");
-                String birthday = rs.getString("birthday");
+                String name = rs.getString("name");
                 String email = rs.getString("email");
-                String phone = rs.getString("phone");
                 String password = rs.getString("password");
-                String user_name = rs.getString("user_name");
                 int login_times = rs.getInt("login_times");
                 String status = rs.getString("status");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, first_name, last_name, birthday, email, ,phone, password, user_name, login_times, status);
+                m = new Member(member_id, email, password, name,login_times, status);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }

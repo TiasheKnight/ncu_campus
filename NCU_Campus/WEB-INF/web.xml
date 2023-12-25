@@ -2,13 +2,13 @@
 <!DOCTYPE xml>
 <web-app>
     <servlet>
-        <servlet-name>member</servlet-name>
+        <servlet-name>testforhtml</servlet-name>
         <servlet-class>ncu.im3069.demo.controller.MemberController</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>member</servlet-name>
-        <url-pattern>/api/member.do</url-pattern>
+        <servlet-name>testforhtml</servlet-name>
+        <url-pattern>/MemberController/do</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
     	<welcome-file>Login.html</welcome-file>
