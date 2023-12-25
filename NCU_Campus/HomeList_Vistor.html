@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home_Vistor</title>
+    <link rel="stylesheet" href="statics/css/Home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="statics\js\loadBoostrap.js" defer></script>
+</head>
+<body>
+    <!-- ActivityList -->
+    <div id="head" class="Tophead d-flex flex-row align-items-center p-2">
+        <div class="col-1 d-flex justify-content-center">
+            <button type="button" class="btn">
+                <iconify-icon icon="mdi:bell"  style="color:gray;" width="40" height="40"></iconify-icon>
+            </button>
+        </div>
+        <div class="col-10 d-flex justify-content-center">
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">好友</a></div>
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">帳號</a></div>
+            <div class="col-3 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">管理活動</a></div>
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">組織</a></div>
+            <div class="col-2 p-1"><a href="" class="btn btn-primary btn-lg mb-3" style="width: 100%; height: auto;background-color: gray; border-radius: 100%;">商城</a></div>
+        </div>
+        <div class="col-1 d-flex flex-column justify-content-center align-items-center">
+            <span>訪客</span>
+            <a href="Login.html" class="btn btn-primary btn-lg mb-3" style="font-size: medium; background-color: #5fa9da;">登入</a>
+        </div>
+    </div>
+    <div id="activityList" class="container-fluid d-grid">
+        <table id="activityTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>活動名稱</th>
+                    <th>活動類型</th>
+                    <th>活動舉辦人</th>
+                    <th>活動地點</th>
+                    <th>日期</th>
+                    <th>時間</th>
+                    <th>目前參與人數</th>
+                    <th>活動人數上限</th>
+                    <th></th>
+                    <th>    
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>SA分享會</td>    
+                    <td>系級活動</td>
+                    <td>xxx</td>
+                    <td>017教室</td>
+                    <td>2020/12/29</td>
+                    <td>13:00-18:00</td>
+                    <td>120</td>
+                    <td>無</td>
+                    <td>
+                        <div class="btn-group d-flex" role="group">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail">詳細內容</button>
+                            <button class="btn btn-primary btn-sm" style="background-color: gray;">參加</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+
+    <!-- Activity Detail Interface -->
+    <div class="modal fade modal-dialog modal-lg" id="ActivityDetail" tabindex="-1" aria-labelledby="ActivityDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center;">
+                    <button id="AttenButtn" class="btn btn-primary btn-lg" style="background-color: gray;">參加</button>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button type="button" class="btn"><iconify-icon icon="iph:heart-bold" style="color:gray" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="icon-park-outline:people-bottom" style="color:gray;" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="ant-design:message-twotone" style="color:gray;" width="50px" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="zondicons:exclamation-solid" style="color:gray;" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
+                    </div>
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; word-wrap: break-word;max-height:fit-content;">
+                    <div class="ActivitiesInformation">
+                        <div class="activity-detail">
+                          <span class="detail-label">活動名稱：</span>
+                          <span id="ActivityName" class="detail-value">運動會</span>
+                        </div>
+                        <div class="activity-detail">
+                            <span class="detail-label">發布型別：</span>
+                            <span id="PublishType" class="detail-value">一般活動</span>
+                          </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動類型：</span>
+                          <span id="ActivityType" class="detail-value">校級活動</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動發起人：</span>
+                          <span id="Publisher" class="detail-value">xxx</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動日期：</span>
+                          <span id="Date" class="detail-value">2020/12/27</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動時間：</span>
+                          <span id="Time" class="detail-value">oo:oo - oo:oo</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動地點：</span>
+                          <span id="Location" class="detail-value">017教室</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">目前參與人數：</span>
+                          <span id="AttendNumber" class="detail-value">120</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動人數下限：</span>
+                          <span id="MinMember" class="detail-value">無</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動人數上限：</span>
+                          <span id="MaxMember" class="detail-value">無</span>
+                        </div>
+                        <div class="activity-detail">
+                          <span class="detail-label">活動內容：</span>
+                          <span id="ActivityContent" class="detail-value">ssdsxxxxxx</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    // function updateTable(data) {
+    //     $("#table > tbody").empty();
+    //     var table_html = '';
+    //     $.each(data, function(index, value) {
+    //         table_html += '<tr><td scope="row">' + value['id'] + '</td>';
+    //         table_html += '<td>' + value['name'] + '</td>';
+    //         table_html += '<td>' + value['email'] + '</td>';
+    //         table_html += '<td>' + value['login_times'] + '</td>';
+    //         table_html += '<td>' + value['status'] + '</td>';
+    //         table_html += '<td>' + '<a href="edit.html?id=' + value['id'] + '">編輯</a> | ';
+    //         table_html += '<a href="javascript: deleteMember(' + value['id'] + ');">刪除</a></td></tr>';
+    //     })
+    //     $("#table > tbody").append(table_html);
+    // }
+</script>
+</html>

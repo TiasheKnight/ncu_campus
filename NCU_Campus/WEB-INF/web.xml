@@ -10,4 +10,7 @@
         <servlet-name>member</servlet-name>
         <url-pattern>/api/member.do</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+    	<welcome-file>Login.html</welcome-file>
+    </welcome-file-list>
 </web-app>
