@@ -22,3 +22,8 @@
 /Member_Organization.class
 /Message.class
 /Organization.class
+/Comment.class
+/Member_Activity.class
+/Member_Activity_Archived.class
+/Notification.class
+/Report.class
