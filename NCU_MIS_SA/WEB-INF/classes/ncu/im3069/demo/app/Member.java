@@ -1,235 +1,217 @@
 package ncu.im3069.demo.app;
 
-import org.json.JSONObject;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.sql.*;
-import java.util.*;
 import org.json.*;
+import java.util.Calendar;
 
+// TODO: Auto-generated Javadoc
 /**
+ * <p>
  * The Class Member
- * Member class has attributes and methods required for a member, and stores business logic related to the member.
+ * Member類別（class）具有會員所需要之屬性與方法，並且儲存與會員相關之商業判斷邏輯<br>
+ * </p>
+ * 
+ * @author IPLab
+ * @version 1.0.0
+ * @since 1.0.0
  */
+
 public class Member {
     
-    /** id, member number */
+    /** id，會員編號 */
     private int id;
     
-    /** Authority, member authority */
-    private String authority;
-    
-    /** First_Name, member first name */
-    private String first_name;
-    
-    /** Last_Name, member last name */
-    private String last_name;
-    
-    /** Birthday, member birthday */
-    private String birthday;
-    
-    /** email, member email */
+    /** email，會員電子郵件信箱 */
     private String email;
     
-    /** Phone, member phone */
-    private String phone;
+    /** name，會員姓名 */
+    private String name;
     
-    /** Password, member password */
+    /** password，會員密碼 */
     private String password;
     
-    /** User_Name, member username */
-    private String user_name;
+    /** login_times，更新時間的分鐘數 */
+    private int login_times;
     
-    /** mh, MemberHelper object with methods related to Member (Singleton) */
-    private MemberHelper mh = MemberHelper.getHelper();
+    /** status，會員之組別 */
+    private String status;
+    
+    /** mh，MemberHelper之物件與Member相關之資料庫方法（Sigleton） */
+    private MemberHelper mh =  MemberHelper.getHelper();
     
     /**
-     * Instantiates a new Member object using overloaded method for creating a new member.
+     * 實例化（Instantiates）一個新的（new）Member物件<br>
+     * 採用多載（overload）方法進行，此建構子用於建立會員資料時，產生一名新的會員
      *
-     * @param first_name member first name
-     * @param last_name member last name
-     * @param birthday member birthday
-     * @param email member email
-     * @param user_name member username
-     * @param phone member phone
+     * @param email 會員電子信箱
+     * @param password 會員密碼
+     * @param name 會員姓名
      */
-    public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birthday = birthday;
+    public Member(String email, String password, String name) {
         this.email = email;
-        this.user_name = user_name;
-        this.phone = phone;
+        this.password = password;
+        this.name = name;
+        update();
     }
 
     /**
-     * Instantiates a new Member object using overloaded method for updating a member.
-     *
-     * @param id member number
-     * @param first_name member first name
-     * @param last_name member last name
-     * @param birthday member birthday
-     * @param email member email
-     * @param phone member phone
-     * @param user_name member username
+     * 實例化（Instantiates）一個新的（new）Member物件<br>
+     * 採用多載（overload）方法進行，此建構子用於更新會員資料時，產生一名會員同時需要去資料庫檢索原有更新時間分鐘數與會員組別
+     * 
+     * @param id 會員編號
+     * @param email 會員電子信箱
+     * @param password 會員密碼
+     * @param name 會員姓名
      */
-    public Member(int id, String first_name, String last_name, String birthday, String email, String phone, String user_name) {
+    public Member(int id, String email, String password, String name) {
         this.id = id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birthday = birthday;
         this.email = email;
-        this.phone = phone;
-        this.user_name = user_name;
-        getMemberOrganizationFromDB(); // Assuming this method needs to be called
-    }
-
-    /**
-     * Instantiates a new Member object using overloaded method for querying a member.
-     *
-     * @param id member number
-     * @param user_name member username
-     */
-    public Member(int id, String user_name) {
-        this.id = id;
-        this.user_name = user_name;
+        this.password = password;
+        this.name = name;
+        /** 取回原有資料庫內該名會員之更新時間分鐘數與組別 */
+        getLoginTimesStatus();
+        /** 計算會員之組別 */
+        calcAccName();
     }
     
     /**
-     * Get member number.
+     * 實例化（Instantiates）一個新的（new）Member物件<br>
+     * 採用多載（overload）方法進行，此建構子用於查詢會員資料時，將每一筆資料新增為一個會員物件
      *
-     * @return int returns the member number
+     * @param id 會員編號
+     * @param email 會員電子信箱
+     * @param password 會員密碼
+     * @param name 會員姓名
+     * @param login_times 更新時間的分鐘數
+     * @param status the 會員之組別
+     */
+    public Member(int id, String email, String password, String name, int login_times, String status) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.login_times = login_times;
+        this.status = status;
+    }
+    
+    /**
+     * 取得會員之編號
+     *
+     * @return the id 回傳會員編號
      */
     public int getID() {
         return this.id;
     }
 
     /**
-     * Get member authority.
+     * 取得會員之電子郵件信箱
      *
-     * @return String Return member authority
-     */
-    public String getAuthority() {
-        return this.authority;
-    }
-
-    /**
-     * Get member first name.
-     *
-     * @return String Return member first name
-     */
-    public String getFirstName() {
-        return this.first_name;
-    }
-
-    /**
-     * Get member last name.
-     *
-     * @return String Return member last name
-     */
-    public String getLastName() {
-        return this.last_name;
-    }
-
-    /**
-     * Get member password.
-     *
-     * @return String Return member password
-     */
-    public String getPassword() {
-        return this.password;
-    }
-
-    /**
-     * Get member birthday.
-     *
-     * @return String Return member birthday
-     */
-    public String getBirthday() {
-        return this.birthday;
-    }
-
-    /**
-     * Get member email.
-     *
-     * @return String Return member email
+     * @return the email 回傳會員電子郵件信箱
      */
     public String getEmail() {
         return this.email;
     }
-
+    
     /**
-     * Get member phone.
+     * 取得會員之姓名
      *
-     * @return String Return member phone
+     * @return the name 回傳會員姓名
      */
-    public String getPhone() {
-        return this.phone;
+    public String getName() {
+        return this.name;
     }
 
     /**
-     * Get member username.
+     * 取得會員之密碼
      *
-     * @return String Return member username
+     * @return the password 回傳會員密碼
      */
-    public String getUser_Name() {
-        return this.user_name;
+    public String getPassword() {
+        return this.password;
     }
-
+    
     /**
-     * Update member data.
+     * 取得更新資料時間之分鐘數
      *
-     * @return JSONObject returns updated member data
+     * @return the login times 回傳更新資料時間之分鐘數
+     */
+    public int getLoginTimes() {
+        return this.login_times;
+    }
+    
+    /**
+     * 取得會員資料之會員組別
+     *
+     * @return the status 回傳會員組別
+     */
+    public String getStatus() {
+        return this.status;
+    }
+    
+    /**
+     * 更新會員資料
+     *
+     * @return the JSON object 回傳SQL更新之結果與相關封裝之資料
      */
     public JSONObject update() {
+        /** 新建一個JSONObject用以儲存更新後之資料 */
         JSONObject data = new JSONObject();
-        // Update logic here
-        // ...
-
+        /** 取得更新資料時間（即現在之時間）之分鐘數 */
+        Calendar calendar = Calendar.getInstance();
+        this.login_times = calendar.get(Calendar.MINUTE);
+        /** 計算帳戶所屬之組別 */
+        calcAccName();
+        
+        /** 檢查該名會員是否已經在資料庫 */
+        if(this.id != 0) {
+            /** 若有則將目前更新後之資料更新至資料庫中 */
+            mh.updateLoginTimes(this);
+            /** 透過MemberHelper物件，更新目前之會員資料置資料庫中 */
+            data = mh.update(this);
+        }
+        
         return data;
     }
-
+    
     /**
-     * Get member data.
+     * 取得該名會員所有資料
      *
-     * @return JSONObject returns member data
+     * @return the data 取得該名會員之所有資料並封裝於JSONObject物件內
      */
     public JSONObject getData() {
+        /** 透過JSONObject將該名會員所需之資料全部進行封裝*/ 
         JSONObject jso = new JSONObject();
         jso.put("id", getID());
-        jso.put("authority", getAuthority());
-        jso.put("first_name", getFirstName());
-        jso.put("last_name", getLastName());
-        jso.put("password", getPassword());
-        jso.put("birthday", getBirthday());
+        jso.put("name", getName());
         jso.put("email", getEmail());
-        jso.put("phone", getPhone());
-        jso.put("user_name", getUser_Name());
-
+        jso.put("password", getPassword());
+        jso.put("login_times", getLoginTimes());
+        jso.put("status", getStatus());
+        
         return jso;
     }
-
+    
     /**
-     * Get member organization data.
+     * 取得資料庫內之更新資料時間分鐘數與會員組別
      *
-     * @return ArrayList<Member_Organization> returns member organization data
      */
-    public ArrayList<Member_Organization> getMemberOrganization() {
-        // Assuming this method returns a list of Member_Organization objects
-    	return this.list;
-    	//JSONArray result = new JSONArray();
-    	//for (int i = 0; i < this.list.size(); i++) {
-        //    result.put(this.list.get(i).getMemberOrganizationFromDB());
-        }
-
+    private void getLoginTimesStatus() {
+        /** 透過MemberHelper物件，取得儲存於資料庫的更新時間分鐘數與會員組別 */
+        JSONObject data = mh.getLoginTimesStatus(this);
+        /** 將資料庫所儲存該名會員之相關資料指派至Member物件之屬性 */
+        this.login_times = data.getInt("login_times");
+        this.status = data.getString("status");
+    }
+    
     /**
-     * Get member organization data from the database.
+     * 計算會員之組別<br>
+     * 若為偶數則為「偶數會員」，若為奇數則為「奇數會員」
      */
-    private void getMemberOrganizationFromDB() {
-        // Implementation of fetching member organization from the database
-    	 ArrayList<OrderItem> data = oph.getOrderProductByOrderId(this.id);
-         this.list = data;
-         
-        //return mh.getMemberOrganization(this);
+    private void calcAccName() {
+        /** 計算目前分鐘數為偶數或奇數 */
+        String curr_status = (this.login_times % 2 == 0) ? "偶數會員" : "奇數會員";
+        /** 將新的會員組別指派至Member之屬性 */
+        this.status = curr_status;
+        /** 檢查該名會員是否已經在資料庫，若有則透過MemberHelper物件，更新目前之組別狀態 */
+        if(this.id != 0) mh.updateStatus(this, curr_status);
     }
 }
