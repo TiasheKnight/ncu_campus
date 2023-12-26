@@ -45,7 +45,7 @@ public class Member {
     /** mh, MemberHelper object with methods related to Member (Singleton) */
     private MemberHelper mh = MemberHelper.getHelper();
 
-	private ArrayList<Member_Organization> list;
+	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
 
     /**
      * Instantiates a new Member object using overloaded method for creating a new
@@ -237,7 +237,7 @@ public class Member {
      */
     private void getMemberOrganizationFromDB() {
         // Implementation of fetching member organization from the database
-        ArrayList<Member> data = mh.getMemberOrganization(this.id);
+        ArrayList<Member_Organization> data = mh.getMemberOrganization(this.id);
         this.list = data;
 
         // return mh.getMemberOrganization(this);
