@@ -1,6 +1,7 @@
 package ncu.im3069.demo.app;
 
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.*;
@@ -44,6 +45,8 @@ public class Member {
     /** mh, MemberHelper object with methods related to Member (Singleton) */
     private MemberHelper mh = MemberHelper.getHelper();
 
+	private ArrayList<Member_Organization> list;
+
     /**
      * Instantiates a new Member object using overloaded method for creating a new
      * member.
@@ -54,12 +57,14 @@ public class Member {
      * @param email      member email
      * @param user_name  member username
      * @param phone      member phone
+     * @param password 
      */
-    public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone) {
+    public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone, String password) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.birthday = birthday;
         this.email = email;
+        this.password= password;
         this.user_name = user_name;
         this.phone = phone;
     }
@@ -232,7 +237,7 @@ public class Member {
      */
     private void getMemberOrganizationFromDB() {
         // Implementation of fetching member organization from the database
-        ArrayList<OrderItem> data = oph.getOrderProductByOrderId(this.id);
+        ArrayList<Member> data = mh.getMemberOrganization(this.id);
         this.list = data;
 
         // return mh.getMemberOrganization(this);
