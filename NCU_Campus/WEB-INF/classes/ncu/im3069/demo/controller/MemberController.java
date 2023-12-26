@@ -52,7 +52,7 @@ public class MemberController extends HttpServlet {
             Member m = new Member(first_name,last_name,birthday,email, password, user_name,phone);
             
             /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
-            if(email.isEmpty() || password.isEmpty() || name.isEmpty()) {
+            if(first_name.isEmpty()||last_name.isEmpty()||birthday.isEmpty()||email.isEmpty() || password.isEmpty() || user_name.isEmpty() || phone.isEmpty()) {
                 /** 以字串組出JSON格式之資料 */
                 String resp = "{\"status\": \'400\', \"message\": \'欄位不能有空值\', \'response\': \'\'}";
                 /** 透過JsonReader物件回傳到前端（以字串方式） */
