@@ -165,10 +165,17 @@ public class ActivityController extends HttpServlet {
         String activity_name = jso.getString("name");
         String activity_type = jso.getString("type");
         String activity_place = jso.getString("place");
-        int hold_id = jso.getInt("holder_id");
+        int holder_id = jso.getInt("holder_id");
         int max_participant = jso.getInt("max_participant");
-        
-        
+        int min_participant = jso.getInt("min_participant");
+        String start_date = jso.getString("start_date");
+        String start_time = jso.getString("start_time");
+        String end_date = jso.getString("end_date");
+        String end_time = jso.getString("end_time");
+        String published_date = jso.getString("published_date");
+        String published_time = jso.getString("published_time");
+        String detail = jso.getString("detail");
+            
         // 根據 activityID 取得現有活動資料
 //        Activity existingActivity = ah.getByID(activityID);
 
