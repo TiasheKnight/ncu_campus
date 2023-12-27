@@ -18,11 +18,6 @@ public class Followship {
         this.Followed_User_ID = Followed_User_ID;
         update();
     }
-    public Followship(int ID, int Follower_User_ID, int Followed_User_ID) {
-        this.ID = ID;
-        this.Follower_User_ID = Follower_User_ID;
-        this.Followed_User_ID = Followed_User_ID;
-    }
 
     public int getID(){
         return ID;
