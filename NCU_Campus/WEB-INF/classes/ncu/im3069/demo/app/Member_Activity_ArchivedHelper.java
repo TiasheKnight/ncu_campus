@@ -53,7 +53,7 @@ public class Member_Activity_ArchivedHelper {
         return maah;
     }
 
-    public JSONArray createByList(long activtiy_id, List<Member_Activity_Archived> memberactivityarchived) {
+    public JSONArray createByList(long activity_id, List<Member_Activity_Archived> memberactivityarchived) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";

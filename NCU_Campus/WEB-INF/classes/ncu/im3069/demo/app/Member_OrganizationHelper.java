@@ -3,6 +3,7 @@ package ncu.im3069.demo.app;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.*;
 
@@ -52,41 +53,95 @@ public class Member_OrganizationHelper {
         return moh;
     }
 
+    public JSONArray createByList(long organization_id, List<Member_Organization> memberorganization) {
+        JSONArray jsa = new JSONArray();
+        /** 記錄實際執行之SQL指令 */
+        String exexcute_sql = "";
+
+        for(int i=0 ; i < memberorganization.size() ; i++) {
+            Member_Organization mo = memberorganization.get(i);
+
+            /** 取得所需之參數 */
+            int mo_id = mo.getID();
+            int user_id = mo.getUser_ID();
+            int organization_id = mo.getOrganization_ID();
+
+            try {
+                /** 取得資料庫之連線 */
+                conn = DBMgr.getConnection();
+                /** SQL指令 */
+                String sql = "INSERT INTO `campus`.`member_organization`(`id`, `user_id`, `organization_id`)"
+                        + " VALUES(?, ?, ?)";
+
+                /** 將參數回填至SQL指令當中 */
+                pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                pres.setInt(1, mo_id);
+                pres.setInt(2, user_id);
+                pres.setInt(3, organization_id);
+
+                /** 執行新增之SQL指令並記錄影響之行數 */
+                pres.executeUpdate();
+
+                /** 紀錄真實執行的SQL指令，並印出 **/
+                exexcute_sql = pres.toString();
+                System.out.println(exexcute_sql);
+
+                ResultSet rs = pres.getGeneratedKeys();
+
+                if (rs.next()) {
+                    long id = rs.getLong(1);
+                    jsa.put(id);
+                }
+            } catch (SQLException e) {
+                /** 印出JDBC SQL指令錯誤 **/
+                System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+            } catch (Exception e) {
+                /** 若錯誤則印出錯誤訊息 */
+                e.printStackTrace();
+            } finally {
+                /** 關閉連線並釋放所有資料庫相關之資源 **/
+                DBMgr.close(pres, conn);
+            }
+        }
+
+        return jsa;
+    }
+
     public ArrayList<Member_Organization> getMemberOrganizationbyId(int id) {
         ArrayList<Member_Organization> result = new ArrayList<Member_Organization>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         ResultSet rs = null;
         Member_Organization mo;
-        
+
         try {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Organization` LEFT JOIN `campus`.`Member-Organization` ON `Member-Organization`.`organization_id`=`Organization`.`id` WHERE `Member-Organization`.`user_id` = ?";
-            
+            String sql = "SELECT * FROM `campus`.`organization` LEFT JOIN `campus`.`member_organization` ON `member_organization`.`organization_id`=`organization`.`id` WHERE `member_organization`.`user_id` = ?";
+
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setInt(1, id);
-            
+
             /** 執行新增之SQL指令並記錄影響之行數 */
             rs = pres.executeQuery();
-            
+
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
+
             while(rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
-                
+
                 /** 將 ResultSet 之資料取出 */
-                int organization_id = rs.getInt("id");
+                int mo_id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
-                String organization_name = rs.getString("organization_name");
-                String organization_detail = rs.getString("organization_detail");
-                
-                /** 將每一筆會員資料產生一名新Member物件 */
-                mo = new  Member_Organization(user_id, organization_id, organization_name, organization_detail);
+                int organization_id = rs.getInt("organization_id");
+                String authority = rs.getString("authority");
+
+                /** 將每一筆會員資料產生一名新Member_Organization物件 */
+                mo = new  Member_Organization(mo_id, user_id, organization_id, authority);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(mo);
             }
@@ -100,7 +155,7 @@ public class Member_OrganizationHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             DBMgr.close(pres, conn);
         }
-        
+
         return result;
     }
 
