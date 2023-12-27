@@ -1,7 +1,6 @@
 package ncu.im3069.demo.app;
 
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -326,12 +325,17 @@ public class NotificationHelper {
             int  ID = n.getID();
             int  user_id = n.getUser_ID();
             int  activity_id = n.getActivity_ID();
+            String notification_title=n.getNotification_Title();
+            String notification_content=n.getNotification_Content();
+
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setInt(1, ID);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
+            pres.setString(4, notification_title);
+            pres.setString(5, notification_content);
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 
@@ -477,8 +481,4 @@ public class NotificationHelper {
 
         return result;
     }
-}
-
-
-
 }
