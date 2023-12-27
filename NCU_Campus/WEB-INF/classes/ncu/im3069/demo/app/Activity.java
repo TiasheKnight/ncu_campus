@@ -130,9 +130,11 @@ public class Activity {
     }
 
     public JSONObject update() {
-        JSONObject data = new JSONObject();
-     // ...
-
+    	JSONObject data = new JSONObject();
+        
+        if(this.ID != 0){
+            data = AH.update(this);
+        }
         return data;
     }
 }

@@ -37,9 +37,11 @@ public class Report {
     }
 
     public JSONObject update() {
-        JSONObject data = new JSONObject();
-        // ...
-
+    	JSONObject data = new JSONObject();
+        
+        if(this.ID != 0){
+            data = RH.update(this);
+        }
         return data;
     }
 }
