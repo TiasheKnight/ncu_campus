@@ -161,8 +161,7 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name,
-                        login_times, authority);
+                m = new Member(member_id, authority, first_name, last_name, birthday, email, phone, password, user_name);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
