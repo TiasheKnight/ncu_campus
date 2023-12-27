@@ -83,50 +83,50 @@
                     </div>
                 </div>
                 <div class="modal-body" style="overflow-y: scroll; word-wrap: break-word;max-height:fit-content;">
-                    <div class="ActivitiesInformation">
-                        <div class="activity-detail">
+                    <div id="ActivitiesInformation_Modal" class="ActivitiesInformation">
+                        <div class="activity-detail-content">
                           <span class="detail-label">活動名稱：</span>
-                          <span id="ActivityName" class="detail-value">運動會</span>
+                          <span id="activity_title" class="detail-value">{{actibity_title}}</span>
                         </div>
                         <div class="activity-detail">
                             <span class="detail-label">發布型別：</span>
-                            <span id="PublishType" class="detail-value">一般活動</span>
+                            <span id="activity_publish_type" class="detail-value">{{activity_publish_type}}</span>
                           </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動類型：</span>
-                          <span id="ActivityType" class="detail-value">校級活動</span>
+                          <span id="activity_type" class="detail-value">{{activity_type}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動發起人：</span>
-                          <span id="Publisher" class="detail-value">xxx</span>
+                          <span id="activity_publisher_id" class="detail-value">{{activity_publisher_id}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動日期：</span>
-                          <span id="Date" class="detail-value">2020/12/27</span>
+                          <span id="start_date" class="detail-value">{{start_date}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動時間：</span>
-                          <span id="Time" class="detail-value">oo:oo - oo:oo</span>
+                          <span id="Time" class="detail-value">{{Time}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動地點：</span>
-                          <span id="Location" class="detail-value">017教室</span>
+                          <span id="activity_location" class="detail-value">{{activity_location}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">目前參與人數：</span>
-                          <span id="AttendNumber" class="detail-value">120</span>
+                          <span id="participant_number" class="detail-value">{{participant_number}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數下限：</span>
-                          <span id="MinMember" class="detail-value">無</span>
+                          <span id="minimun_participant" class="detail-value">{{minimun_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數上限：</span>
-                          <span id="MaxMember" class="detail-value">無</span>
+                          <span id="maximun_participant" class="detail-value">{{maximum_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動內容：</span>
-                          <span id="ActivityContent" class="detail-value">ssdsxxxxxx</span>
+                          <span id="activity_detail" class="detail-value">{{activity-detail}}</span>
                         </div>
                     </div>
                 </div>
@@ -138,19 +138,141 @@
     </div>
 </body>
 <script>
-    // function updateTable(data) {
+    function getAllActivity() {
+        // 發出POST的GET請求取得所有會員列表
+        $.ajax({
+                type: "GET",
+                url: "api/ActivityController.do",
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                    if(response.status == 200){
+                        updateActivityTable(response.response.data);
+                    }
+                    console.log(response);
+                },
+                error: function () {
+                    alert("無法連線到伺服器！");
+                }
+        });
+    }
+    
+    function updateActivityTable(data) {
+        $("#table > tbody").empty();
+        var table_html = '';
+        $.each(data, function(index, value) {
+            table_html += '<tr>';
+            table_html += '<td>' + value['activity_name'] + '</td>';
+            table_html += '<td>' + value['activity_title'] + '</td>';
+            table_html += '<td>' + value['activity_publisher_id'] + '</td>';
+            table_html += '<td>' + value['activity_location'] + '</td>';
+            table_html += '<td>' + value['start_date'] + '</td>';
+            table_html += '<td>' + value['start_time'] + '-' + value['end_time'] + '</td>';             
+            table_html += '<td>' + value['participant_number'] + '</td>';
+            table_html += '<td>' + value['maximun_participant'] + '</td>';    
+            table_html += '<td><div class="btn-group d-flex" role="group">';
+            table_html += '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail">'+ value['id'] +'詳細內容</button>';
+            table_html += '<button class="btn btn-primary btn-sm" style="background-color: gray;">參加</button>';
+            table_html += '</div></td>';
+            table_html += '<tr>';
+        })
+        $("#table > tbody").append(table_html);
+    }
+
+
+//     function updateHTML(data) {
+// 	  $("#order_id").html(data['order_info']['id']);
+// 	  $("#create").html(data['order_info']['create']);
+// 	  $("#modify").html(data['order_info']['modify']);
+// 	  $("#email").html(data['order_info']['email']);
+// 	  $("#address").html(data['order_info']['address']);
+// 	  $("#phone").html(data['order_info']['phone']);
+// 	  $("#first_name").html(data['order_info']['first_name']);
+// 	  $("#last_name").html(data['order_info']['last_name']);
+// 	  $("#item").html(data.product_info.length);
+	  
+// 	  var total_price = Big(0.0);
+// 	  var quantity = 0;
+// 	  var inner_html = "";
+	  
+// 	  $.each(data.product_info, function (k, v) {
+// 		  quantity += v['quantity'];
+// 		  total_price = total_price.plus(v['subtotal']);
+// 		  inner_html += updateOrderProductTable(v);
+// 	  });
+	  
+// 	  $("#quantity").html(quantity);
+// 	  $("#total").html(total_price.toString());
+	  
+// 	  $("#table > tbody").empty();
+// 	  $("#panel").append(inner_html);
+
+//   }
+
+    function getActivityDetail() {
+        $.ajax({
+            type: "GET",
+            url: "api/order.do",
+            data: "id=" + id,
+            crossDomain: true,
+            cache: false,
+            dataType: 'json',
+            timeout: 5000,
+            success: function (response) {
+                if(response.status == 200){
+                    updateHTML(response.response.data);
+                }
+            },
+            error: function () {
+                alert("無法連線到伺服器！");
+            }
+        });
+    }
+    function updateActivityDetail(data) {
+        $("ActivitiesInformation_Modal").empty();
+        var table_html = '';
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['activity_title'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['activity_publish_type'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['activity_type'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['activity_publisher_id'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['start_date'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['start_time'] + value['end_time'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['activity_location'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['participant_number'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['mininum_participant'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['maximum_participant'] + '</span></div>'
+        table_html += '<div class="activity-detail-content">' + '<span class="detail-label">活動名稱：</span>' + '<span id="activity_title" class="detail-value">' + value['activity_detail'] + '</span></div>'
+    }
+
+    // function updateHTML(data) {
+    //     // 更新各個元素的內容
+    //     $("#activity_title").html(data['activity_title']);
+    //     $("#activity_publish_type").html(data['activity_publish_type']);
+    //     $("#modify").html(data['activity_publish_type']);
+    //     $("#email").html(data['order_info']['email']);
+    //     // ...（更新其他元素）
+
+    //     // 處理產品資訊
+    //     var total_price = Big(0.0);
+    //     var quantity = 0;
+    //     var inner_html = "";
+
+    //     $.each(data.product_info, function (k, v) {
+    //         quantity += v['quantity'];
+    //         total_price = total_price.plus(v['subtotal']);
+    //         inner_html += updateOrderProductTable(v);
+    //     });
+
+    //     // 更新合計資訊
+    //     $("#quantity").html(quantity);
+    //     $("#total").html(total_price.toString());
+
+    //     // 清空表格並附加新的內容
     //     $("#table > tbody").empty();
-    //     var table_html = '';
-    //     $.each(data, function(index, value) {
-    //         table_html += '<tr><td scope="row">' + value['id'] + '</td>';
-    //         table_html += '<td>' + value['name'] + '</td>';
-    //         table_html += '<td>' + value['email'] + '</td>';
-    //         table_html += '<td>' + value['login_times'] + '</td>';
-    //         table_html += '<td>' + value['status'] + '</td>';
-    //         table_html += '<td>' + '<a href="edit.html?id=' + value['id'] + '">編輯</a> | ';
-    //         table_html += '<a href="javascript: deleteMember(' + value['id'] + ');">刪除</a></td></tr>';
-    //     })
-    //     $("#table > tbody").append(table_html);
-    // }
+    //     $("#panel").append(inner_html);
+    // }   
+
 </script>
 </html>

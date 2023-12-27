@@ -21,7 +21,7 @@ body{
     margin: 20px; /* 設置適當的邊距 */
   }
   
-  .activity-detail {
+  .activity-detail-content {
     display:list-item;
     justify-content: space-between;
     margin-bottom: 10px;

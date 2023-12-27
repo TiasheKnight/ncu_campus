@@ -70,37 +70,37 @@
     <div class="modal fade modal-dialog modal-lg" id="ActivityDetail" tabindex="-1" aria-labelledby="ActivityDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="max-height: 700px;">
-                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
-                    <button id="AttenButtn" class="btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
+                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center;">
+                    <button id="AttenButtn" class="btn btn-primary btn-lg" style="background-color: gray;">參加</button>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <button type="button" class="btn"><iconify-icon icon="ph:heart-bold" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
-                        <button type="button" class="btn"><iconify-icon icon="icon-park-outline:people-bottom" style="color: #FFC700;" width="50" height="50"></iconify-icon></button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#CommentBoard" ><iconify-icon icon="ant-design:message-twotone" style="color:#699BF7;" width="50px" height="50"></iconify-icon></button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#ReportBoard"><iconify-icon icon="zondicons:exclamation-solid" style="color:#F24E1E;" width="50" height="50"></iconify-icon></button>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50;background-color: aliceblue;"></button>
+                        <button type="button" class="btn"><iconify-icon icon="iph:heart-bold" style="color:gray" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="icon-park-outline:people-bottom" style="color:gray;" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="ant-design:message-twotone" style="color:gray;" width="50px" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="zondicons:exclamation-solid" style="color:gray;" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
                     </div>
                 </div>
                 <div class="modal-body" style="overflow-y: scroll; word-wrap: break-word;max-height:fit-content;">
-                    <div class="ActivitiesInformation">
-                        <div class="activity-detail">
+                    <div id="ActivitiesInformation_Modal" class="ActivitiesInformation">
+                        <div class="activity-detail-content">
                           <span class="detail-label">活動名稱：</span>
-                          <span id="ActivityName" class="detail-value">運動會</span>
+                          <span id="activity_title" class="detail-value">運動會</span>
                         </div>
                         <div class="activity-detail">
                             <span class="detail-label">發布型別：</span>
-                            <span id="PublishType" class="detail-value">一般活動</span>
+                            <span id="activity_publish_type" class="detail-value">一般活動</span>
                           </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動類型：</span>
-                          <span id="ActivityType" class="detail-value">校級活動</span>
+                          <span id="activity_type" class="detail-value">校級活動</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動發起人：</span>
-                          <span id="Publisher" class="detail-value">xxx</span>
+                          <span id="activity_publisher_id" class="detail-value">xxx</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動日期：</span>
-                          <span id="Date" class="detail-value">2020/12/27</span>
+                          <span id="start_date" class="detail-value">2020/12/27</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動時間：</span>
@@ -108,23 +108,23 @@
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動地點：</span>
-                          <span id="Location" class="detail-value">017教室</span>
+                          <span id="activity_location" class="detail-value">017教室</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">目前參與人數：</span>
-                          <span id="AttendNumber" class="detail-value">120</span>
+                          <span id="participant_number" class="detail-value">120</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數下限：</span>
-                          <span id="MinMember" class="detail-value">無</span>
+                          <span id="minimun_participant" class="detail-value">無</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數上限：</span>
-                          <span id="MaxMember" class="detail-value">無</span>
+                          <span id="maximun_participant" class="detail-value">無</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動內容：</span>
-                          <span id="ActivityContent" class="detail-value">ssdsxxxxxx</span>
+                          <span id="activity_detail" class="detail-value">ssdsxxxxxx</span>
                         </div>
                     </div>
                 </div>
