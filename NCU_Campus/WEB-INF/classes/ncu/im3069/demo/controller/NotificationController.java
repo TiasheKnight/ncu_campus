@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Notification;
 import ncu.im3069.demo.app.NotificationHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Notification.do")
+@WebServlet("/api/NotificationController.do")
 
 public class NotificationController extends HttpServlet {
 
