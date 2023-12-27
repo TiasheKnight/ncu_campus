@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Activity;
 import ncu.im3069.demo.app.ActivityHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Activity.do")
+@WebServlet("/api/ActivityController.do")
 
 /**
  * The Class ActivityController.
