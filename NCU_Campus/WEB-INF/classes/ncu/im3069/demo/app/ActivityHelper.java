@@ -71,7 +71,7 @@ public class ActivityHelper {
             conn = DBMgr.getConnection();
 
             /** SQL指令 */
-            String sql = "DELETE FROM `missa`.`activities` WHERE `id` = ? LIMIT 1";
+            String sql = "DELETE FROM `campus`.`activities` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -131,7 +131,7 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`activities`";
+            String sql = "SELECT * FROM `campus`.`activities`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -149,23 +149,25 @@ public class ActivityHelper {
 
                 /** 將 ResultSet 之資料取出 */
                 int activity_id = rs.getInt("id");
-                String status = rs.getString("status");
-                String name = rs.getString("name");
-                String type = rs.getString("type");
-                String place = rs.getString("place");
-                int holder_id = rs.getInt("holder_id");
-                int max_participant = rs.getInt("max_participant");
-                int min_participant = rs.getInt("min_participant");
+                String status = rs.getString("activity_publish_type");
+                String name = rs.getString("activity_title");
+                String type = rs.getString("activity_type");
+                String place = rs.getString("activity_location");
+                int holder_id = rs.getInt("activity_publisher_id");
+                int max_participant = rs.getInt("maximun_participant");
+                int min_participant = rs.getInt("minimum_participant");
                 String start_date = rs.getString("start_date");
                 String start_time = rs.getString("start_time");
                 String end_date = rs.getString("end_date");
                 String end_time = rs.getString("end_time");
                 String published_date = rs.getString("published_date");
                 String published_time = rs.getString("published_time");
-                String detail = rs.getString("detail");
+                String detail = rs.getString("activity_detail");
+                int activity_participant = rs.getInt("activity_particpant");
 
                 /** 將每一筆活動資料產生一名新Activity物件 */
-                a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time, end_date, end_time, published_date, published_time, detail);
+                a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time,
+                                end_date, end_time, published_date, published_time, detail, activity_participant);
                 /** 取出該名活動之資料並封裝至 JSONsonArray 內 */
                 jsa.put(a.getData());
             }
@@ -220,7 +222,7 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`activities` WHERE `id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `campus`.`activities` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -240,23 +242,25 @@ public class ActivityHelper {
 
                 /** 將 ResultSet 之資料取出 */
                 int activity_id = rs.getInt("id");
-                String status = rs.getString("status");
-                String name = rs.getString("name");
-                String type = rs.getString("type");
-                String place = rs.getString("place");
-                int holder_id = rs.getInt("holder_id");
-                int max_participant = rs.getInt("max_participant");
-                int min_participant = rs.getInt("min_participant");
+                String status = rs.getString("activity_publish_type");
+                String name = rs.getString("activity_title");
+                String type = rs.getString("activity_type");
+                String place = rs.getString("activity_location");
+                int holder_id = rs.getInt("activity_publisher_id");
+                int max_participant = rs.getInt("maximun_participant");
+                int min_participant = rs.getInt("minimum_participant");
                 String start_date = rs.getString("start_date");
                 String start_time = rs.getString("start_time");
                 String end_date = rs.getString("end_date");
                 String end_time = rs.getString("end_time");
                 String published_date = rs.getString("published_date");
                 String published_time = rs.getString("published_time");
-                String detail = rs.getString("detail");
+                String detail = rs.getString("activity_detail");
+                int activity_participant = rs.getInt("activity_particpant");
 
                 /** 將每一筆活動資料產生一名新Activity物件 */
-                a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time, end_date, end_time, published_date, published_time, detail);
+                a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time, end_date,
+                                end_time, published_date, published_time, detail, activity_participant);
                 /** 取出該名活動之資料並封裝至 JSONsonArray 內 */
                 jsa.put(a.getData());
             }
@@ -305,15 +309,15 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `missa`.`activities`(`status`, `name`, `type`, `place`, `holder_id`, `max_perticipant`, `min_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `published_date`, `published_time`, `detail`, `modified`, `created`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `published_date`, `published_time`, `activity_detail`, `activity_participant`, `modified`, `created`)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
             String status = a.getActivity_Status();
             String name = a.getActivity_Name();
             String type = a.getActivity_Type();
             String place = a.getActivity_Place();
-            int holder_id = a.getActivity_Holder_ID();
+            int holder_id = a.getActivity_Publisher_ID();
             int max_participant = a.getMaximum_Participant();
             int min_participant = a.getMinimum_Participant();
             String start_date = a.getStart_Date();
@@ -395,7 +399,7 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `missa`.`activities` SET `name` = ? ,`password` = ? , `modified` = ? WHERE `id` = ?";
+            String sql = "Update `campus`.`activities` SET `activity_publish_type` = ? ,`activity_title` = ? , `activity_type` = ?, `activity_location` = ?, `activity_publisher_id` = ?, `maximum_participant` = ?, `minimum_participant` = ?, `start_date` = ?, `start_time` = ?, `end_date` = ?, `end_time` = ?, `published_date` = ?, `published_time` = ?, `activity_detail` = ?, `activity_participant` = ? ,WHERE `id` = ?";
 
             /** 取得所需之參數 */
             int activity_id = a.getID();
@@ -403,7 +407,7 @@ public class ActivityHelper {
             String name = a.getActivity_Name();
             String type = a.getActivity_Type();
             String place = a.getActivity_Place();
-            int holder_id = a.getActivity_Holder_ID();
+            int holder_id = a.getActivity_Publisher_ID();
             int max_participant = a.getMaximum_Participant();
             int min_participant = a.getMinimum_Participant();
             String start_date = a.getStart_Date();
@@ -413,6 +417,7 @@ public class ActivityHelper {
             String published_date = a.getPublished_Date();
             String published_time = a.getPublished_Time();
             String detail = a.getActivity_Detail();
+            int activity_participant = a.getActivity_Participant();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
