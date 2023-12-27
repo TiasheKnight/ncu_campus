@@ -5,7 +5,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import org.json.*;
-import org.json.JSONObject;
+import ncu.im3069.demo.app.Friend;
 import ncu.im3069.demo.app.FriendHelper;
 import ncu.im3069.tools.JsonReader;
 
