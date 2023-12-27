@@ -6,7 +6,6 @@ import javax.servlet.http.*;
 import org.json.*;
 import ncu.im3069.demo.app.Member_Organization;
 import ncu.im3069.demo.app.Member_OrganizationHelper;
-import ncu.im3069.demo.app.Organization;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/Member_OrganizationController.do")
