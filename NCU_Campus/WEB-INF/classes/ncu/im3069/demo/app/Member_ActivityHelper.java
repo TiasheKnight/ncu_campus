@@ -61,7 +61,7 @@ public class Member_ActivityHelper {
             /** 取得所需之參數 */
             int ma_id = ma.getID();
             int user_id = ma.getUser_ID();
-            int activity_id = ma.getActivity_ID();
+            int activity_id1 = ma.getActivity_ID();
 
             try {
                 /** 取得資料庫之連線 */
@@ -74,7 +74,7 @@ public class Member_ActivityHelper {
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 pres.setInt(1, ma_id);
                 pres.setInt(2, user_id);
-                pres.setInt(3, activity_id);
+                pres.setInt(3, activity_id1);
 
                 /** 執行新增之SQL指令並記錄影響之行數 */
                 pres.executeUpdate();

@@ -91,11 +91,11 @@ public class MessageHelper {
                 int user_id = rs.getInt("user_id");
                 int friend_user_id = rs.getInt("friend_user_id");
                 String message_content=rs.getString("message_content");
-                String message_time_tamp=rs.getString("message_time_tamp");
+                String message_time_stamp=rs.getString("message_time_stamp");
 
 
                 /** 將每一筆商品資料產生一名新Product物件 */
-                m = new Message(id, user_id, friend_user_id,message_content,message_time_tamp);
+                m = new Message(id, user_id, friend_user_id,message_content,message_time_stamp);
                 /** 取出該項商品之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -162,10 +162,10 @@ public class MessageHelper {
                 int user_id = rs.getInt("user_id");
                 int friend_user_id = rs.getInt("friend_user_id");
                 String message_content=rs.getString("message_content");
-                String message_time_tamp=rs.getString("message_time_tamp");
+                String message_time_stamp=rs.getString("message_time_stamp");
 
                 /** 將每一筆商品資料產生一名新Product物件 */
-                m = new Message(id, user_id, friend_user_id,message_content,message_time_tamp);
+                m = new Message(id, user_id, friend_user_id,message_content,message_time_stamp);
                 jsa.put(m.getData());
             }
 
@@ -206,7 +206,7 @@ public class MessageHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_tamp`)"
+            String sql = "INSERT INTO `campus`.`Message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_stamp`)"
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -214,7 +214,7 @@ public class MessageHelper {
             int user_id = Message.getUser_ID();
             int friend_user_id = Message.getFriends_User_ID();
             String message_content=Message.getMessage_Content();
-            String message_time_tamp=Message.getMessage_Content();
+            String message_time_stamp=Message.getMessage_Content();
 
             
             /** 將參數回填至SQL指令當中 */
@@ -223,7 +223,7 @@ public class MessageHelper {
             pres.setInt(2, user_id);
             pres.setInt(3, friend_user_id);
             pres.setString(4, message_content);
-            pres.setString(5, message_time_tamp);
+            pres.setString(5, message_time_stamp);
             
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -382,13 +382,13 @@ public class MessageHelper {
             int user_id = m.getUser_ID();
             int friend_user_id = m.getFriends_User_ID();
             String message_content=m.getMessage_Content();
-            String message_time_tamp=m.getMessage_Content();
+            String message_time_stamp=m.getMessage_Content();
 
             try {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_tamp`)"
+                String sql = "INSERT INTO `campus`.`Message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_stamp`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -397,7 +397,7 @@ public class MessageHelper {
                 pres.setInt(2, user_id);
                 pres.setInt(3, friend_user_id);
                 pres.setString(4, message_content);
-                pres.setString(5, message_time_tamp);
+                pres.setString(5, message_time_stamp);
 
 
                 /** 執行新增之SQL指令並記錄影響之行數 */
@@ -459,13 +459,13 @@ public class MessageHelper {
                 int  user_id = rs.getInt("user_id");
                 int  friend_user_id = rs.getInt("friend_user_id");
                 String message_content=rs.getString("message_content");
-                String message_time_tamp=rs.getString("message_time_tamp");
+                String message_time_stamp=rs.getString("message_time_stamp");
 
 
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Message(ID, user_id, friend_user_id,message_content,message_time_tamp);
+                m = new Message(ID, user_id, friend_user_id,message_content,message_time_stamp);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(m);
             }
