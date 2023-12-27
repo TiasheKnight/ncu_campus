@@ -67,7 +67,7 @@ public class Member_ActivityHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`member_activty`(`id`, `user_id`, `activty_id`)"
+                String sql = "INSERT INTO `campus`.`member_activity`(`id`, `user_id`, `activty_id`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
