@@ -436,16 +436,16 @@ public class ReportHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = r.getID("id");
-                int  user_id = r.getUser_ID("user_id");
-                int  activity_id = r.getActivity_ID("activity_id");
+                int  ID = rs.getInt("id");
+                int  user_id = rs.getInt("user_id");
+                int  activity_id = rs.getInt("activity_id");
 
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                op = new OrderItem(order_product_id, order_id, product_id, price, quantity, subtotal);
+                r = new Report(ID, user_id, activity_id);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
-                result.add(op);
+                result.add(r);
             }
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
