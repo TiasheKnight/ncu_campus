@@ -2,7 +2,6 @@ package ncu.im3069.demo.controller;
 
 import java.io.*;
 import javax.servlet.*;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import org.json.*;
 import ncu.im3069.demo.app.Activity;
@@ -62,7 +61,7 @@ public class ActivityController extends HttpServlet {
                 Maximum_Participant, Minimum_Participant, Start_Date, Start_Time, End_Date, End_Time, Published_Date,
                 Published_Time, Activity_Detail, Activity_Participant);
         
-        if (Activity_ID == 0 || Activity_Atatus.isEmpty() || Activity_Name.isEmpty() || Activity_Type.isEmpty()
+        if (Activity_ID == 0 || Activity_Status.isEmpty() || Activity_Name.isEmpty() || Activity_Type.isEmpty()
                 || Activity_Place.isEmpty() || Activity_Holder_ID == 0 || Maximum_Participant == 0
                 || Minimum_Participant == 0 || Start_Date.isEmpty() || Start_Time.isEmpty() || End_Date.isEmpty()
                 || End_Time.isEmpty() || Published_Date.isEmpty() || Published_Time.isEmpty()
@@ -105,7 +104,7 @@ public class ActivityController extends HttpServlet {
         } else {
             // 根據指定的 activity_id 取得單一活動的資料
             int activityIDValue = Integer.parseInt(activityID);
-            JSONObject query = ah.getByID(activityIDValue);
+            JSONObject query = ah.getByID(String id);
             
             if (query != null) {
                 JSONObject resp = new JSONObject();
@@ -137,13 +136,13 @@ public class ActivityController extends HttpServlet {
             JsonReader jsr = new JsonReader(request);
             JSONObject jso = jsr.getObject();
             
-            int Activity_ID = jso.getInt("activity_id");
+            int activityID = jso.getInt("activity_id");
             
             if (Activity_ID == 0) {
                 String resp = "{\"status\": \"400\", \"message\": \"格式錯誤，請提供正確的活動ID\", \"response\": \"\"}";
                 jsr.response(resp, response);
             } else {
-                boolean result = ah.delete(A_ID);
+                boolean result = ah.delete(Activity_ID);
                 
                 if (result) {
                     String resp = "{\"status\": \"200\", \"message\": \"刪除活動成功\", \"response\": \"\"}";
@@ -163,54 +162,55 @@ public class ActivityController extends HttpServlet {
         int activityID = jso.getInt("activity_id");
 
         // 根據 activityID 取得現有活動資料
-        Activity existingActivity = ah.getByID(activityID);
+        Activity existingActivity = ah.getByID(String id);
 
         if (existingActivity != null) {
-            // 更新所有可能的欄位，僅在 JSON 物件中包含相應欄位時進行更新
-            if (jso.has("activity_status")) {
-                existingActivity.setActivityStatus(jso.getString("activity_status"));
+        	if (jso.has("activity_status")) {
+        	    existingActivity.setActivity_Status(jso.getString("activity_status"));
+        	}
+
             }
             if (jso.has("activity_name")) {
-                existingActivity.setActivityName(jso.getString("activity_name"));
+                existingActivity.setActivity_Name(jso.getString("activity_name"));
             }
             if (jso.has("activity_type")) {
-                existingActivity.setActivityType(jso.getString("activity_type"));
+                existingActivity.setActivity_Type(jso.getString("activity_type"));
             }
             if (jso.has("activity_place")) {
-                existingActivity.setActivityPlace(jso.getString("activity_place"));
+                existingActivity.setActivity_Place(jso.getString("activity_place"));
             }
             if (jso.has("activity_holder_id")) {
-                existingActivity.setActivityHolderID(jso.getInt("Activity_Holder_ID"));
+                existingActivity.setActivity_Holder_ID(jso.getInt("Activity_Holder_ID"));
             }
             if (jso.has("maximum_participant")) {
-                existingActivity.setMaximumParticipant(jso.getInt("maximum_participant"));
+                existingActivity.setMaximum_Participant(jso.getInt("maximum_participant"));
             }
             if (jso.has("minimum_participant")) {
-                existingActivity.setMinimumParticipant(jso.getInt("minimum_participant"));
+                existingActivity.setMinimum_Participant(jso.getInt("minimum_participant"));
             }
             if (jso.has("start_date")) {
-                existingActivity.setStartDate(jso.getString("start_date"));
+                existingActivity.setStart_Date(jso.getString("start_date"));
             }
             if (jso.has("start_time")) {
-                existingActivity.setStartTime(jso.getString("start_time"));
+                existingActivity.setStart_Time(jso.getString("start_time"));
             }
             if (jso.has("end_date")) {
-                existingActivity.setEndDate(jso.getString("end_date"));
+                existingActivity.setEnd_Date(jso.getString("end_date"));
             }
             if (jso.has("end_time")) {
-                existingActivity.setEndTime(jso.getString("end_time"));
+                existingActivity.setEnd_Time(jso.getString("end_time"));
             }
             if (jso.has("published_date")) {
-                existingActivity.setPublishedDate(jso.getString("published_date"));
+                existingActivity.setPublished_Date(jso.getString("published_date"));
             }
             if (jso.has("published_time")) {
-                existingActivity.setPublishedTime(jso.getString("published_time"));
+                existingActivity.setPublished_Time(jso.getString("published_time"));
             }
             if (jso.has("activity_detail")) {
-                existingActivity.setActivityDetail(jso.getString("activity_detail"));
+                existingActivity.setActivity_Detail(jso.getString("activity_detail"));
             }
             if (jso.has("activity_participant")) {
-                existingActivity.setActivityParticipant(jso.getInt("activity_participant"));
+                existingActivity.setActivity_Participant(jso.getInt("activity_participant"));
             }
 
             // 呼叫 update 方法更新活動資料
@@ -232,5 +232,8 @@ public class ActivityController extends HttpServlet {
     }
 
 }
+
+
+
 
 
