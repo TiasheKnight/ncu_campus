@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Activity Form</title>
+    <link rel="stylesheet" href="../statics/css/Home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="../statics/js/loadBoostrap.js" defer></script>
+</head>
+<body>
+    <div id="head" class="Tophead d-flex flex-row align-items-center p-2">
+        <div class="col-1 d-flex justify-content-center">
+            <button id="Home" class="btn"><iconify-icon icon="ant-design:home-filled" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
+            <button id="reback" class="btn"><iconify-icon icon="material-symbols:keyboard-return-rounded" style="color: #9747ff;" width="40" height="40"></iconify-icon></button>
+        </div>
+        <div class="col-5 d-flex justify-content-center">
+            <h2 style="color: yellow;">發布一般活動</h2>
+        </div>
+    </div>
+    <div class="container-fluid p-2">
+        <form id="GeneralActivityForm" action="">
+            <div class="input-group mb-3 ">
+                <label class="input-group-text" for="ActivityNameInput">活動名稱：</label>
+                <input id="ActivityNameInput" type="text" class="form-control-p" placeholder="ex:請填入活動的名稱" aria-label="ActivityName" required>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="FirstNameInput">活動發布型別：</label>
+                <select id="PublishTypeInput" class="form-select">
+                    <option>一般活動</option>
+                </select>
+            </div>
+            
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="MaxMemberInput">活動人數上限：</label>
+                <select id="disabledSelect" class="form-select">
+                    <option>校級活動</option>
+                    <option>系級活動</option>
+                    <option>社團活動</option>
+                    <option>靜態休閒活動</option>
+                    <option>動態休閒活動</option>
+                    <option>其他</option>
+                </select>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="FirstNameInput">活動發起人：</label>
+                <input id="PublisherInput" type="text" class="form-control" placeholder="請填入您現在登入的使用者名稱" aria-label="Publisher" required>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="FirstNameInput">活動地點：</label>
+                <input id="LocationInput" type="text" class="form-control" placeholder="請填入活動的舉辦地點" aria-label="Location" required>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="FirstNameInput">活動人數下限：</label>
+                <input id="MinMemberInput" type="text" class="form-control" placeholder="該活動最低需求人數是多少" aria-label="MinMember" required>
+            </div>
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="MaxMemberInput">活動人數上限：</label>
+                <input id="MaxMemberInput" type="text" class="form-control" placeholder="該活動最高可容納幾人參加" aria-label="MaxMember" required>
+            </div>
+
+            <div class="input-group date mb-3" data-provide="datepicker" data-target-input="nearest">
+                <label class="input-group-text" for="StartDatePicker">活動開始日期：</label>
+                <input id="StartDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="StartTimeInput">活動開始時間</label>
+                <input id="StartTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="StarTime" required>
+            </div>
+
+            <div class="input-group date mb-3" data-provide="datepicker">
+                <label class="input-group-text" for="EndDatePicker">活動結束日期：</label>
+                <input id="EndDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
+                <div class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="EndTimeInput">活動結束時間</label>
+                <input id="EndTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="EndTime" required>
+            </div>
+
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="ContentInput">活動內容：</label>
+                <textarea name="Conment" id="ContentInput" cols="100" rows="20" placeholder="請簡單描述您的活動" required></textarea>
+            </div>
+            <div class="col-md-12 p-0" >
+                <button id="Submit" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">確認發佈</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    document.getElementById("Home").addEventListener("click", function() {
+        // if(authication=="一般使用者"){
+
+        // }
+        // else{}
+        window.location.href = "../HomeList_NormalUser.html";
+    });
+    document.getElementById("reback").addEventListener("click", function() {
+        window.history.back();
+    });
+</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organization Power Edit</title>
+    <link rel="stylesheet" href="../statics/css/Home.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="../statics/js/loadBoostrap.js" defer></script>
+</head>
+<body>
+    <div id="head" class="Tophead d-flex flex-row align-items-center p-2">
+        <div class="col-2 d-flex justify-content-center">
+            <button id="Home" class="btn"><iconify-icon icon="ant-design:home-filled" style="color: #9747ff;" width="50" height="50"></iconify-icon></button>
+            <button id="reback" class="btn"><iconify-icon icon="material-symbols:keyboard-return-rounded" style="color: #9747ff;" width="40" height="40"></iconify-icon></button>
+        </div>
+        <div class="col-8 d-flex justify-content-center">
+            <h2 id="OrganizationName" style="color: orange;">學生會</h2>
+            <h2 style="color: yellow;">管理權限</h2>
+        </div>
+        <div class="col-2 d-flex justify-content-center">
+            <button class="col btn btn-primary btn-sm" style="background-color: #00B400;" data-bs-toggle="modal" data-bs-target="#AddNewOrganizationManagerModal">新增管理員</button>
+        </div>
+    </div>
+    <div id="OrganizationManagerList" class="container-fluid d-grid p-2">
+        <table id="ReportActivityTable" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>UserID</th>
+                    <th>使用者名稱</th>
+                    <th>組織權限階層</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>3</td>    
+                    <td>學生會會長</td>
+                    <td>創辦管理員</td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4</td>    
+                    <td>學生會秘書</td>
+                    <td>管理員</td>
+                    <td>
+                        <div class="btn-group d-flex" role="group">
+                            <button class="btn btn-primary btn-sm" style="background-color: #D91621;" data-bs-toggle="modal" data-bs-target="#DeletePowerCheckModal">移除權限</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+
+    <!-- DeletePowerCheck -->
+    <div class="modal fade modal-dialog modal-lg" id="DeletePowerCheckModal" tabindex="-1" aria-labelledby="DeletePowerCheckModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
+                    <div class="col-12 d-flex justify-content-center">
+                        <h2 style="color: yellow;">是否移除此成員管理權限？</h2>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-secondary">確認</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- AddNewOrganizationManager -->
+    <div class="modal fade modal-dialog modal-lg" id="AddNewOrganizationManagerModal" tabindex="-1" aria-labelledby="AddNewOrganizationManagerModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="max-height: 700px;">
+                <div class="modal-header d-flex justify-content-center text-center" style="align-items: center; background-color: black;">
+                    <h2 style="color: orange;">請輸入將賦予管理員權限的<br>UserID</h2>
+                </div>
+                <div class="modal-body d-flex flex-column justify-content-center align-items-center" style="overflow-y: scroll; max-height: fit-content;">
+                    <input id="UserID_Input" type="text" placeholder="UserID">
+                </div>           
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">確認</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    document.getElementById("Home").addEventListener("click", function() {
+        // if(authication=="一般使用者"){
+
+        // }
+        // else{}
+        window.location.href = "../HomeList_NormalUser.html";
+    });
+    document.getElementById("reback").addEventListener("click", function() {
+        window.history.back();
+    });
+</script>
+</html>
