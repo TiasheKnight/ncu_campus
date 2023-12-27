@@ -1,11 +1,10 @@
 package ncu.im3069.demo.controller;
 
-import java.io.IOException;
+import java.io.*;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
+import org.json.*;
 import org.json.JSONObject;
 import ncu.im3069.demo.app.FriendHelper;
 import ncu.im3069.tools.JsonReader;
