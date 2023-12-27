@@ -3,6 +3,7 @@
     import java.io.*;
     import javax.servlet.*;
     import javax.servlet.http.*;
+    import javax.servlet.annotation.WebServlet;
     import org.json.*;
     import ncu.im3069.demo.app.Organization;
     import ncu.im3069.demo.app.OrganizationHelper;

@@ -3,6 +3,7 @@ package ncu.im3069.demo.controller;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
 import org.json.*;
 import ncu.im3069.demo.app.Member_Activity_Archived;
 import ncu.im3069.demo.app.Member_Activity_ArchivedHelper;

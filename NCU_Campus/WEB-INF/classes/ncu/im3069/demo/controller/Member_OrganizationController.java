@@ -3,10 +3,10 @@ package ncu.im3069.demo.controller;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
 import org.json.*;
 import ncu.im3069.demo.app.Member_Organization;
 import ncu.im3069.demo.app.Member_OrganizationHelper;
-import ncu.im3069.demo.app.Organization;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/Member_OrganizationController.do")
