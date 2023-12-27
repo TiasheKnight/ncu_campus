@@ -14,13 +14,6 @@ public class Friend {
         update();
     } //Instantiates 一個新的Friend 物件，採用Overload方法進行，此建構子用於新增好友時，好友列表
 
-        public Friend(int ID, int User_ID, int Friends_User_ID, String Friends_User_Name){
-        this.ID = ID;
-        this.User_ID = User_ID;
-        this.Friends_User_ID = Friends_User_ID;
-        this.Friends_User_Name = Friends_User_Name;
-        update();
-    } //Instantiates 一個新的Friend 物件，採用Overload方法進行，此建構子用於刪除好友時，好友列表
 
     public Friend(int ID, int User_ID, int Friends_User_ID){
         this.ID = ID;
