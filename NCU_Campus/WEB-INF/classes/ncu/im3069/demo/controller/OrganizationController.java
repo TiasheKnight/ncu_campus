@@ -8,7 +8,7 @@
     import ncu.im3069.demo.app.OrganizationHelper;
     import ncu.im3069.tools.JsonReader;
 
-    @WebServlet("/api/Organization.do")
+    @WebServlet("/api/OrganizationController.do")
     
     /**
      * The Class OrganizationController.
