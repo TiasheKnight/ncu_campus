@@ -156,5 +156,22 @@
             event.preventDefault();
         }
     });
+
+    function updateSQLTable(data) {
+    $("#sql_log > tbody").empty();
+    var table_html = "";
+
+    table_html += '<tr>';
+    table_html += '<td>' + '1' + '</td>'; // Assuming this is a counter or index
+    table_html += '<td>' + data.UserName + '</td>';
+    table_html += '<td style="text-align: right">' + data.User_ID + '</td>';
+    table_html += '<td style="text-align: right">' + data.birthday + '</td>';
+    table_html += '<td style="text-align: right">' + data.CellPhone + '</td>';
+    table_html += '</tr>';
+
+    $("#sql_log > tbody").append(table_html);
+    }
+
+
 </script>
 </html>
