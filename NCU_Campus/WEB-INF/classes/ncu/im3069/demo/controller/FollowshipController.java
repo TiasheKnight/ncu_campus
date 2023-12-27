@@ -2,12 +2,12 @@ package ncu.im3069.demo.controller;
 
 import java.io.*;
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import org.json.*;
 import ncu.im3069.demo.app.Followship;
 import ncu.im3069.demo.app.FollowshipHelper;
 import ncu.im3069.tools.JsonReader;
-
 @WebServlet("/api/Followship.do")
 /**
  * The Class FollowshipController.
