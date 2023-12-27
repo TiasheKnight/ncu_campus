@@ -89,7 +89,17 @@ public class Member {
         this.user_name = user_name;
         getMemberOrganizationFromDB(); // Assuming this method needs to be called
     }
-
+    public Member(int id,String authority, String first_name, String last_name, String birthday, String email, String user_name, String phone, String password) {
+    	this.id = id;
+    	this.authority = authority;
+    	this.first_name = first_name;
+        this.last_name = last_name;
+        this.birthday = birthday;
+        this.email = email;
+        this.password= password;
+        this.user_name = user_name;
+        this.phone = phone;
+    }
     /**
      * Instantiates a new Member object using overloaded method for querying a
      * member.
