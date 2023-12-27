@@ -9,7 +9,7 @@ public class Activity {
     private String Activity_Name;
     private String Activity_Type;
     private String Activity_Place;
-    private int Activity_Holder_ID;
+    private int Activity_Publisher_ID;
     private int Maximum_Participant;
     private int Minimum_Participant;
     private String Start_Date;
@@ -23,7 +23,7 @@ public class Activity {
     private int Activity_Participant;
 
     public Activity(int ID, String Activity_Status, String Activity_Name, String Activity_Type, String Activity_Place,
-            int Activity_Holder_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,
+            int Activity_Publisher_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,
             String Start_Time,
             String End_Date, String End_Time, String Published_Date, String Published_Time, String Activity_Detail) {
         this.ID = ID;
@@ -31,7 +31,7 @@ public class Activity {
         this.Activity_Name = Activity_Name;
         this.Activity_Type = Activity_Type;
         this.Activity_Place = Activity_Place;
-        this.Activity_Holder_ID = Activity_Holder_ID;
+        this.Activity_Publisher_ID = Activity_Publisher_ID;
         this.Maximum_Participant = Maximum_Participant;
         this.Minimum_Participant = Minimum_Participant;
         this.Start_Date = Start_Date;
@@ -64,8 +64,8 @@ public class Activity {
         return this.Activity_Place;
     }
 
-    public int getActivity_Holder_ID() {
-        return this.Activity_Holder_ID;
+    public int getActivity_Publisher_ID() {
+        return this.Activity_Publisher_ID;
     }
 
     public int getMaximum_Participant() {
@@ -110,29 +110,28 @@ public class Activity {
 
     public JSONObject getData() {
         JSONObject jso = new JSONObject();
-        jso.put("ID", getID());
-        jso.put("Activity_Status", getActivity_Status());
-        jso.put("Activity_Name", getActivity_Name());
-        jso.put("Activity_Type", getActivity_Type());
-        jso.put("Activity_Place", getActivity_Place());
-        jso.put("Activity_Holder_ID", getActivity_Holder_ID());
-        jso.put("Maximum_Participant", getMaximum_Participant());
-        jso.put("Minimum_Participant", getMinimum_Participant());
-        jso.put("Start_Date", getStart_Date());
-        jso.put("Start_Time", getStart_Time());
-        jso.put("End_Date", getEnd_Date());
-        jso.put("End_Time", getEnd_Time());
-        jso.put("Published_Date", getPublished_Date());
-        jso.put("Published_Time", getPublished_Time());
-        jso.put("Activity_Detail", getActivity_Detail());
-        jso.put("Activity_Participant", getActivity_Participant());
+        jso.put("id", getID());
+        jso.put("activity_status", getActivity_Status());
+        jso.put("activity_name", getActivity_Name());
+        jso.put("activity_type", getActivity_Type());
+        jso.put("activity_place", getActivity_Place());
+        jso.put("activity_publisher_id", getActivity_Publisher_ID());
+        jso.put("maximum_participant", getMaximum_Participant());
+        jso.put("minimum_participant", getMinimum_Participant());
+        jso.put("start_date", getStart_Date());
+        jso.put("start_time", getStart_Time());
+        jso.put("end_date", getEnd_Date());
+        jso.put("end_time", getEnd_Time());
+        jso.put("published_date", getPublished_Date());
+        jso.put("published_time", getPublished_Time());
+        jso.put("activity_detail", getActivity_Detail());
+        jso.put("activity_participant", getActivity_Participant());
         return jso;
     }
 
     public JSONObject update() {
         JSONObject data = new JSONObject();
-        // Update logic here
-        // ...
+     // ...
 
         return data;
     }

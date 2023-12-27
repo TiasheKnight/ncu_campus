@@ -30,15 +30,14 @@ public class Report {
 
     public JSONObject getData() {
         JSONObject jso = new JSONObject();
-        jso.put("ID", getID());
-        jso.put("User_ID", getUser_ID());
-        jso.put("Activity_ID", getActivity_ID());
+        jso.put("id", getID());
+        jso.put("user_id", getUser_ID());
+        jso.put("activity_id", getActivity_ID());
         return jso;
     }
 
     public JSONObject update() {
         JSONObject data = new JSONObject();
-        // Update logic here
         // ...
 
         return data;

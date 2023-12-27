@@ -48,17 +48,16 @@ public class Notification {
     // Other methods
     public JSONObject getData() {
         JSONObject jso = new JSONObject();
-        jso.put("ID", getID());
-        jso.put("Activity_ID", getActivity_ID());
-        jso.put("User_ID", getUser_ID());
-        jso.put("Notification_Title", getNotification_Title());
-        jso.put("Notification_Content", getNotification_Content());
+        jso.put("id", getID());
+        jso.put("activity_id", getActivity_ID());
+        jso.put("user_id", getUser_ID());
+        jso.put("notification_title", getNotification_Title());
+        jso.put("notification_content", getNotification_Content());
         return jso;
     }
 
     public JSONObject update() {
         JSONObject data = new JSONObject();
-        // Update logic here
         // ...
 
         return data;

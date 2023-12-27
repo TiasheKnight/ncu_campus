@@ -193,7 +193,6 @@ public class Member {
      */
     public JSONObject update() {
         JSONObject data = new JSONObject();
-        // Update logic here
         // ...
 
         return data;
