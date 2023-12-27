@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Report;
 import ncu.im3069.demo.app.ReportHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Report.do")
+@WebServlet("/api/ReportController.do")
 
 public class ReportController extends HttpServlet {
     
