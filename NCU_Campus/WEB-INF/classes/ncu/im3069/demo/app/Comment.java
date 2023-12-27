@@ -40,11 +40,11 @@ public class Comment {
 
     public JSONObject getData() {
         JSONObject jso = new JSONObject();
-        jso.put("ID", getID());
-        jso.put("User_ID", getUser_ID());
-        jso.put("Activity_ID", getActivity_ID());
-        jso.put("Comment", getComment());
-        jso.put("TimeStamp", getTimeStamp());
+        jso.put("id", getID());
+        jso.put("user_id", getUser_ID());
+        jso.put("activity_id", getActivity_ID());
+        jso.put("comment", getComment());
+        jso.put("timestamp", getTimeStamp());
         return jso;
     }
 

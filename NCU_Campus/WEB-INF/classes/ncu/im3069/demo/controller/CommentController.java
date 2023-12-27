@@ -8,6 +8,7 @@ import ncu.im3069.demo.app.Comment;
 import ncu.im3069.demo.app.CommentHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Comment.do")
 /**
  * The Class CommentController.
  * CommentController類別主要用於處理Comment相關之Http請求（Request），繼承HttpServlet
@@ -20,12 +21,12 @@ public class CommentController extends HttpServlet {
     /** ch，CommentHelper之物件與Comment相關之資料庫方法（Singleton） */
     private CommentHelper ch = CommentHelper.getHelper();
 
-    /** ID，User_ID，Activity_ID，Comment，TimeStamp，用於處理Comment相關之資料 */
-    private int ID;
-    private int User_ID;
-    private int Activity_ID;
-    private String Comment;
-    private int TimeStamp;
+
+    private int id;
+    private int user_id;
+    private int activity_id;
+    private String comment;
+    private int time;
 
     /** message，output，用於儲存回傳訊息與結果 */
     private String message = "";
@@ -82,10 +83,10 @@ public class CommentController extends HttpServlet {
         Activity_ID = jso.getInt("activity_id");
         User_ID = jso.getInt("user_id");
         Comment = jso.getString("comment");
-        TimeStamp = jso.getInt("timestamp");
+        Time = jso.getInt("time");
 
         // 建立Comment物件
-        Comment comment = new Comment(User_ID, Activity_ID, Comment, TimeStamp);
+        Comment comment = new Comment(User_id, Activity_ID, Comment, Time);
 
         // 新增留言資料
         JSONObject data = ch.create(comment);
@@ -112,7 +113,7 @@ public class CommentController extends HttpServlet {
         ID = jso.getInt("comment_id");
 
         // 刪除留言資料
-        boolean result = ch.delete(ID);
+        boolean result = ch.delete(id);
 
         // 建立回傳結果的JSONObject
         if (result) {

@@ -8,6 +8,8 @@ import ncu.im3069.demo.app.Member_Item;
 import ncu.im3069.demo.app.Member_ItemHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Member_Item.do")
+
 public class Member_ItemController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -26,8 +28,8 @@ public class Member_ItemController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        int User_ID = jso.getInt("User_ID");
-        int Item_ID = jso.getInt("Item_ID");
+        int User_ID = jso.getInt("user_id");
+        int Item_ID = jso.getInt("item_id");
         int Item_Quantity = 1;  // 一次只能購買一個
 
         // Create a new Member_Item instance for the purchase
@@ -47,9 +49,9 @@ public class Member_ItemController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        int User_ID = jso.getInt("User_ID");
-        int Item_ID = jso.getInt("Item_ID");
-        int Item_Quantity = jso.getInt("Item_Quantity");
+        int User_ID = jso.getInt("user_id");
+        int Item_ID = jso.getInt("item_id");
+        int Item_Quantity = jso.getInt("item_quantity");
 
         Member_Item memberItem = new Member_Item(User_ID, Item_ID, Item_Quantity);
 
@@ -64,9 +66,9 @@ public class Member_ItemController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        int User_ID = jso.getInt("User_ID");
-        int Item_ID = jso.getInt("Item_ID");
-        int Item_Quantity = jso.getInt("Item_Quantity");
+        int User_ID = jso.getInt("user_id");
+        int Item_ID = jso.getInt("item_id");
+        int Item_Quantity = jso.getInt("item_quantity");
 
         // Check if the item exists in the user's inventory
         Member_Item existingItem = mih.getByUserIDAndItemID(User_ID, Item_ID);

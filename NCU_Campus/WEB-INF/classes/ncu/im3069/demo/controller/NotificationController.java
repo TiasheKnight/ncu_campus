@@ -8,6 +8,8 @@ import ncu.im3069.demo.app.Notification;
 import ncu.im3069.demo.app.NotificationHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Notification.do")
+
 public class NotificationController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -32,10 +34,10 @@ public class NotificationController extends HttpServlet {
         JSONObject jso = jsr.getObject();
 
         // 取得參數值
-        int Activity_ID = jso.getInt("Activity_ID");
-        int User_ID = jso.getInt("User_ID");
-        String Notification_Title = jso.getString("Notification_Title");
-        String Notification_Content = jso.getString("Notification_Content");
+        int Activity_ID = jso.getInt("activity_id");
+        int User_ID = jso.getInt("user_id");
+        String Notification_Title = jso.getString("notification_title");
+        String Notification_Content = jso.getString("notification_content");
 
         // 創建 Notification 物件
         Notification notification = new Notification(Activity_ID, User_ID, Notification_Title, Notification_Content);
@@ -59,7 +61,7 @@ public class NotificationController extends HttpServlet {
         JSONObject jso = jsr.getObject();
 
         // 取得參數值
-        int User_ID = jso.getInt("User_ID");
+        int User_ID = jso.getInt("user_id");
 
         // 由使用者 ID 取得通知
         JSONObject query = nh.getByUserID(User_ID);

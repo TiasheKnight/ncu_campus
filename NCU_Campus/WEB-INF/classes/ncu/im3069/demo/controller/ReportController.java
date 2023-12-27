@@ -8,6 +8,8 @@ import ncu.im3069.demo.app.Report;
 import ncu.im3069.demo.app.ReportHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Report.do")
+
 public class ReportController extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
@@ -33,9 +35,9 @@ public class ReportController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
-        int ID = jso.getInt("ID");
-        int User_ID = jso.getInt("User_ID");
-        int Activity_ID = jso.getInt("Activity_ID");
+        int ID = jso.getInt("id");
+        int User_ID = jso.getInt("user_id");
+        int Activity_ID = jso.getInt("activity_id");
         
         Report r = new Report(ID, User_ID, Activity_ID);
         

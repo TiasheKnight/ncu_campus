@@ -8,6 +8,8 @@ import ncu.im3069.demo.app.Member_Activity;
 import ncu.im3069.demo.app.Member_ActivityHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Member_Activity.do")
+
 /**
  * The Class Member_Activity_Controller.
  * Member_Activity_Controller 類別（class）主要用於處理 Member_Activity 相關之 Http 請求（Request），繼承 HttpServlet
@@ -17,7 +19,7 @@ public class Member_Activity_Controller extends HttpServlet {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
     
-    /** mah，Member_ActivityHelper 之物件與 Member_Activity 相關之資料庫方法（Singleton） */
+    /** mah，Member_ActivityHelper 之物件與 member_activity 相關之資料庫方法（Singleton） */
     private Member_ActivityHelper mah = Member_ActivityHelper.getHelper();
     
     /**
@@ -31,7 +33,7 @@ public class Member_Activity_Controller extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        String ID = jsr.getParameter("ID");
+        String ID = jsr.getParameter("id");
         
         if (ID.isEmpty()) {
             JSONObject query = mah.getAll();
@@ -41,7 +43,7 @@ public class Member_Activity_Controller extends HttpServlet {
             resp.put("response", query);
             jsr.response(resp, response);
         } else {
-            JSONObject query = mah.getByID(ID);
+            JSONObject query = mah.getByID(id);
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "會員活動資料取得成功");
@@ -62,7 +64,7 @@ public class Member_Activity_Controller extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-        int ID = jso.getInt("ID");
+        int ID = jso.getInt("id");
         
         JSONObject query = mah.deleteByID(ID);
         
@@ -87,10 +89,10 @@ public class Member_Activity_Controller extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
-        int User_ID = jso.getInt("User_ID");
-        int Activity_ID = jso.getInt("Activity_ID");
+        int User_ID = jso.getInt("user_id");
+        int Activity_ID = jso.getInt("activity_id");
         
-        Member_Activity ma = new Member_Activity(User_ID, Activity_ID);
+        Member_Activity ma = new Member_Activity(user_id, activity_id);
         
         if (User_ID <= 0 || Activity_ID <= 0) {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";

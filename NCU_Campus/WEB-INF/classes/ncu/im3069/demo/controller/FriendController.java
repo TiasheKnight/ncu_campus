@@ -14,6 +14,7 @@ import ncu.im3069.demo.app.FriendHelper;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/friend.do")
+
 public class FriendController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -53,10 +54,10 @@ public class FriendController extends HttpServlet {
         JSONObject resp = new JSONObject();
 
         if ("addFriend".equals(action)) {
-            int userId = jsr.getParameterInt("user_id");
-            int friendId = jsr.getParameterInt("friend_id");
+            int UserId = jsr.getParameterInt("user_id");
+            int FriendId = jsr.getParameterInt("friend_id");
             
-            if (fh.addFriend(userId, friendId)) {
+            if (fh.addFriend(UserId, FriendId)) {
                 resp.put("status", "200");
                 resp.put("message", "新增好友成功");
             } else {

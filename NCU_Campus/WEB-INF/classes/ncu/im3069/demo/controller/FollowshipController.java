@@ -8,6 +8,7 @@ import ncu.im3069.demo.app.Followship;
 import ncu.im3069.demo.app.FollowshipHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Followship.do")
 /**
  * The Class FollowshipController.
  * FollowshipController 類別（class）主要用於處理 Followship 相關之 Http 請求（Request），繼承 HttpServlet
@@ -33,9 +34,9 @@ public class FollowshipController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
-        int ID = jso.getInt("ID");
-        int Follower_User_ID = jso.getInt("Follower_User_ID");
-        int Followed_User_ID = jso.getInt("Followed_User_ID");
+        int ID = jso.getInt("id");
+        int Follower_User_ID = jso.getInt("follower_user_id");
+        int Followed_User_ID = jso.getInt("followed_user_id");
         
         Followship f = new Followship(ID, Follower_User_ID, Followed_User_ID);
         
@@ -67,9 +68,9 @@ public class FollowshipController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
-        int ID = jso.getInt("ID");
+        int ID = jso.getInt("id");
         
-        JSONObject query = fh.deleteByID(ID);
+        JSONObject query = fh.deleteByID(id);
         
         JSONObject resp = new JSONObject();
         resp.put("status", "200");
@@ -90,7 +91,7 @@ public class FollowshipController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        String ID = jsr.getParameter("ID");
+        String ID = jsr.getParameter("id");
         
         if (ID.isEmpty()) {
             JSONObject query = fh.getAll();

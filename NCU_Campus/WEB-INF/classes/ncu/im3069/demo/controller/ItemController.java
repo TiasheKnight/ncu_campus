@@ -8,6 +8,8 @@ import ncu.im3069.demo.app.Item;
 import ncu.im3069.demo.app.ItemHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Item.do")
+
 public class ItemController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
@@ -16,7 +18,7 @@ public class ItemController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        String ID = jsr.getParameter("ID");
+        String ID = jsr.getParameter("id");
 
         if (ID.isEmpty()) {
             JSONObject query = ih.getAll();
@@ -28,7 +30,7 @@ public class ItemController extends HttpServlet {
 
             jsr.response(resp, response);
         } else {
-            JSONObject query = ih.getByID(ID);
+            JSONObject query = ih.getByID(id);
 
             JSONObject resp = new JSONObject();
             resp.put("status", "200");

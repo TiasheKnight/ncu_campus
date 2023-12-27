@@ -9,6 +9,8 @@ import ncu.im3069.demo.app.Member_OrganizationHelper;
 import ncu.im3069.demo.app.Organization;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Member_Organization.do")
+
 /**
  * The Class Member_OrganizationController.
  * Member_OrganizationController類別（class）主要用於處理Member_Organization相關之Http請求（Request），繼承HttpServlet

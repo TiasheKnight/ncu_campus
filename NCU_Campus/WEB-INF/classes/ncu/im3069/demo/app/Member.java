@@ -43,7 +43,7 @@ public class Member {
     private String user_name;
 
     /** mh, MemberHelper object with methods related to Member (Singleton) */
-    private MemberHelper mh = MemberHelper.getHelper();
+    private MemberHelper MH = MemberHelper.getHelper();
 
 	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
 
@@ -192,10 +192,11 @@ public class Member {
      * @return JSONObject returns updated member data
      */
     public JSONObject update() {
-        JSONObject data = new JSONObject();
-        // Update logic here
-        // ...
-
+    	JSONObject data = new JSONObject();
+        
+        if(this.id != 0){
+            data = MH.update(this);
+        }
         return data;
     }
 
@@ -237,7 +238,7 @@ public class Member {
      */
     private void getMemberOrganizationFromDB() {
         // Implementation of fetching member organization from the database
-        ArrayList<Member_Organization> data = mh.getMemberOrganization(this.id);
+        ArrayList<Member_Organization> data = MH.getMemberOrganization(this.id);
         this.list = data;
 
         // return mh.getMemberOrganization(this);

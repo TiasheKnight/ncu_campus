@@ -60,7 +60,7 @@ public class ActivityHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
-        long start_time = System.nanoTime();
+        long sys_start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
@@ -97,7 +97,7 @@ public class ActivityHelper {
         /** 紀錄程式結束執行時間 */
         long end_time = System.nanoTime();
         /** 紀錄程式執行時間 */
-        long duration = (end_time - start_time);
+        long duration = (end_time - sys_start_time);
 
         /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
@@ -121,7 +121,7 @@ public class ActivityHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
-        long start_time = System.nanoTime();
+        long sys_start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
@@ -184,7 +184,7 @@ public class ActivityHelper {
         /** 紀錄程式結束執行時間 */
         long end_time = System.nanoTime();
         /** 紀錄程式執行時間 */
-        long duration = (end_time - start_time);
+        long duration = (end_time - sys_start_time);
 
         /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
@@ -210,7 +210,7 @@ public class ActivityHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
-        long start_time = System.nanoTime();
+        long sys_start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
@@ -275,7 +275,7 @@ public class ActivityHelper {
         /** 紀錄程式結束執行時間 */
         long end_time = System.nanoTime();
         /** 紀錄程式執行時間 */
-        long duration = (end_time - start_time);
+        long duration = (end_time - sys_start_time);
 
         /** 將SQL指令、花費時間、影響行數與所有會員資料之JSONArray，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
@@ -297,7 +297,7 @@ public class ActivityHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
-        long start_time = System.nanoTime();
+        long sys_start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
 
@@ -309,20 +309,20 @@ public class ActivityHelper {
                     + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
-            String status = a.getStatus();
-            String name = a.getName();
-            String type = a.getType();
-            String place = a.getPlace();
-            int holder_id = a.getHolderId();
-            int max_participant = a.getMaxParticipant();
-            int min_participant = a.getMinParticipant();
-            String start_date = a.getStartDate();
-            String start_time = a.getStartTime();
-            String end_date = a.getEndDate();
-            String end_time = a.getEndTime();
-            String published_date = a.getPublishedDate();
-            String published_time = a.getPublishedTime();
-            String detail = a.getDetail();
+            String status = a.getActivity_Status();
+            String name = a.getActivity_Name();
+            String type = a.getActivity_Type();
+            String place = a.getActivity_Place();
+            int holder_id = a.getActivity_Holder_ID();
+            int max_participant = a.getMaximum_Participant();
+            int min_participant = a.getMinimum_Participant();
+            String start_date = a.getStart_Date();
+            String start_time = a.getStart_Time();
+            String end_date = a.getEnd_Date();
+            String end_time = a.getEnd_Time();
+            String published_date = a.getPublished_Date();
+            String published_time = a.getPublished_Time();
+            String detail = a.getActivity_Detail();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -340,8 +340,8 @@ public class ActivityHelper {
             pres.setString(12, published_date);
             pres.setString(13, published_time);
             pres.setString(14, detail);
-            pres.setTimestamp(, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setTimestamp(, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setTimestamp(15, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setTimestamp(16, Timestamp.valueOf(LocalDateTime.now()));
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -364,7 +364,7 @@ public class ActivityHelper {
         /** 紀錄程式結束執行時間 */
         long end_time = System.nanoTime();
         /** 紀錄程式執行時間 */
-        long duration = (end_time - start_time);
+        long duration = (end_time - sys_start_time);
 
         /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();
@@ -387,7 +387,7 @@ public class ActivityHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
-        long start_time = System.nanoTime();
+        long sys_start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
 
@@ -395,18 +395,44 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `missa`.`activities` SET `name` = ? ,`password` = ? , `modified` = ? WHERE `email` = ?";
+            String sql = "Update `missa`.`activities` SET `name` = ? ,`password` = ? , `modified` = ? WHERE `id` = ?";
+
             /** 取得所需之參數 */
-            String name = m.getName();
-            String email = m.getEmail();
-            String password = m.getPassword();
+            int activity_id = a.getID();
+            String status = a.getActivity_Status();
+            String name = a.getActivity_Name();
+            String type = a.getActivity_Type();
+            String place = a.getActivity_Place();
+            int holder_id = a.getActivity_Holder_ID();
+            int max_participant = a.getMaximum_Participant();
+            int min_participant = a.getMinimum_Participant();
+            String start_date = a.getStart_Date();
+            String start_time = a.getStart_Time();
+            String end_date = a.getEnd_Date();
+            String end_time = a.getEnd_Time();
+            String published_date = a.getPublished_Date();
+            String published_time = a.getPublished_Time();
+            String detail = a.getActivity_Detail();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, name);
-            pres.setString(2, password);
-            pres.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setString(4, email);
+            pres.setString(1, status);
+            pres.setString(2, name);
+            pres.setString(3, type);
+            pres.setString(4, place);
+            pres.setInt(5, holder_id);
+            pres.setInt(6, max_participant);
+            pres.setInt(7, min_participant);
+            pres.setString(8, start_date);
+            pres.setString(9, start_time);
+            pres.setString(10, end_date);
+            pres.setString(11, end_time);
+            pres.setString(12, published_date);
+            pres.setString(13, published_time);
+            pres.setString(14, detail);
+            pres.setTimestamp(15, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setTimestamp(16, Timestamp.valueOf(LocalDateTime.now()));
+
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 
@@ -428,7 +454,7 @@ public class ActivityHelper {
         /** 紀錄程式結束執行時間 */
         long end_time = System.nanoTime();
         /** 紀錄程式執行時間 */
-        long duration = (end_time - start_time);
+        long duration = (end_time - sys_start_time);
 
         /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
         JSONObject response = new JSONObject();

@@ -8,6 +8,7 @@ import ncu.im3069.demo.app.Authentication;
 import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Authentication.do")
 /**
  * The Class AuthenticationController.
  * AuthenticationController 類別用於處理與使用者身份驗證相關的 HTTP 請求。
@@ -25,7 +26,6 @@ public class AuthenticationController extends HttpServlet {
     /** mh，MemberHelper 類別與會員資料庫相關的方法（單例模式） */
     private MemberHelper mh = MemberHelper.getHelper();
     
- 
     /**
      * 處理 HTTP GET 請求（取得資料）。
      *
@@ -37,8 +37,8 @@ public class AuthenticationController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         // 從請求中獲取使用者的驗證資訊，例如使用者名稱、權限等
-        String UserName = request.getParameter("UserName");
-        Authentication auth = mh.getAuthentication(username);
+        String UserName = request.getParameter("user_name");
+        Authentication auth = mh.getAuthentication(UserName);
 
         // 判斷使用者類型
         if (auth != null) {

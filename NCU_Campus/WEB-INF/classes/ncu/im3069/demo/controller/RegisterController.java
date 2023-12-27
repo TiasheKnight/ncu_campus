@@ -8,6 +8,8 @@ import ncu.im3069.demo.app.Member;
 import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
 
+@WebServlet("/api/Register.do")
+
 /**
  * The Class RegisterController.
  * RegisterController 類別用於處理會員註冊相關的 HTTP 請求。
@@ -38,15 +40,15 @@ public class RegisterController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
-        int ID = jso.getInt("ID");
-        String Authority = jso.getString("Authority");
-        String FirstName = jso.getString("FirstName");
-        String LastName = jso.getString("LastName");
-        String Birthday = jso.getString("Birthday");
+        int ID = jso.getInt("id");
+        String Authority = jso.getString("authority");
+        String FirstName = jso.getString("firstName");
+        String LastName = jso.getString("last_name");
+        String Birthday = jso.getString("birthday");
         String email = jso.getString("email");
-        String Phone = jso.getString("Phone");
-        String UserName = jso.getString("UserName");
-        String Password = jso.getString("Password");
+        String Phone = jso.getString("phone");
+        String UserName = jso.getString("user_name");
+        String Password = jso.getString("password");
         
         Member m = new Member(ID, Authority, FirstName, LastName, Birthday, email, Phone, UserName, Password);
         

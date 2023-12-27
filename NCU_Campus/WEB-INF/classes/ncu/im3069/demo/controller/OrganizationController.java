@@ -8,6 +8,8 @@
     import ncu.im3069.demo.app.OrganizationHelper;
     import ncu.im3069.tools.JsonReader;
 
+    @WebServlet("/api/Organization.do")
+    
     /**
      * The Class OrganizationController.
      * OrganizationController類別主要用於處理Organization相關之Http請求（Request），繼承HttpServlet
