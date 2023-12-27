@@ -186,7 +186,7 @@ public class ReportHelper {
 
         return response;
     }
- 
+
     public JSONObject create(Report report) {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -194,34 +194,34 @@ public class ReportHelper {
         long start_time = System.nanoTime();
         /** 紀錄SQL總行數 */
         int row = 0;
-        
+
         try {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
             String sql = "INSERT INTO `campus`.`Report`(`id`, `user_id`, `activity_id`)"
                     + " VALUES(?, ?, ?)";
-            
+
             /** 取得所需之參數 */
             int ID = report.getID();
             int user_id = report.getUser_ID();
             int activity_id = report.getActivity_ID();
-            
+
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setInt(1, ID);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
 
-            
+
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
-            
+
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
-            
+
+
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
             System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());

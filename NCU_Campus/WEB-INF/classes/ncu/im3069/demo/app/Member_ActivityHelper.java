@@ -1,7 +1,7 @@
 package ncu.im3069.demo.app;
 
 import java.sql.*;
-import java.time.LocalDateTime;
+import java.util.*;
 import org.json.*;
 
 import ncu.im3069.demo.util.DBMgr;
@@ -49,40 +49,40 @@ public class Member_ActivityHelper {
 
         return mah;
     }
-    
-    public JSONArray createByList(long activtiy_id, List<Member_ActivityHelper> memberactivity) {
+
+    public JSONArray createByList(long activtiy_id, List<Member_Activity> memberactivity) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
-        
+
         for(int i=0 ; i < memberactivity.size() ; i++) {
-            MemberActivity ma = memberactivity.get(i);
-            
+            Member_Activity ma = memberactivity.get(i);
+
             /** 取得所需之參數 */
-            int ma_id = ma.getMemberActivty().getID();
+            int ma_id = ma.getID();
             int user_id = ma.getUser_ID();
-            int activity_id = ma.getActivty_ID();
-            
+            int activity_id = ma.getActivity_ID();
+
             try {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `missa`.`member_activty`(`id`, `user_id`, `activty_id`)"
+                String sql = "INSERT INTO `campus`.`member_activty`(`id`, `user_id`, `activty_id`)"
                         + " VALUES(?, ?, ?)";
-                
+
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 pres.setInt(1, ma_id);
                 pres.setInt(2, user_id);
                 pres.setInt(3, activity_id);
-                
+
                 /** 執行新增之SQL指令並記錄影響之行數 */
                 pres.executeUpdate();
-                
+
                 /** 紀錄真實執行的SQL指令，並印出 **/
                 exexcute_sql = pres.toString();
                 System.out.println(exexcute_sql);
-                
+
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
@@ -100,42 +100,42 @@ public class Member_ActivityHelper {
                 DBMgr.close(pres, conn);
             }
         }
-        
+
         return jsa;
     }
-    
+
     public ArrayList<Member_Activity> getMemberActivity(int member_id) {
         ArrayList<Member_Activity> result = new ArrayList<Member_Activity>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         ResultSet rs = null;
-        MemberActivity ma;
-        
+        Member_Activity ma;
+
         try {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`member_activity` WHERE `member_activity`.`user_id` = ?";
-            
+            String sql = "SELECT * FROM `campus`.`member_activity` WHERE `member_activity`.`user_id` = ?";
+
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, user_id);
-            
+            pres.setInt(1, member_id);
+
             /** 執行新增之SQL指令並記錄影響之行數 */
             rs = pres.executeQuery();
-            
+
             /** 紀錄真實執行的SQL指令，並印出 **/
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
-            
+
             while(rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
-                
+
                 /** 將 ResultSet 之資料取出 */
                 int ma_id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int activity_id = rs.getInt("activity_id");
-                
+
                 /** 將每一筆會員資料產生一名新Member_Activity物件 */
                 ma = new Member_Activity(ma_id, user_id, activity_id);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
@@ -151,7 +151,7 @@ public class Member_ActivityHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             DBMgr.close(pres, conn);
         }
-        
+
         return result;
     }
 
