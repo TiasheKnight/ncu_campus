@@ -43,7 +43,7 @@ public class RegisterController extends HttpServlet {
         
         int ID = jso.getInt("id");
         String Authority = jso.getString("authority");
-        String FirstName = jso.getString("firstName");
+        String FirstName = jso.getString("first_name");
         String LastName = jso.getString("last_name");
         String Birthday = jso.getString("birthday");
         String email = jso.getString("email");
@@ -56,7 +56,7 @@ public class RegisterController extends HttpServlet {
         if(ID.isEmpty() || Authority.isEmpty() || FirstName.isEmpty() || LastName.isEmpty() || Birthday.isEmpty() || email.isEmpty() || Phone.isEmpty() || UserName.isEmpty() || Password.isEmpty()) {
             String resp = "{\"status\": \"400\", \"message\": \"格式錯誤，請再次確認\", \"response\": \"\"}";
             jsr.response(resp, response);
-        } else if (!mh.checkDuplicate(m)) {
+        } else if (!mh.checkDuplicate(Member m)) {
             JSONObject data = mh.create(Member m);
             
             JSONObject resp = new JSONObject();
@@ -71,5 +71,4 @@ public class RegisterController extends HttpServlet {
         }
     }
 }
-
 
