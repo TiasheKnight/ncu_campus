@@ -9,7 +9,7 @@ import ncu.im3069.demo.app.Authentication;
 import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Authentication.do")
+@WebServlet("/api/AuthenticationController.do")
 /**
  * The Class AuthenticationController.
  * AuthenticationController 類別用於處理與使用者身份驗證相關的 HTTP 請求。

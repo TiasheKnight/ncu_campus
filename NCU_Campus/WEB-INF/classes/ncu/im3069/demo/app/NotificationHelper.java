@@ -370,18 +370,20 @@ public class NotificationHelper {
         String exexcute_sql = "";
 
         for(int i=0 ; i < Notification.size() ; i++) {
-        	Notification r = Notification.get(i);
+        	Notification n = Notification.get(i);
 
             /** 取得所需之參數 */
-            int  ID = r.getID();
-            int  user_id = r.getUser_ID();
-            int  activity_id = r.getActivity_ID();
+        	int ID = n.getID();
+            int user_id = n.getUser_ID();
+            int activity_id = n.getActivity_ID();
+            String notification_title=n.getNotification_Title();
+            String notification_content=n.getNotification_Content();
 
             try {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Notification`(`id`, `user_id`, `activity_id`)"
+                String sql = "INSERT INTO `campus`.`Notification`(`id`, `user_id`, `activity_id`,`notification_title`,`notification_content`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -389,6 +391,8 @@ public class NotificationHelper {
                 pres.setInt(1, ID);
                 pres.setInt(2, user_id);
                 pres.setInt(3, activity_id);
+                pres.setString(4, notification_title);
+                pres.setString(5, notification_content);
 
 
                 /** 執行新增之SQL指令並記錄影響之行數 */
@@ -423,13 +427,13 @@ public class NotificationHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         ResultSet rs = null;
-        Notification r;
+        Notification n;
 
         try {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`order_product` WHERE `order_product`.`order_id` = ?";
+            String sql = "SELECT * FROM `campus`.`Notification` WHERE `Notification`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -449,13 +453,16 @@ public class NotificationHelper {
                 int  ID = rs.getInt("id");
                 int  user_id = rs.getInt("user_id");
                 int  activity_id = rs.getInt("activity_id");
+                String notification_title=rs.getString("notification_title");
+                String notification_content=rs.getString("notification_content");
+
 
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                r = new Notification(ID, user_id, activity_id);
+                n = new Notification(ID, user_id, activity_id,notification_title,notification_content);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
-                result.add(r);
+                result.add(n);
             }
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/

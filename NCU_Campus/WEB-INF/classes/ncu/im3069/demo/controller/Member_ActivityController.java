@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Member_Activity;
 import ncu.im3069.demo.app.Member_ActivityHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Member_Activity.do")
+@WebServlet("/api/Member_Activity_Controller.do")
 
 /**
  * The Class Member_Activity_Controller.

@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Member_Activity_Archived;
 import ncu.im3069.demo.app.Member_Activity_ArchivedHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Member_Activity_Archived.do")
+@WebServlet("/api/Member_Activity_ArchivedController.do")
 
 /**
  * The Class Member_Activity_ArchivedController.

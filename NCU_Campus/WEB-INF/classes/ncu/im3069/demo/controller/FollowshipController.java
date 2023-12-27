@@ -8,7 +8,8 @@ import org.json.*;
 import ncu.im3069.demo.app.Followship;
 import ncu.im3069.demo.app.FollowshipHelper;
 import ncu.im3069.tools.JsonReader;
-@WebServlet("/api/Followship.do")
+
+@WebServlet("/api/FollowshipController.do")
 /**
  * The Class FollowshipController.
  * FollowshipController 類別（class）主要用於處理 Followship 相關之 Http 請求（Request），繼承 HttpServlet

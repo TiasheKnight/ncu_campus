@@ -419,7 +419,7 @@ public class ReportHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`order_product` WHERE `order_product`.`order_id` = ?";
+            String sql = "SELECT * FROM `campus`.`Report` WHERE `Report`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

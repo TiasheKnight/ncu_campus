@@ -3,12 +3,13 @@ package ncu.im3069.demo.controller;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
 import org.json.*;
 import ncu.im3069.demo.app.Comment;
 import ncu.im3069.demo.app.CommentHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Comment.do")
+@WebServlet("/api/CommentController.do")
 /**
  * The Class CommentController.
  * CommentController類別主要用於處理Comment相關之Http請求（Request），繼承HttpServlet
