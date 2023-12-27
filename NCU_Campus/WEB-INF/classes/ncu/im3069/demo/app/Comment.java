@@ -8,10 +8,10 @@ public class Comment {
     private int User_ID;
     private int Activity_ID;
     private String Comment;
-    private int TimeStamp;
+    private String TimeStamp;
     private CommentHelper CH = CommentHelper.getHelper();
 
-    public Comment(int Activity_ID, int User_ID, String Comment, int TimeStamp) {
+    public Comment(int Activity_ID, int User_ID, String Comment, String TimeStamp) {
         this.Activity_ID = Activity_ID;
         this.User_ID = User_ID;
         this.Comment = Comment;
@@ -34,7 +34,7 @@ public class Comment {
         return this.Comment;
     }
 
-    public int getTimeStamp() {
+    public String getTimeStamp() {
         return this.TimeStamp;
     }
 
