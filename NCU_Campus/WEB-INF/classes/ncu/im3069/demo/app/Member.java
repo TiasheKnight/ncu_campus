@@ -3,10 +3,7 @@ package ncu.im3069.demo.app;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.sql.*;
-import java.util.*;
-import org.json.*;
+
 
 /**
  * The Class Member
@@ -238,7 +235,7 @@ public class Member {
      */
     private void getMemberOrganizationFromDB() {
         // Implementation of fetching member organization from the database
-        ArrayList<Member_Organization> data = MH.getMemberOrganization(this.id);
+        ArrayList<Member_Organization> data = MH.getMemberOrganizationbyId(this.id);
         this.list = data;
 
         // return mh.getMemberOrganization(this);
