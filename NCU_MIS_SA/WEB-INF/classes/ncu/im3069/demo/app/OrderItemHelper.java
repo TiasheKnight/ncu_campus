@@ -25,7 +25,8 @@ public class OrderItemHelper {
      */
     public static OrderItemHelper getHelper() {
         /** Singleton檢查是否已經有MemberHelper物件，若無則new一個，若有則直接回傳 */
-        if(oph == null) oph = new OrderItemHelper();
+        if (oph == null)
+            oph = new OrderItemHelper();
 
         return oph;
     }
@@ -35,7 +36,7 @@ public class OrderItemHelper {
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
 
-        for(int i=0 ; i < orderproduct.size() ; i++) {
+        for (int i = 0; i < orderproduct.size(); i++) {
             OrderItem op = orderproduct.get(i);
 
             /** 取得所需之參數 */
@@ -111,7 +112,7 @@ public class OrderItemHelper {
             exexcute_sql = pres.toString();
             System.out.println(exexcute_sql);
 
-            while(rs.next()) {
+            while (rs.next()) {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */

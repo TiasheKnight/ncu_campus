@@ -42,6 +42,8 @@ public class Member {
     /** mh, MemberHelper object with methods related to Member (Singleton) */
     private MemberHelper MH = MemberHelper.getHelper();
 
+    private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
+    
 	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
 
     /**
@@ -246,7 +248,7 @@ public class Member {
      */
     private void getMemberOrganizationFromDB() {
         // Implementation of fetching member organization from the database
-        ArrayList<Member_Organization> data = MH.getMemberOrganizationbyId(this.id);
+        ArrayList<Member_Organization> data = MOH.getMemberOrganizationbyId(this.id);
         this.list = data;
 
         // return mh.getMemberOrganization(this);
