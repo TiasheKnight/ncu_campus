@@ -204,7 +204,7 @@ public class ActivityHelper {
      * @param id 活動編號
      * @return the JSON object 回傳SQL執行結果與該活動編號之活動資料
      */
-    public JSONObject getByID(String id) {
+    public JSONObject getByID(int id) {
         /** 新建一個 Activity 物件之 a 變數，用於紀錄每一位查詢回之活動資料 */
         Activity a = null;
         /** 用於儲存所有檢索回之活動，以JSONArray方式儲存 */
