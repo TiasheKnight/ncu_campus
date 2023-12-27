@@ -57,7 +57,7 @@ public class RegisterController extends HttpServlet {
             String resp = "{\"status\": \"400\", \"message\": \"格式錯誤，請再次確認\", \"response\": \"\"}";
             jsr.response(resp, response);
         } else if (!mh.checkDuplicate(m)) {
-            JSONObject data = mh.create(m);
+            JSONObject data = mh.create(Member m);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
