@@ -20,7 +20,7 @@
                     <h2 class="mb-5" style="font-size: xx-large;color:darkkhaki">中央大學校園雷達</h2>    
                 </div>
                 <!-- Register input personal data -->
-                <form id="registerForm">
+                <form id="registerForm" method="post">
                     <div class="input-group mb-3 ">
                         <label class="input-group-text" for="LastNameInput">姓：</label>
                         <input id="LastNameInput" type="text" class="form-control" placeholder="ex:葉" aria-label="LastName" required>
@@ -97,7 +97,7 @@
         emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
         cellphoneValidationFeedback.style.display = isValidCellphone ? "none" : "block";        
 
-        // Check wether email is fit
+        // Check whether email is fit
         if(!isValidBirthday || !isValidEmail || !isValidCellphone){
             // stop submit behavior /阻止表單預設的提交行為
             event.preventDefault();
