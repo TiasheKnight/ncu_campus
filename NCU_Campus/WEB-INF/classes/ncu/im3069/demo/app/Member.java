@@ -99,7 +99,6 @@ public class Member {
         this.password= password;
         this.user_name = user_name;
         this.phone = phone;
-        
     }
     /**
      * Instantiates a new Member object using overloaded method for querying a
