@@ -1,8 +1,8 @@
 package ncu.im3069.demo.app;
 import ncu.im3069.tools.JsonReader;
 
+
 import org.json.*;
-import java.io;
 import java.util.*;
 import javax.servlet.http.*;
 import javax.servlet.*;
@@ -18,11 +18,6 @@ public class Organization {
         this.Organization_Name = Organization_Name;
         this.Organization_Detail = Organization_Detail;
         update();
-    }
-    public Organization(int ID, String Organization_Name, String Organization_Detail) {
-        this.ID = ID;
-        this.Organization_Name = Organization_Name;
-        this.Organization_Detail = Organization_Detail;
     }
 
     public int getID() {

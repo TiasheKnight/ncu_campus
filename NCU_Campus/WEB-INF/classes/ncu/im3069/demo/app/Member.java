@@ -44,7 +44,7 @@ public class Member {
 
     private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
     
-	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
+	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();
 
     /**
      * Instantiates a new Member object using overloaded method for creating a new

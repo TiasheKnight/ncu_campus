@@ -429,7 +429,7 @@ public class MemberHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`activities` SET `first_name` = ?, `last_name` = ?, `birthday` = ?, `email` = ?, `phone` = ?, `user_name` = ?, `modified` = ?, `created` = ? ,WHERE `id` = ?"
+            String sql = "Update `campus`.`Member` SET `first_name` = ?, `last_name` = ?, `birthday` = ?, `email` = ?, `phone` = ?, `user_name` = ?, `modified` = ?, `created` = ? ,WHERE `id` = ?"
                     + " VALUES(?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
