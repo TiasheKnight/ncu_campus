@@ -2,6 +2,7 @@ package ncu.im3069.demo.controller;
 
 import java.io.*;
 import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import org.json.*;
 import ncu.im3069.demo.app.Activity;
@@ -104,7 +105,7 @@ public class ActivityController extends HttpServlet {
         } else {
             // 根據指定的 activity_id 取得單一活動的資料
             int activityIDValue = Integer.parseInt(activityID);
-            JSONObject query = ah.getByID(String id);
+            JSONObject query = ah.getByID(activityID);
             
             if (query != null) {
                 JSONObject resp = new JSONObject();
@@ -138,11 +139,11 @@ public class ActivityController extends HttpServlet {
             
             int activityID = jso.getInt("activity_id");
             
-            if (Activity_ID == 0) {
+            if (activityID == 0) {
                 String resp = "{\"status\": \"400\", \"message\": \"格式錯誤，請提供正確的活動ID\", \"response\": \"\"}";
                 jsr.response(resp, response);
             } else {
-                boolean result = ah.delete(Activity_ID);
+                boolean result = ah.deleteByID(activityID);
                 
                 if (result) {
                     String resp = "{\"status\": \"200\", \"message\": \"刪除活動成功\", \"response\": \"\"}";
@@ -160,58 +161,72 @@ public class ActivityController extends HttpServlet {
         JSONObject jso = jsr.getObject();
 
         int activityID = jso.getInt("activity_id");
-
+        String activity_status = jso.getString("status");
+        String activity_name = jso.getString("name");
+        String activity_type = jso.getString("type");
+        String activity_place = jso.getString("place");
+        int holder_id = jso.getInt("holder_id");
+        int max_participant = jso.getInt("max_participant");
+        int min_participant = jso.getInt("min_participant");
+        String start_date = jso.getString("start_date");
+        String start_time = jso.getString("start_time");
+        String end_date = jso.getString("end_date");
+        String end_time = jso.getString("end_time");
+        String published_date = jso.getString("published_date");
+        String published_time = jso.getString("published_time");
+        String detail = jso.getString("detail");
+            
         // 根據 activityID 取得現有活動資料
-        Activity existingActivity = ah.getByID(String id);
+//        Activity existingActivity = ah.getByID(activityID);
 
-        if (existingActivity != null) {
-        	if (jso.has("activity_status")) {
-        	    existingActivity.setActivity_Status(jso.getString("activity_status"));
-        	}
-
-            }
-            if (jso.has("activity_name")) {
-                existingActivity.setActivity_Name(jso.getString("activity_name"));
-            }
-            if (jso.has("activity_type")) {
-                existingActivity.setActivity_Type(jso.getString("activity_type"));
-            }
-            if (jso.has("activity_place")) {
-                existingActivity.setActivity_Place(jso.getString("activity_place"));
-            }
-            if (jso.has("activity_holder_id")) {
-                existingActivity.setActivity_Holder_ID(jso.getInt("Activity_Holder_ID"));
-            }
-            if (jso.has("maximum_participant")) {
-                existingActivity.setMaximum_Participant(jso.getInt("maximum_participant"));
-            }
-            if (jso.has("minimum_participant")) {
-                existingActivity.setMinimum_Participant(jso.getInt("minimum_participant"));
-            }
-            if (jso.has("start_date")) {
-                existingActivity.setStart_Date(jso.getString("start_date"));
-            }
-            if (jso.has("start_time")) {
-                existingActivity.setStart_Time(jso.getString("start_time"));
-            }
-            if (jso.has("end_date")) {
-                existingActivity.setEnd_Date(jso.getString("end_date"));
-            }
-            if (jso.has("end_time")) {
-                existingActivity.setEnd_Time(jso.getString("end_time"));
-            }
-            if (jso.has("published_date")) {
-                existingActivity.setPublished_Date(jso.getString("published_date"));
-            }
-            if (jso.has("published_time")) {
-                existingActivity.setPublished_Time(jso.getString("published_time"));
-            }
-            if (jso.has("activity_detail")) {
-                existingActivity.setActivity_Detail(jso.getString("activity_detail"));
-            }
-            if (jso.has("activity_participant")) {
-                existingActivity.setActivity_Participant(jso.getInt("activity_participant"));
-            }
+//        if (existingActivity != null) {
+//        	if (jso.has("activity_status")) {
+//        	    existingActivity.setActivity_Status(jso.getString("activity_status"));
+//        	}
+//
+//            }
+//            if (jso.has("activity_name")) {
+//                existingActivity.setActivity_Name(jso.getString("activity_name"));
+//            }
+//            if (jso.has("activity_type")) {
+//                existingActivity.setActivity_Type(jso.getString("activity_type"));
+//            }
+//            if (jso.has("activity_place")) {
+//                existingActivity.setActivity_Place(jso.getString("activity_place"));
+//            }
+//            if (jso.has("activity_holder_id")) {
+//                existingActivity.setActivity_Holder_ID(jso.getInt("Activity_Holder_ID"));
+//            }
+//            if (jso.has("maximum_participant")) {
+//                existingActivity.setMaximum_Participant(jso.getInt("maximum_participant"));
+//            }
+//            if (jso.has("minimum_participant")) {
+//                existingActivity.setMinimum_Participant(jso.getInt("minimum_participant"));
+//            }
+//            if (jso.has("start_date")) {
+//                existingActivity.setStart_Date(jso.getString("start_date"));
+//            }
+//            if (jso.has("start_time")) {
+//                existingActivity.setStart_Time(jso.getString("start_time"));
+//            }
+//            if (jso.has("end_date")) {
+//                existingActivity.setEnd_Date(jso.getString("end_date"));
+//            }
+//            if (jso.has("end_time")) {
+//                existingActivity.setEnd_Time(jso.getString("end_time"));
+//            }
+//            if (jso.has("published_date")) {
+//                existingActivity.setPublished_Date(jso.getString("published_date"));
+//            }
+//            if (jso.has("published_time")) {
+//                existingActivity.setPublished_Time(jso.getString("published_time"));
+//            }
+//            if (jso.has("activity_detail")) {
+//                existingActivity.setActivity_Detail(jso.getString("activity_detail"));
+//            }
+//            if (jso.has("activity_participant")) {
+//                existingActivity.setActivity_Participant(jso.getInt("activity_participant"));
+//            }
 
             // 呼叫 update 方法更新活動資料
             JSONObject data = existingActivity.update();

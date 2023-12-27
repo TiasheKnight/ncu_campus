@@ -161,8 +161,7 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name,
-                        login_times, authority);
+                m = new Member(member_id, authority, first_name, last_name, birthday, email, user_name, phone, password);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -235,7 +234,7 @@ public class MemberHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
 
-                /** 將 ResultSet 之資料取出 */
+                //** 將 ResultSet 之資料取出 */
                 int member_id = rs.getInt("id");
                 String first_name = rs.getString("first_name");
                 String last_name = rs.getString("last_name");
@@ -248,8 +247,7 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, first_name, last_name, birthday, email, phone, password, user_name,
-                        login_times, authority);
+                m = new Member(member_id, authority, first_name, last_name, birthday, email, user_name, phone, password);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -286,7 +284,7 @@ public class MemberHelper {
      * @param m 一名會員之Member物件
      * @return the JSON object 回傳該名會員之更新時間與所屬組別（以JSONObject進行封裝）
      */
- 
+
     /**
      * 檢查該名會員之電子郵件信箱是否重複註冊
      *
@@ -355,8 +353,8 @@ public class MemberHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `missa`.`members`(`first_name`, `last_name`, `birthday`, `email`, `password`, `user_name`, `modified`, `created`, `login_times`, `authority`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `campus`.`members`(`first_name`, `last_name`, `birthday`, `email`, `phone`, `password`, `user_name`, `modified`, `created`)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
             String first_name = m.getFirstName();
@@ -365,9 +363,7 @@ public class MemberHelper {
             String email = m.getEmail();
             String phone = m.getPhone();
             String password = m.getPassword();
-            String user_name = m.getUserName();
-            int login_times = m.getLoginTimes();
-            String authority = m.getAuthority();
+            String user_name = m.getUser_Name();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -380,8 +376,6 @@ public class MemberHelper {
             pres.setString(7, user_name);
             pres.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
             pres.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setInt(10, login_times);
-            pres.setString(11, authority);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -435,18 +429,28 @@ public class MemberHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `missa`.`members` SET `name` = ? ,`password` = ? , `modified` = ? WHERE `email` = ?";
+            String sql = "Update `campus`.`activities` SET `first_name` = ?, `last_name` = ?, `birthday` = ?, `email` = ?, `phone` = ?, `user_name` = ?, `modified` = ?, `created` = ? ,WHERE `id` = ?"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?)";
+
             /** 取得所需之參數 */
-            String name = m.getName();
+            int member_id = m.getID();
+            String first_name = m.getFirstName();
+            String last_name = m.getLastName();
+            String birthday = m.getBirthday();
             String email = m.getEmail();
+            String phone = m.getPhone();
             String password = m.getPassword();
+            String user_name = m.getUser_Name();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, name);
-            pres.setString(2, password);
-            pres.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setString(1, first_name);
+            pres.setString(2, last_name);
+            pres.setString(3, birthday);
             pres.setString(4, email);
+            pres.setString(5, phone);
+            pres.setString(6, user_name);
+            pres.setInt(7, member_id);
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 
