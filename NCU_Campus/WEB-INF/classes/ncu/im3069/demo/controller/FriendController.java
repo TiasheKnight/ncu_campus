@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import ncu.im3069.demo.app.FriendHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/friend.do")
+@WebServlet("/api/FriendController.do")
 
 public class FriendController extends HttpServlet {
     private static final long serialVersionUID = 1L;

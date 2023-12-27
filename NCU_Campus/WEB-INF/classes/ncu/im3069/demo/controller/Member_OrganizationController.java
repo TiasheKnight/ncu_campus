@@ -9,7 +9,7 @@ import ncu.im3069.demo.app.Member_OrganizationHelper;
 import ncu.im3069.demo.app.Organization;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Member_Organization.do")
+@WebServlet("/api/Member_OrganizationController.do")
 
 /**
  * The Class Member_OrganizationController.

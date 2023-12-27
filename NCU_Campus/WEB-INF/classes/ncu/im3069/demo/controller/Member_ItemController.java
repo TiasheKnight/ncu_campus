@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Member_Item;
 import ncu.im3069.demo.app.Member_ItemHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Member_Item.do")
+@WebServlet("/api/Member_ItemController.do")
 
 public class Member_ItemController extends HttpServlet {
 

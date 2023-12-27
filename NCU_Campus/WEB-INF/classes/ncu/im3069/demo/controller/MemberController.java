@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Member;
 import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Member.do")
+@WebServlet("/api/MemberController.do")
 
 /**
  * The Class MemberController.

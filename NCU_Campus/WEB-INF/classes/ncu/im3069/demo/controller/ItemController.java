@@ -8,7 +8,7 @@ import ncu.im3069.demo.app.Item;
 import ncu.im3069.demo.app.ItemHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Item.do")
+@WebServlet("/api/ItemController.do")
 
 public class ItemController extends HttpServlet {
 
