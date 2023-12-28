@@ -168,7 +168,7 @@ public class MemberController extends HttpServlet {
             String email = jso.getString("email");
             String password = jso.getString("password");
 
-            // 進行帳號密碼驗證的邏輯，以下僅為示範，實際應用中需根據你的邏輯進行修改
+            // 進行帳號密碼驗證
             boolean isValidLogin = validateLogin(email, password);
 
             JSONObject resp = new JSONObject();
@@ -203,15 +203,25 @@ public class MemberController extends HttpServlet {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT `password` FROM `campus`.`members` WHERE `email` = ?";
+            String sql = "SELECT `count(*)`, `password` FROM `campus`.`members` WHERE `email` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
             pres.setString(1, email);
+
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
-            pwd = rs.getString("password");
+            /** 讓指標移往最後一列，取得目前有幾行在資料庫內 */
+            rs.next();
+            row = rs.getInt("count(*)");
+
+            if(row == 0){
+                pwd = rs.getString("password");
+            }
+            else{
+                pwd = null;
+            }
 
         } catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
