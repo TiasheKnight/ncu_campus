@@ -58,7 +58,7 @@ public class Member {
      * @param phone      member phone
      * @param password
      */
-    public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone) {
+    public Member(String first_name, String last_name, String birthday, String email, String user_name,String password , String phone) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.birthday = birthday;
