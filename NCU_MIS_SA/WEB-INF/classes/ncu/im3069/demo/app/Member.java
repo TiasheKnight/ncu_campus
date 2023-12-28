@@ -68,6 +68,12 @@ public class Member {
         this.phone = phone;
         update();
     }
+    
+    public Member(String email,String password) {
+        this.email = email;
+        this.password= password;
+        update();
+    }
 
     /**
      * Instantiates a new Member object using overloaded method for updating a
