@@ -44,7 +44,7 @@ public class Member {
 
     private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
 
-	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
+	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();
 
     /**
      * Instantiates a new Member object using overloaded method for creating a new
@@ -67,13 +67,7 @@ public class Member {
         this.user_name = user_name;
         this.phone = phone;
         update();
-    }
-    // 註冊帳號所新增   
-    public Member(String first_name,String last_name,String birthdaym, String email,String password, String user_name) {
-        this.email = email;
-        this.password= password;
-        update();
-    }
+    } 
     
     public Member(String email,String password) {
         this.email = email;

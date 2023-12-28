@@ -170,11 +170,12 @@ public class MemberController extends HttpServlet {
             String firstName = jso.getString("firstname");
             String birthday = jso.getString("birthday");
             String email = jso.getString("email");
+            String cellphone = jso.getString("cellphone");
             String password = jso.getString("password");
             String userName = jso.getString("username");
             
             // 註冊以新建帳號
-            Member m = new Member(lastName,firstName,birthday,email,password,userName);
+            Member m = new Member(lastName,firstName,birthday,email,cellphone,password,userName);
             /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
             if(lastName.isEmpty() || firstName.isEmpty() || birthday.isEmpty() || email.isEmpty() || password.isEmpty() || userName.isEmpty()) {
                 /** 以字串組出JSON格式之資料 */

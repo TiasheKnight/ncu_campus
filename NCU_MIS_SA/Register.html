@@ -113,7 +113,7 @@
     function register(){
         var lastName = $('#LastNameInput').val();
         var firstName = $('#FirstNameInput').val();
-        var birthday = $('#BirthdatInput').val();
+        var birthday = $('#BirthdayInput').val();
         var email = $('#EmailInput').val();
         var cellphone = $('#CellphoneInput').val();
         var password = $('#PasswordInput').val();
@@ -127,6 +127,7 @@
             "password": password,
             "userName": userName,
         };
+        console.log(register_data_string);
         var register_data_string = JSON.stringify(register_data_object);
 
         $.ajax({
@@ -141,14 +142,14 @@
                 $('#flashMessage').html(response.message);
                 $('#flashMessage').show();
                 if(response.status == 200){
-                    console.log
+                    console.log("Yes");
+                    $(document).ready(function() {
+                        window.location.href = "Login.html";
+                    });
                 }
             },
             error: function () {
                 alert("無法連線到伺服器！");
-                $(document).ready(function() {
-                    window.location.href("Login.html");
-                });
             }
         })
     }
