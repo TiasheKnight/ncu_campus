@@ -22,7 +22,7 @@ public class Member_ActivityController extends HttpServlet {
     
     /** mah，Member_ActivityHelper 之物件與 member_activity 相關之資料庫方法（Singleton） */
     private Member_ActivityHelper mah = Member_ActivityHelper.getHelper();
-    
+    private ActivityHelper ah = ActivityHelper.getHelper();
     /**
      * 處理 Http Method 請求 GET 方法（取得資料）。
      *
@@ -36,6 +36,8 @@ public class Member_ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         
         String activityID = jsr.getParameter("activity_id");
+        int member_id = jsr.getIntParameter("member_id");
+
 
         if (activityID.isEmpty()) {
             JSONArray query = mah.getMemberActivity(member_id);
@@ -105,7 +107,7 @@ public class Member_ActivityController extends HttpServlet {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
-            JSONArray data = mah.createByList(Activity_ID, Collections.singletonList(ma));
+            JSONArray data = mah.createByList(long activtiy_id, List<Member_Activity> memberactivity);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
