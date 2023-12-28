@@ -89,7 +89,7 @@ public class Member_Activity_ArchivedHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    long id = rs.getLong(1);
+                    int id = rs.getInt(1);
                     jsa.put(id);
                 }
             } catch (SQLException e) {
