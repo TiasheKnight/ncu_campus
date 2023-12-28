@@ -163,7 +163,7 @@ public class ActivityHelper {
                 String published_date = rs.getString("published_date");
                 String published_time = rs.getString("published_time");
                 String detail = rs.getString("activity_detail");
-                int activity_participant = rs.getInt("activity_particpant");
+                int activity_participant = rs.getInt("participant_number");
 
                 /** 將每一筆活動資料產生一名新Activity物件 */
                 a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time,
