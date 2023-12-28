@@ -31,7 +31,7 @@ public class ItemController extends HttpServlet {
 
             jsr.response(resp, response);
         } else {
-            JSONObject query = ih.getByID(id);
+            JSONObject query = ih.getByID(ID);
 
             JSONObject resp = new JSONObject();
             resp.put("status", "200");

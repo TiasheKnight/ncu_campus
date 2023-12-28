@@ -122,5 +122,3 @@ public class Member_OrganizationController extends HttpServlet {
         jsr.response(resp, response);
     }
 }
-
-
