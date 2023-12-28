@@ -60,7 +60,7 @@ public class AuthenticationController extends HttpServlet {
         } else {
             // 使用者未登入
             JSONObject responseData = new JSONObject();
-            responseData.put("error", "使用者為登入請重新登入。");
+            responseData.put("error", "使用者未登入請重新登入。");
             response.getWriter().print(responseData.toString());
         }
     }
