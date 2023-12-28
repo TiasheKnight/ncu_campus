@@ -165,10 +165,13 @@ public class MemberController extends HttpServlet {
 
             JsonReader jsr = new JsonReader(request);
             JSONObject jso = jsr.getObject();
-
+            
+            String lastName = jso.getString("lastname");
+            String firstName = jso.getString("firstname");
+            String birthday = jso.getString("birthday");
             String email = jso.getString("email");
             String password = jso.getString("password");
-
+            String userName = jso.getString("username");
             // 進行帳號密碼驗證，以及獲取使用者權限
             JSONObject loginResult = validateLogin(email, password);
 
