@@ -25,8 +25,8 @@ public class Member_Activity_ArchivedController extends HttpServlet {
 
     /** ID，Activity_ID，User_ID，用於處理Member_Activity_Archived相關之資料 */
     private int ID;
-    private int Activity_ID;
-    private String User_ID;
+    private int activity_id;
+    private String user_id;
 
     /** message，output，用於儲存回傳訊息與結果 */
     private String message = "";
@@ -51,17 +51,17 @@ public class Member_Activity_ArchivedController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        User_ID = jsr.getParameter("user_id");
+        user_id = jsr.getParameter("user_id");
 
         // 檢查是否提供使用者ID
-        if (User_ID.isEmpty()) {
+        if (user_id.isEmpty()) {
             message = "缺少使用者ID";
             responseMessage(response, 400, message);
             return;
         }
 
         // 根據指定的使用者ID取得該使用者收藏的活動資料
-        int userIDValue = Integer.parseInt(User_ID);
+        int userIDValue = Integer.parseInt(user_id);
         JSONObject query = maaHelper.getByUserID(userIDValue);
 
         // 檢查是否找到相對應的資料
@@ -88,16 +88,22 @@ public class Member_Activity_ArchivedController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        Activity_ID = jso.getInt("activity_id");
-        User_ID = jso.getString("user_id");
+        int activity_id = jso.getInt("activity_id");
+        int user_id = jso.getString("user_id");
 
         // 刪除已收藏的活動資料
-        boolean result = maaHelper.delete(Activity_ID, User_ID);
+        boolean result = maaHelper.delete(activity_id, user_id);
 
         // 建立回傳結果的JSONObject
         if (result) {
-            message = "成功! 刪除活動資料";
-            responseMessage(response, 200, message);
-        } else {
+            String resp = "{\"成功!\", \"刪除活動資料\", \"response\": \"\"}";
+            jsr.response(resp, response);
+        }
+        else{
+            String resp = "{\"成功!\", \"刪除活動資料\", \"response\": \"\"}";
+            jsr.response(resp, response);
+        }
+    }
+}
 
 

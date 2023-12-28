@@ -56,83 +56,64 @@
 
 <!-- JS function -->
 <script>
-    const emailInput = document.getElementById("EmailInput");
-    const passwordInput = document.getElementById("PasswordInput");
-    const emailValidationFeedback = document.getElementById("emailValidationFeedback");
+  const emailInput = document.getElementById("EmailInput");
+  const passwordInput = document.getElementById("PasswordInput");
+  const emailValidationFeedback = document.getElementById("emailValidationFeedback");
 
-    document.getElementById("loginForm").addEventListener("submit", function (event) {
+  document.getElementById("loginForm").addEventListener("submit", function (event) {
 
-      //檢查email格式
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isValidEmail = emailPattern.test(emailInput.value);
-      emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
+    //檢查email格式
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidEmail = emailPattern.test(emailInput.value);
+    emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
 
-      //檢查是否有輸入密碼
-      const isValidPassword = passwordInput.value.trim() !== "";
-      
-      if(!isValidEmail){
-		  console.log(passwordInput);
-		  console.log(isValidEmail);
-		  console.log(passwordInput.value);
-		  console.log(isValidPassword);
-          // stop submit behavior //阻止表單預設的提交行為
-          event.preventDefault();
-      }
-      else if (isValidEmail && isValidPassword) {
-        loginUser(emailInput.value, passwordInput.value);
-      }
+    //檢查是否有輸入密碼
+    const isValidPassword = passwordInput.value.trim() !== "";
 
-      function loginUser(email, passwword){
-        const xhr = new XMLHttpRequest();
-        const loginEndpoint = "/api/MemberController.do";
+    if(!isValidEmail){
+      console.log(passwordInput);
+      console.log(isValidEmail);
+      console.log(passwordInput.value);
+      console.log(isValidPassword);
 
-        xhr.open("POST", loginEndpoint, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
+      // stop submit behavior //阻止表單預設的提交行為
+      event.preventDefault();
+    }
+    else if (isValidEmail && isValidPassword) {
+      loginUser(emailInput.value, passwordInput.value);
+    }
 
-        xhr.onload = function () {
-            if (xhr.status === 200) {
+    function loginUser(email, password){
+      $.ajax({
+          type: "POST",
+          url: "/api/MemberController.do",
+          data: {
+            "email": email,
+            "password": password
+          },
+          crossDomain: true,
+          cache: false,
+          dataType: 'json',
+          timeout: 5000,
+          success: function (response) {
+              if(response.status == "success"){
                 // 登入成功
                 console.log("Login successful");
-                if (xhr.authority == "Member"){
-                  window.location.replace("HomeList_NormaUser.html");
+
+                if(response.authority == "Member"){
+                  window.location.replace("HomeList_NormalUser.html");
                 }
-                else if(xhr.authority == "SystemManager"){
+                else if(response.authority == "SystemManager"){
                   window.location.replace("HomeList_SystemManager.html");
                 }
-            } else {
-                // 登入失敗
-                console.log("Login failed");
-            }
-        };
-        
-    $.ajax({
-        type: "POST",
-        url: "api/member.do",
-        data: data_string,
-        crossDomain: true,
-        cache: false,
-        dataType: 'json',
-        timeout: 5000,
-        success: function (response) {
-            $('#flashMessage').html(response.message);
-            $('#flashMessage').show();
-            if(response.status == 200){
-                updateSQLTable(response.response);
-            }
-        },
-        error: function () {
-            alert("無法連線到伺服器！");
-        }
-    });
-        xhr.onerror = function () {
-            console.error("Error sending login request");
-        };
-
-        // 將帳號密碼轉成 JSON 格式發送到後端
-        const data = JSON.stringify({ email: email, password: password });
-        xhr.send(data);
-      }
-
-    });
+              }
+          },
+          error: function () {
+              // 登入失敗
+              console.log("Login failed");
+          }
+      });
+    };
+  });
 </script>
 </html>
