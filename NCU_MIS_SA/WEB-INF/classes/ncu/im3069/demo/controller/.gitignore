@@ -2,3 +2,17 @@
 /OrderController.class
 /ProductController.class
 /Test.class
+/ActivityController.class
+/AuthenticationController.class
+/CommentController.class
+/FollowshipController.class
+/FriendController.class
+/ItemController.class
+/Member_ActivityController.class
+/Member_Activity_ArchivedController.class
+/Member_ItemController.class
+/Member_OrganizationController.class
+/NotificationController.class
+/OrganizationController.class
+/RegisterController.class
+/ReportController.class

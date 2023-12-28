@@ -156,7 +156,7 @@
                     if(response.status == 200){
                         updateActivityTable(response.response.data);
                     }
-                    console.log(response);
+                    console.log(response.response);
                 },
                 error: function () {
                     alert("無法連線到伺服器！");
