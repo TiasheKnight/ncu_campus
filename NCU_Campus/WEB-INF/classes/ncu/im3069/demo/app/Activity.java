@@ -43,7 +43,23 @@ public class Activity {
         this.Activity_Detail = Activity_Detail;
         this.Activity_Participant = Activity_Participant; // Initialize to 0, assuming no participants initially
     }
-
+    public Activity(String Activity_Status, String Activity_Name, String Activity_Type, String Activity_Place,
+            int Activity_Publisher_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,
+            String Start_Time,String End_Date, String End_Time, String Activity_Detail) {
+        this.Activity_Status = Activity_Status;
+        this.Activity_Name = Activity_Name;
+        this.Activity_Type = Activity_Type;
+        this.Activity_Place = Activity_Place;
+        this.Activity_Publisher_ID = Activity_Publisher_ID;
+        this.Maximum_Participant = Maximum_Participant;
+        this.Minimum_Participant = Minimum_Participant;
+        this.Start_Date = Start_Date;
+        this.Start_Time = Start_Time;
+        this.End_Date = End_Date;
+        this.End_Time = End_Time;
+        this.Activity_Detail = Activity_Detail;
+        update();
+    }
     public int getID() {
         return this.ID;
     }

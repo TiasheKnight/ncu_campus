@@ -123,7 +123,7 @@ public class CommentHelper {
 
         return response;
     }
-    public JSONObject getById(String Comment_id) {
+    public JSONObject getById(int id) {
     	Comment c = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -144,7 +144,7 @@ public class CommentHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, Comment_id);
+            pres.setInt(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -156,7 +156,6 @@ public class CommentHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int activity_id = rs.getInt("activity_id");
                 String content=rs.getString("content");
@@ -208,7 +207,7 @@ public class CommentHelper {
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
-            int ID = Comment.getID();
+            int id = Comment.getID();
             int user_id = Comment.getUser_ID();
             int activity_id = Comment.getActivity_ID();
             String content=Comment.getContent();
@@ -217,7 +216,7 @@ public class CommentHelper {
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
             pres.setString(4, content);
@@ -255,7 +254,7 @@ public class CommentHelper {
 
         return response;
     }
-    public JSONArray createByList(long Comment_ID, List<Comment> Comment) {
+    public JSONArray createByList(int id, List<Comment> Comment) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -264,7 +263,6 @@ public class CommentHelper {
         	Comment m = Comment.get(i);
 
             /** 取得所需之參數 */
-        	int ID = m.getID();
             int user_id = m.getUser_ID();
             int activity_id = m.getActivity_ID();
             String content=m.getContent();
@@ -279,7 +277,7 @@ public class CommentHelper {
 
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setInt(1, ID);
+                pres.setInt(1, id);
                 pres.setInt(2, user_id);
                 pres.setInt(3, activity_id);
                 pres.setString(4, content);
@@ -296,8 +294,8 @@ public class CommentHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int c_id = rs.getInt(1);
+                    jsa.put(c_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/
@@ -341,7 +339,7 @@ public class CommentHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = rs.getInt("id");
+                int  id = rs.getInt("id");
                 int  user_id = rs.getInt("user_id");
                 int  activity_id = rs.getInt("activity_id");
                 String content=rs.getString("content");
@@ -351,7 +349,7 @@ public class CommentHelper {
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Comment(ID, user_id, activity_id,content,timestamp);
+                m = new Comment(id, user_id, activity_id,content,timestamp);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(m);
             }

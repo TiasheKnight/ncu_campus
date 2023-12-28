@@ -210,7 +210,7 @@ public class MessageHelper {
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
-            int ID = Message.getID();
+            int id = Message.getID();
             int user_id = Message.getUser_ID();
             int friend_user_id = Message.getFriends_User_ID();
             String message_content=Message.getMessage_Content();
@@ -219,7 +219,7 @@ public class MessageHelper {
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, friend_user_id);
             pres.setString(4, message_content);
@@ -324,7 +324,7 @@ public class MessageHelper {
             /** SQL指令 */
             String sql = "Update `campus`.`Message` SET `id` = ? ,`user_id` = ? , `friend_user_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
-            int  ID = m.getID();
+            int  id = m.getID();
             int  user_id = m.getUser_ID();
             int  friend_user_id = m.getFriends_User_ID();
             String message_content=m.getMessage_Content();
@@ -332,7 +332,7 @@ public class MessageHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, friend_user_id);
             pres.setString(4, message_content);
@@ -378,7 +378,7 @@ public class MessageHelper {
         	Message m = Message.get(i);
 
             /** 取得所需之參數 */
-        	int ID = m.getID();
+        	int id = m.getID();
             int user_id = m.getUser_ID();
             int friend_user_id = m.getFriends_User_ID();
             String message_content=m.getMessage_Content();
@@ -393,7 +393,7 @@ public class MessageHelper {
 
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setInt(1, ID);
+                pres.setInt(1, id);
                 pres.setInt(2, user_id);
                 pres.setInt(3, friend_user_id);
                 pres.setString(4, message_content);
@@ -427,7 +427,7 @@ public class MessageHelper {
 
         return jsa;
     }
-    public ArrayList<Message> getMessageByMemberId(int member_id) {
+    public ArrayList<Message> getMessageByMemberId(int user_id) {
         ArrayList<Message> result = new ArrayList<Message>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -442,7 +442,7 @@ public class MessageHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, member_id);
+            pres.setInt(1, user_id);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             rs = pres.executeQuery();
@@ -455,7 +455,7 @@ public class MessageHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = rs.getInt("id");
+                int  id = rs.getInt("id");
                 int  user_id = rs.getInt("user_id");
                 int  friend_user_id = rs.getInt("friend_user_id");
                 String message_content=rs.getString("message_content");
@@ -465,7 +465,7 @@ public class MessageHelper {
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Message(ID, user_id, friend_user_id,message_content,message_time_stamp);
+                m = new Message(id, user_id, friend_user_id,message_content,message_time_stamp);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(m);
             }

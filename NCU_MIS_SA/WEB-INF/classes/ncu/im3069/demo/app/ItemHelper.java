@@ -170,13 +170,12 @@ public class ItemHelper {
                 row += 1;
 
                 /** 將 ResultSet 之資料取出 */
-                int item_id = rs.getInt("id");
                 int item_price = rs.getInt("item_price");
                 String item_name = rs.getString("item_name");
                 String item_detail = rs.getString("item_detail");
 
                 /** 將每一筆活動資料產生一名新Item物件 */
-                i = new Item(item_id, item_price, item_name, item_detail);
+                i = new Item(id, item_price, item_name, item_detail);
                 /** 取出該名活動之資料並封裝至 JSONsonArray 內 */
                 jsa.put(i.getData());
             }

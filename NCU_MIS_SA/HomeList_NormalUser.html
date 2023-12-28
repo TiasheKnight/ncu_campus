@@ -80,52 +80,53 @@
                     </div>
                 </div>
                 <div class="modal-body" style="overflow-y: scroll; word-wrap: break-word;max-height:fit-content;">
-                    <div class="ActivitiesInformation">
+                    <div id="ActivitiesInformation_Modal" class="ActivitiesInformation">
                         <div class="activity-detail-content">
                           <span class="detail-label">活動名稱：</span>
-                          <span id="activity_title" class="detail-value">運動會</span>
+                          <span id="activity_title" class="detail-value">{{actibity_title}}</span>
                         </div>
                         <div class="activity-detail">
                             <span class="detail-label">發布型別：</span>
-                            <span id="activity_publish_type" class="detail-value">一般活動</span>
+                            <span id="activity_publish_type" class="detail-value">{{activity_publish_type}}</span>
                           </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動類型：</span>
-                          <span id="activity_type" class="detail-value">校級活動</span>
+                          <span id="activity_type" class="detail-value">{{activity_type}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動發起人：</span>
-                          <span id="activity_publisher_id" class="detail-value">xxx</span>
+                          <span id="activity_publisher_id" class="detail-value">{{activity_publisher_id}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動日期：</span>
-                          <span id="start_date" class="detail-value">2020/12/27</span>
+                          <span id="start_date" class="detail-value">{{start_date}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動時間：</span>
-                          <span id="Time" class="detail-value">oo:oo - oo:oo</span>
+                          <span id="Time" class="detail-value">{{Time}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動地點：</span>
-                          <span id="activity_location" class="detail-value">017教室</span>
+                          <span id="activity_location" class="detail-value">{{activity_location}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">目前參與人數：</span>
-                          <span id="participant_number" class="detail-value">120</span>
+                          <span id="participant_number" class="detail-value">{{participant_number}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數下限：</span>
-                          <span id="minimun_participant" class="detail-value">無</span>
+                          <span id="minimun_participant" class="detail-value">{{minimun_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數上限：</span>
-                          <span id="maximun_participant" class="detail-value">無</span>
+                          <span id="maximun_participant" class="detail-value">{{maximum_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動內容：</span>
-                          <span id="activity_detail" class="detail-value">ssdsxxxxxx</span>
+                          <span id="activity_detail" class="detail-value">{{activity-detail}}</span>
                         </div>
                     </div>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>

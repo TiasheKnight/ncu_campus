@@ -174,12 +174,12 @@ public class FriendHelper {
                 row += 1;
 
                 /** 將 ResultSet 之資料取出 */
-                int f_id = rs.getInt("id");
+                int id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int friend_user_id = rs.getInt("friend_user_id");
 
                 /** 將每一筆活動資料產生一名新Friend物件 */
-                f = new Friend(f_id, user_id, friend_user_id);
+                f = new Friend(id, user_id, friend_user_id);
                 /** 取出該名活動之資料並封裝至 JSONsonArray 內 */
                 jsa.put(f.getData());
             }

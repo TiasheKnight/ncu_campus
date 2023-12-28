@@ -121,7 +121,7 @@ public class FollowshipHelper {
 
         return response;
     }
-    public JSONObject getById(String Followship_id) {
+    public JSONObject getById(int id) {
     	Followship f = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -142,7 +142,7 @@ public class FollowshipHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, Followship_id);
+            pres.setInt(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -154,7 +154,6 @@ public class FollowshipHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
                 int follower_user_id = rs.getInt("follower_user_id");
                 int followed_user_id = rs.getInt("followed_user_id");
                 /** 將每一筆商品資料產生一名新Product物件 */
@@ -203,13 +202,13 @@ public class FollowshipHelper {
                     + " VALUES(?, ?, ?)";
 
             /** 取得所需之參數 */
-            int ID = followship.getID();
+            int id = followship.getID();
             int follower_user_id = followship.getFollower_User_ID();
             int followed_user_id = followship.getFollowed_User_ID();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, follower_user_id);
             pres.setInt(3, followed_user_id);
 
@@ -313,13 +312,13 @@ public class FollowshipHelper {
             /** SQL指令 */
             String sql = "Update `campus`.`Followship` SET `id` = ? ,`follower_user_id` = ? , `followed_user_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
-            int  ID = f.getID();
+            int  id = f.getID();
             int  follower_user_id = f.getFollower_User_ID();
             int  followed_user_id = f.getFollowed_User_ID();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, follower_user_id);
             pres.setInt(3, followed_user_id);
             /** 執行更新之SQL指令並記錄影響之行數 */
@@ -354,7 +353,7 @@ public class FollowshipHelper {
 
         return response;
     }
-    public JSONArray createByList(long Followship_ID, List<Followship> followship) {
+    public JSONArray createByList(int id, List<Followship> followship) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -363,7 +362,6 @@ public class FollowshipHelper {
         	Followship r = followship.get(i);
 
             /** 取得所需之參數 */
-            int  ID = r.getID();
             int  follower_user_id = r.getFollower_User_ID();
             int  followed_user_id = r.getFollowed_User_ID();
 
@@ -376,7 +374,7 @@ public class FollowshipHelper {
 
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setInt(1, ID);
+                pres.setInt(1, id);
                 pres.setInt(2, follower_user_id);
                 pres.setInt(3, followed_user_id);
 
@@ -391,8 +389,8 @@ public class FollowshipHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int f_id = rs.getInt(1);
+                    jsa.put(f_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/
@@ -436,14 +434,14 @@ public class FollowshipHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = rs.getInt("id");
+                int  id = rs.getInt("id");
                 int  follower_user_id = rs.getInt("follower_user_id");
                 int  followed_user_id = rs.getInt("followed_user_id");
 
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                f = new Followship(ID, follower_user_id, followed_user_id);
+                f = new Followship(id, follower_user_id, followed_user_id);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(f);
             }

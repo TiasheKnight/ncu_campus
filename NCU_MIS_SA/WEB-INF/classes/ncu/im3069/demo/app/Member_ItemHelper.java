@@ -123,7 +123,7 @@ public class Member_ItemHelper {
 
         return response;
     }
-    public JSONObject getById(String Member_Item_id) {
+    public JSONObject getById(int id) {
     	Member_Item mi = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -144,7 +144,7 @@ public class Member_ItemHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, Member_Item_id);
+            pres.setInt(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -156,12 +156,12 @@ public class Member_ItemHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
+            	int m_id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int item_id = rs.getInt("item_id");
                 int item_quantity = rs.getInt("item_quantity");
                 /** 將每一筆商品資料產生一名新Product物件 */
-                mi = new Member_Item(id, user_id, item_id,item_quantity);
+                mi = new Member_Item(m_id, user_id, item_id,item_quantity);
                 jsa.put(mi.getData());
             }
 
@@ -206,14 +206,14 @@ public class Member_ItemHelper {
                     + " VALUES(?, ?, ?,?)";
 
             /** 取得所需之參數 */
-            int ID = member_item.getID();
+            int id = member_item.getID();
             int user_id = member_item.getUser_ID();
             int item_id = member_item.getItem_ID();
             int item_quantity = member_item.getItem_Quantity();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, item_id);
             pres.setInt(3, item_quantity);
@@ -318,14 +318,14 @@ public class Member_ItemHelper {
             /** SQL指令 */
             String sql = "Update `campus`.`Member_Item` SET `id` = ? ,`user_id` = ? , `item_id`, `item_quantity` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
-            int  ID = r.getID();
+            int  id = r.getID();
             int  user_id = r.getUser_ID();
             int  item_id = r.getItem_ID();
             int  item_quantity = r.getItem_Quantity();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, item_id);
             pres.setInt(4, item_quantity);
@@ -361,7 +361,7 @@ public class Member_ItemHelper {
 
         return response;
     }
-    public JSONArray createByList(long Member_Item_ID, List<Member_Item> member_item) {
+    public JSONArray createByList(int id, List<Member_Item> member_item) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -370,7 +370,6 @@ public class Member_ItemHelper {
         	Member_Item mi = member_item.get(i);
 
             /** 取得所需之參數 */
-            int  ID = mi.getID();
             int  user_id = mi.getUser_ID();
             int  item_id = mi.getItem_ID();
             int  item_quantity = mi.getItem_Quantity();
@@ -384,7 +383,7 @@ public class Member_ItemHelper {
 
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setInt(1, ID);
+                pres.setInt(1, id);
                 pres.setInt(2, user_id);
                 pres.setInt(3, item_id);
                 pres.setInt(3, item_quantity);
@@ -400,8 +399,8 @@ public class Member_ItemHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int m_id = rs.getInt(1);
+                    jsa.put(m_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/
@@ -445,7 +444,7 @@ public class Member_ItemHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = rs.getInt("id");
+                int  id = rs.getInt("id");
                 int  user_id = rs.getInt("user_id");
                 int  item_id = rs.getInt("item_id");
                 int  item_quantity = rs.getInt("item_quantity");
@@ -453,7 +452,7 @@ public class Member_ItemHelper {
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                mi = new Member_Item(ID, user_id, item_id,item_quantity);
+                mi = new Member_Item(id, user_id, item_id,item_quantity);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(mi);
             }
