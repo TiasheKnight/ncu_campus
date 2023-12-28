@@ -18,7 +18,7 @@
             <div class="row mb-2 justify-content-center text-light d-flex flex-column align-items-center h-100" style="height: auto;">
                 <!-- Register.html Welcome Information -->
                 <div class="text-center mb-5">
-                    <h2 class="mt-3 font-monospace">Sing UP</h2>
+                    <h2 class="mt-3 font-monospace">Sign UP</h2>
                     <h2 class="mb-5" style="font-size: xx-large;color:darkkhaki">中央大學校園雷達</h2>    
                 </div>
                 <!-- Register input personal data -->
@@ -118,6 +118,7 @@
         var cellphone = $('#CellphoneInput').val();
         var password = $('#PasswordInput').val();
         var userName = $('#UserNameInput').val();
+        
         var register_data_object = {
             "lastName": lastName,
             "firstName": firstName,
@@ -132,7 +133,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/api/MemberController.do",
+            url: "/api/Member.do",
             data: register_data_string,
             crossDomain: true,
             cache: false,
