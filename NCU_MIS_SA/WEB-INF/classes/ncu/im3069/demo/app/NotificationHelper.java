@@ -68,7 +68,7 @@ public class NotificationHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Notification`";
+            String sql = "SELECT * FROM `campus`.`notification`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -140,7 +140,7 @@ public class NotificationHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Notification` WHERE `Notification`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`notification` WHERE `notification`.`id` = ?";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -204,7 +204,7 @@ public class NotificationHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Notification`(`id`, `user_id`, `activity_id`,`notification_title`,`notification_content`)"
+            String sql = "INSERT INTO `campus`.`notification`(`id`, `user_id`, `activity_id`,`notification_title`,`notification_content`)"
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -270,7 +270,7 @@ public class NotificationHelper {
             conn = DBMgr.getConnection();
 
             /** SQL指令 */
-            String sql = "DELETE FROM `campus`.`Notification` WHERE `id` = ? LIMIT 1";
+            String sql = "DELETE FROM `campus`.`notification` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -320,7 +320,7 @@ public class NotificationHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`Notification` SET `id` = ? ,`user_id` = ? , `activity_id` = ? WHERE `id` = ?";
+            String sql = "Update `campus`.`notification` SET `id` = ? ,`user_id` = ? , `activity_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
             int  id = n.getID();
             int  user_id = n.getUser_ID();
@@ -386,7 +386,7 @@ public class NotificationHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Notification`(`id`, `user_id`, `activity_id`,`notification_title`,`notification_content`)"
+                String sql = "INSERT INTO `campus`.`notification`(`id`, `user_id`, `activity_id`,`notification_title`,`notification_content`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -436,7 +436,7 @@ public class NotificationHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Notification` WHERE `Notification`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`notification` WHERE `notification`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
