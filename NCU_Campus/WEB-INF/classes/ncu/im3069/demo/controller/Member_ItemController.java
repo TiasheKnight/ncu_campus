@@ -29,13 +29,12 @@ public class Member_ItemController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        int ID = jso.getInt("id");
         int User_ID = jso.getInt("user_id");
         int Item_ID = jso.getInt("item_id");
         int Item_Quantity = 1;  // 一次只能購買一個
 
         // Create a new Member_Item instance for the purchase
-        Member_Item memberItem = new Member_Item(ID, User_ID, Item_ID, Item_Quantity);
+        Member_Item memberItem = new Member_Item(User_ID, Item_ID, Item_Quantity);
 
         // Perform the purchase
         JSONObject data = mih.create(memberItem);
@@ -47,16 +46,15 @@ public class Member_ItemController extends HttpServlet {
 
 
     public void doDelete(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        int ID = jso.getInt("id");
         int User_ID = jso.getInt("user_id");
         int Item_ID = jso.getInt("item_id");
         int Item_Quantity = jso.getInt("item_quantity");
 
-        Member_Item memberItem = new Member_Item(ID, User_ID, Item_ID, Item_Quantity);
+        Member_Item memberItem = new Member_Item(User_ID, Item_ID, Item_Quantity);
 
         JSONObject data = memberItem.update();
 
@@ -90,14 +88,15 @@ public class Member_ItemController extends HttpServlet {
         }
     }
 
-    private void responseMessage(HttpServletResponse response, int status, String message) throws IOException {
+    private void responseMessage(HttpServletRequest request, HttpServletResponse response, int status, String message) throws IOException {
         JSONObject resp = new JSONObject();
         resp.put("status", String.valueOf(status));
         resp.put("message", message);
         resp.put("response", output);
 
-        JsonReader jsr = new JsonReader(response);
+        JsonReader jsr = new JsonReader(request);
         jsr.response(resp, response);
     }
+
 }
 
