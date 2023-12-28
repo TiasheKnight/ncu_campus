@@ -69,7 +69,7 @@ public class Member_ItemHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Member_Item`";
+            String sql = "SELECT * FROM `campus`.`member_item`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -140,7 +140,7 @@ public class Member_ItemHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Member_Item` WHERE `Member_Item`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`member_item` WHERE `member_item`.`id` = ?";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -202,7 +202,7 @@ public class Member_ItemHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Member_Item`(`id`, `user_id`, `item_id`, `item_quantity`)"
+            String sql = "INSERT INTO `campus`.`member_item`(`id`, `user_id`, `item_id`, `item_quantity`)"
                     + " VALUES(?, ?, ?,?)";
 
             /** 取得所需之參數 */
@@ -266,7 +266,7 @@ public class Member_ItemHelper {
             conn = DBMgr.getConnection();
 
             /** SQL指令 */
-            String sql = "DELETE FROM `campus`.`Member_Item` WHERE `id` = ? LIMIT 1";
+            String sql = "DELETE FROM `campus`.`member_item` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -316,7 +316,7 @@ public class Member_ItemHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`Member_Item` SET `id` = ? ,`user_id` = ? , `item_id`, `item_quantity` = ? WHERE `id` = ?";
+            String sql = "Update `campus`.`member_item` SET `id` = ? ,`user_id` = ? , `item_id`, `item_quantity` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
             int  id = r.getID();
             int  user_id = r.getUser_ID();
@@ -378,7 +378,7 @@ public class Member_ItemHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Member_Item`(`id`, `user_id`, `item_id`, `item_quantity)"
+                String sql = "INSERT INTO `campus`.`member_item`(`id`, `user_id`, `item_id`, `item_quantity)"
                         + " VALUES(?, ?, ?,?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -427,7 +427,7 @@ public class Member_ItemHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Member_Item` WHERE `Member_Item`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`member_item` WHERE `member_item`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

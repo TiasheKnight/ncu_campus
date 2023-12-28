@@ -68,7 +68,7 @@ public class FollowshipHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Followship`";
+            String sql = "SELECT * FROM `campus`.`followship`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -138,7 +138,7 @@ public class FollowshipHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Followship` WHERE `Followship`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`followship` WHERE `followship`.`id` = ?";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -198,7 +198,7 @@ public class FollowshipHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Followship`(`id`, `follower_user_id`, `followed_user_id`)"
+            String sql = "INSERT INTO `campus`.`followship`(`id`, `follower_user_id`, `followed_user_id`)"
                     + " VALUES(?, ?, ?)";
 
             /** 取得所需之參數 */
@@ -260,7 +260,7 @@ public class FollowshipHelper {
             conn = DBMgr.getConnection();
 
             /** SQL指令 */
-            String sql = "DELETE FROM `campus`.`Followship` WHERE `id` = ? LIMIT 1";
+            String sql = "DELETE FROM `campus`.`followship` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -310,7 +310,7 @@ public class FollowshipHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`Followship` SET `id` = ? ,`follower_user_id` = ? , `followed_user_id` = ? WHERE `id` = ?";
+            String sql = "Update `campus`.`followship` SET `id` = ? ,`follower_user_id` = ? , `followed_user_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
             int  id = f.getID();
             int  follower_user_id = f.getFollower_User_ID();
@@ -369,7 +369,7 @@ public class FollowshipHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Followship`(`id`, `follower_user_id`, `followed_user_id`)"
+                String sql = "INSERT INTO `campus`.`followship`(`id`, `follower_user_id`, `followed_user_id`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -417,7 +417,7 @@ public class FollowshipHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Followship` WHERE `Followship`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`followship` WHERE `Followship`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
