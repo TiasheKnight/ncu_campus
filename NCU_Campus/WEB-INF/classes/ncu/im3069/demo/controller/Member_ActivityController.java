@@ -32,20 +32,21 @@ public class Member_ActivityController extends HttpServlet {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        String activityID = jsr.getParameter("activity_id");
         
+        String activityID = jsr.getParameter("activity_id");
+
         if (activityID.isEmpty()) {
-            JSONObject query = mah.getAll();
+            JSONArray query = mah.getMemberActivity(member_id);
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "所有會員活動資料取得成功");
             resp.put("response", query);
             jsr.response(resp, response);
         } else {
-        	int activityIDValue = Integer.parseInt(activityID);
-            JSONObject query = ah.getByID(activityID);
+            int activityIDValue = Integer.parseInt(activityID);
+            JSONObject query = ah.getByID(activityIDValue);
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "會員活動資料取得成功");
@@ -53,6 +54,7 @@ public class Member_ActivityController extends HttpServlet {
             jsr.response(resp, response);
         }
     }
+
 
     /**
      * 處理 Http Method 請求 DELETE 方法（刪除）。
@@ -67,9 +69,9 @@ public class Member_ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
-        int activityID = jso.getInt("activity_id");
+        int id = jso.getInt("activity_id");
         
-        JSONObject query = mah.deleteByID(activityID);
+        JSONObject query = ah.deleteByID(id);
         
         JSONObject resp = new JSONObject();
         resp.put("status", "200");
@@ -88,20 +90,22 @@ public class Member_ActivityController extends HttpServlet {
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
+        int ma_id = jso.getInt("id");
         int User_ID = jso.getInt("user_id");
         int Activity_ID = jso.getInt("activity_id");
         
-        Member_Activity ma = new Member_Activity(User_ID, Activity_ID);
+        // 使用正確的參數初始化 Member_Activity 物件
+        Member_Activity ma = new Member_Activity(ma_id, User_ID, Activity_ID);
         
         if (User_ID <= 0 || Activity_ID <= 0) {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
-            JSONObject data = mah.createByList(long activtiy_id, List<Member_Activity> memberactivity);
+            JSONArray data = mah.createByList(Activity_ID, Collections.singletonList(ma));
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
@@ -111,7 +115,10 @@ public class Member_ActivityController extends HttpServlet {
             jsr.response(resp, response);
         }
     }
+
 }
+
+
 
 
 
