@@ -1,12 +1,18 @@
 package ncu.im3069.demo.controller;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 import org.json.*;
 import ncu.im3069.demo.app.Member;
 import ncu.im3069.demo.app.MemberHelper;
+import ncu.im3069.demo.util.DBMgr;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/MemberController.do")
@@ -16,10 +22,10 @@ import ncu.im3069.tools.JsonReader;
  * MemberController類別（class）主要用於處理Member相關之Http請求（Request），繼承HttpServlet
  */
 public class MemberController extends HttpServlet {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    
+
     /** mh，MemberHelper之物件與Member相關之資料庫方法（Sigleton） */
     private MemberHelper mh =  MemberHelper.getHelper();
 
@@ -39,7 +45,7 @@ public class MemberController extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         String ID = jsr.getParameter("id");
-        
+
         if (ID.isEmpty()) {
             JSONObject query = mh.getAll();
             JSONObject resp = new JSONObject();
@@ -74,15 +80,15 @@ public class MemberController extends HttpServlet {
         // 透過JsonReader類別將Request之JSON格式資料解析並取回
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-        
+
         // 取出經解析到JSONObject之Request參數
         int deletingUserId = jso.getInt("id");
-        
+
         // 檢查管理員權限
         if (isAdmin(request)) {
             // 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件
             JSONObject query = mh.deleteByID(deletingUserId);
-            
+
             // 新建一個JSONObject用於將回傳之資料進行封裝
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
@@ -144,6 +150,81 @@ public class MemberController extends HttpServlet {
         message = "成功! 更新會員資料";
         output = data.toString();
         jsr.response(resp, response);
+    }
+
+    /**
+     * 處理Http Method請求POST方法（更新）
+     *
+     * @param request Servlet請求之HttpServletRequest之Request物件（前端到後端）
+     * @param response Servlet回傳之HttpServletResponse之Response物件（後端到前端）
+     * @throws ServletException the servlet exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+            JsonReader jsr = new JsonReader(request);
+            JSONObject jso = jsr.getObject();
+
+            String email = jso.getString("email");
+            String password = jso.getString("password");
+
+            // 進行帳號密碼驗證的邏輯，以下僅為示範，實際應用中需根據你的邏輯進行修改
+            boolean isValidLogin = validateLogin(email, password);
+
+            JSONObject resp = new JSONObject();
+            if (isValidLogin) {
+                resp.put("status", "success");
+                resp.put("message", "Login successful");
+            } else {
+                resp.put("status", "error");
+                resp.put("message", "Invalid email or password");
+            }
+
+            jsr.response(resp, response);
+        }
+
+    private boolean validateLogin(String email, String password) {
+
+        /** 儲存JDBC資料庫連線 */
+        Connection conn = null;
+
+        /** 儲存JDBC預準備之SQL指令 */
+        PreparedStatement pres = null;
+
+        /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
+        int row = -1;
+
+        String pwd = null;
+
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT `password` FROM `campus`.`members` WHERE `email` = ?";
+
+            /** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql);
+            pres.setString(1, email);
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            pwd = rs.getString("password");
+
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+
+        return email.equals(email) && pwd.equals(password);
     }
 }
 
