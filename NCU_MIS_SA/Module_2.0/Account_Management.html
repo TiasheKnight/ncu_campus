@@ -108,7 +108,7 @@
                                 請輸入有效的電話號碼。
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">確認</button>
+                        <button type="button" class="btn btn-primary" onclick="updateMember()">確認</button>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -156,5 +156,44 @@
             event.preventDefault();
         }
     });
+    
+    function updateMember() {
+        var name = $('#UserName_Edit').val(); // Modified: Use UserName_Edit instead of member_name
+        var email = $('#Email_Edit').val(); // Modified: Use Email_Edit instead of member_email
+        var lastName = $('#LastName_Edit').val(); // Modified: Use LastName_Edit instead of member_name
+        var firstName = $('#FirstName_Edit').val(); // Modified: Use FirstName_Edit instead of member_name
+        var birthday = $('#Birthday_Edit').val(); // Modified: Use Birthday_Edit instead of member_name
+        var cellphone = $('#Cellphone_Edit').val(); // Modified: Use Cellphone_Edit instead of member_name
+        
+        $('#UserName').text(name);
+        $('#LastName').text(lastName);
+        $('#FirstName').text(firstName);
+        $('#Birthday').text(birthday);
+        $('#Email').text(email);
+        $('#Cellphone').text(cellphone);
+
+		var updatedMember = new Member(firstName, lastName, birthday, email, name, cellphone, /* password */);
+        
+		$.ajax({
+            type: "PUT",
+            url: "api/member.do", // Modify the URL accordingly
+            data: updatedMember,
+            success: function (response) {
+                console.log(response);
+                if (response.status == 200) {
+                    // Modified: Update SQL log and fetch member details again
+                    updateSQLTable(response.response);
+                    getMember();
+                    $('#EditPersonalInformationModal').modal('hide');
+                }
+            },
+            error: function () {
+                alert("無法連線到伺服器！");
+            }
+        });
+
+        
+        event.preventDefault();
+    }
 </script>
 </html>
