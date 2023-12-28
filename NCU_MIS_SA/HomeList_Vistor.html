@@ -165,9 +165,10 @@
     }
     
     function updateActivityTable(data) {
-        $("#table > tbody").empty();
+        $("#activityTable > tbody").empty();
         var table_html = '';
         $.each(data, function(index, value) {
+			console.log(value['activity_name']);
             table_html += '<tr>';
             table_html += '<td>' + value['activity_name'] + '</td>';
             table_html += '<td>' + value['activity_type'] + '</td>';
@@ -178,12 +179,12 @@
             table_html += '<td>' + value['activity_participant'] + '</td>';
             table_html += '<td>' + value['maximun_participant'] + '</td>';    
             table_html += '<td><div class="btn-group d-flex" role="group">';
-            table_html += '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail">'+ value['id'] +'詳細內容</button>';
+            table_html += '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail" id = "'+ value['id'] + '">' +'詳細內容</button>';
             table_html += '<button class="btn btn-primary btn-sm" style="background-color: gray;">參加</button>';
             table_html += '</div></td>';
             table_html += '<tr>';
         })
-        $("#table > tbody").append(table_html);
+        $("#activityTable > tbody").append(table_html);
     }
 
 
