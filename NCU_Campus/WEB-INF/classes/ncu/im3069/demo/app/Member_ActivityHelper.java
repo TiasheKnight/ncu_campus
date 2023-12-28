@@ -86,7 +86,7 @@ public class Member_ActivityHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    long id = rs.getLong(1);
+                    int id = rs.getInt(1);
                     jsa.put(id);
                 }
             } catch (SQLException e) {
@@ -132,7 +132,7 @@ public class Member_ActivityHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int ma_id = rs.getInt("id");
+                int id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int activity_id = rs.getInt("activity_id");
 
