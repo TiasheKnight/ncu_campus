@@ -58,13 +58,14 @@ public class Member_OrganizationController extends HttpServlet {
             throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-
-        Organization_ID = jso.getInt("organization_id");
-        User_ID = jso.getInt("user_id");
-        Authority = jso.getString("authority");
+        
+        int ID = jso.getInt("id");
+        int Organization_ID = jso.getInt("organization_id");
+        int User_ID = jso.getInt("user_id");
+        String Authority = jso.getString("authority");
 
         // 建立Member_Organization物件
-        Member_Organization mo = new Member_Organization(Organization_ID, User_ID, Authority);
+        Member_Organization mo = new Member_Organization(ID, Organization_ID, User_ID, Authority);
 
         // 新增組織資料
         JSONObject data = moh.create(mo);
