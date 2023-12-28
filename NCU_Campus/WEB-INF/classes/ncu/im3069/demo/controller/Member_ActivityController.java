@@ -37,7 +37,7 @@ public class Member_ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         
         String activityID = jsr.getParameter("activity_id");
-        int member_id = jsr.getParameter("member_id");
+        int member_id = Integer.parseInt(jsr.getParameter("member_id"));
 
         if (activityID.isEmpty()) {
             JSONArray query = mah.getMemberActivity(member_id);
@@ -108,7 +108,7 @@ public class Member_ActivityController extends HttpServlet {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
-            JSONArray data = mah.createByList(activtiy_id, memberid);
+            JSONArray data = mah.createByList(Activity_ID, memberid);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
