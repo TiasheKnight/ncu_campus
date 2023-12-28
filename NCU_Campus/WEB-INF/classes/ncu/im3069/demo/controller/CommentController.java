@@ -52,7 +52,7 @@ public class CommentController extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        Activity_ID = jsr.getInt("activity_id");
+        int Activity_ID = jsr.getInt("activity_id");
 
         // 根據指定的活動ID取得該活動的留言資料
         JSONObject query = ch.getByActivityID(Activity_ID);
@@ -81,13 +81,13 @@ public class CommentController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        Activity_ID = jso.getInt("activity_id");
-        User_ID = jso.getInt("user_id");
-        Comment = jso.getString("comment");
-        Time = jso.getInt("time");
+        int Activity_ID = jso.getInt("activity_id");
+        int User_ID = jso.getInt("user_id");
+        String Comment = jso.getString("comment");
+        String Time = jso.getInt("time");
 
         // 建立Comment物件
-        Comment comment = new Comment(User_id, Activity_ID, Comment, Time);
+        Comment comment = new Comment(Activity_ID,User_ID, Comment, Time);
 
         // 新增留言資料
         JSONObject data = ch.create(comment);
@@ -111,10 +111,10 @@ public class CommentController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        ID = jso.getInt("comment_id");
+        int ID = jso.getInt("comment_id");
 
         // 刪除留言資料
-        boolean result = ch.delete(id);
+        boolean result = ch.delete(ID);
 
         // 建立回傳結果的JSONObject
         if (result) {
@@ -140,7 +140,7 @@ public class CommentController extends HttpServlet {
         resp.put("message", message);
         resp.put("response", output);
 
-        JsonReader jsr = new JsonReader(request);
+        //JsonReader jsr = new JsonReader(request);
         jsr.response(resp, response);
     }
 }
