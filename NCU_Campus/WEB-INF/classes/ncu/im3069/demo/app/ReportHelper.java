@@ -121,7 +121,7 @@ public class ReportHelper {
 
         return response;
     }
-    public JSONObject getById(int Report_id) {
+    public JSONObject getByID(int id) {
     	Report r = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -142,7 +142,7 @@ public class ReportHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setint(1, Report_id);
+            pres.setint(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -203,13 +203,13 @@ public class ReportHelper {
                     + " VALUES(?, ?, ?)";
 
             /** 取得所需之參數 */
-            int ID = report.getID();
-            int user_id = report.getUser_ID();
-            int activity_id = report.getActivity_ID();
+            int id = report.getid();
+            int user_id = report.getUser_id();
+            int activity_id = report.getActivity_id();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
 
@@ -313,13 +313,13 @@ public class ReportHelper {
             /** SQL指令 */
             String sql = "Update `campus`.`Report` SET `id` = ? ,`user_id` = ? , `activity_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
-            int  ID = r.getID();
-            int  user_id = r.getUser_ID();
-            int  activity_id = r.getActivity_ID();
+            int  id = r.getid();
+            int  user_id = r.getUser_id();
+            int  activity_id = r.getActivity_id();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
             /** 執行更新之SQL指令並記錄影響之行數 */
@@ -354,7 +354,7 @@ public class ReportHelper {
 
         return response;
     }
-    public JSONArray createByList(long Report_ID, List<Report> report) {
+    public JSONArray createByList(long id, List<Report> report) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -363,9 +363,9 @@ public class ReportHelper {
         	Report r = report.get(i);
 
             /** 取得所需之參數 */
-            int  ID = r.getID();
-            int  user_id = r.getUser_ID();
-            int  activity_id = r.getActivity_ID();
+            int  id = r.getid();
+            int  user_id = r.getUser_id();
+            int  activity_id = r.getActivity_id();
 
             try {
                 /** 取得資料庫之連線 */
@@ -376,7 +376,7 @@ public class ReportHelper {
 
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setInt(1, ID);
+                pres.setInt(1, id);
                 pres.setInt(2, user_id);
                 pres.setInt(3, activity_id);
 
@@ -408,7 +408,7 @@ public class ReportHelper {
 
         return jsa;
     }
-    public ArrayList<Report> getReportByMemberId(int member_id) {
+    public ArrayList<Report> getReportByMemberid(int member_id) {
         ArrayList<Report> result = new ArrayList<Report>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -436,14 +436,14 @@ public class ReportHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = rs.getInt("id");
+                int  id = rs.getInt("id");
                 int  user_id = rs.getInt("user_id");
                 int  activity_id = rs.getInt("activity_id");
 
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                r = new Report(ID, user_id, activity_id);
+                r = new Report(id, user_id, activity_id);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(r);
             }

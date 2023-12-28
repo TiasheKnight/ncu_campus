@@ -53,7 +53,7 @@ public class Member_OrganizationHelper {
         return moh;
     }
 
-    public JSONArray createByList(long organization_id, List<Member_Organization> memberorganization) {
+    public JSONArray createByList(int organization_id, List<Member_Organization> memberorganization) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -89,7 +89,7 @@ public class Member_OrganizationHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    long id = rs.getLong(1);
+                    int id = rs.getInt(1);
                     jsa.put(id);
                 }
             } catch (SQLException e) {
