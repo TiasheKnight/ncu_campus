@@ -134,13 +134,13 @@ public class CommentController extends HttpServlet {
      * @param message 回傳的訊息
      * @throws IOException Signals that an I/O exception has occurred.
      */
-    private void responseMessage(HttpServletResponse response, int status, String message) throws IOException {
+    private void responseMessage(HttpServletRequest request,HttpServletResponse response, int status, String message) throws IOException {
         JSONObject resp = new JSONObject();
         resp.put("status", String.valueOf(status));
         resp.put("message", message);
         resp.put("response", output);
 
-        //JsonReader jsr = new JsonReader(request);
+        JsonReader jsr = new JsonReader(request);
         jsr.response(resp, response);
     }
 }
