@@ -123,7 +123,7 @@ public class NotificationHelper {
 
         return response;
     }
-    public JSONObject getById(String Notification_id) {
+    public JSONObject getById(int n_id) {
     	Notification n = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -144,7 +144,7 @@ public class NotificationHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, Notification_id);
+            pres.setInt(1, n_id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -208,7 +208,7 @@ public class NotificationHelper {
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
-            int ID = Notification.getID();
+            int id = Notification.getID();
             int user_id = Notification.getUser_ID();
             int activity_id = Notification.getActivity_ID();
             String notification_title=Notification.getNotification_Title();
@@ -217,7 +217,7 @@ public class NotificationHelper {
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
             pres.setString(4, notification_title);
@@ -322,7 +322,7 @@ public class NotificationHelper {
             /** SQL指令 */
             String sql = "Update `campus`.`Notification` SET `id` = ? ,`user_id` = ? , `activity_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
-            int  ID = n.getID();
+            int  id = n.getID();
             int  user_id = n.getUser_ID();
             int  activity_id = n.getActivity_ID();
             String notification_title=n.getNotification_Title();
@@ -331,7 +331,7 @@ public class NotificationHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, ID);
+            pres.setInt(1, id);
             pres.setInt(2, user_id);
             pres.setInt(3, activity_id);
             pres.setString(4, notification_title);
@@ -368,7 +368,7 @@ public class NotificationHelper {
 
         return response;
     }
-    public JSONArray createByList(long Notification_ID, List<Notification> Notification) {
+    public JSONArray createByList(long n_id, List<Notification> Notification) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -377,7 +377,7 @@ public class NotificationHelper {
         	Notification n = Notification.get(i);
 
             /** 取得所需之參數 */
-        	int ID = n.getID();
+        	int id = n.getID();
             int user_id = n.getUser_ID();
             int activity_id = n.getActivity_ID();
             String notification_title=n.getNotification_Title();
@@ -392,7 +392,7 @@ public class NotificationHelper {
 
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-                pres.setInt(1, ID);
+                pres.setInt(1, id);
                 pres.setInt(2, user_id);
                 pres.setInt(3, activity_id);
                 pres.setString(4, notification_title);
@@ -454,7 +454,7 @@ public class NotificationHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
 
                 /** 將 ResultSet 之資料取出 */
-                int  ID = rs.getInt("id");
+                int  id = rs.getInt("id");
                 int  user_id = rs.getInt("user_id");
                 int  activity_id = rs.getInt("activity_id");
                 String notification_title=rs.getString("notification_title");
@@ -464,7 +464,7 @@ public class NotificationHelper {
                 /** 將參數回填至SQL指令當中 */
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                n = new Notification(ID, user_id, activity_id,notification_title,notification_content);
+                n = new Notification(id, user_id, activity_id,notification_title,notification_content);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 result.add(n);
             }

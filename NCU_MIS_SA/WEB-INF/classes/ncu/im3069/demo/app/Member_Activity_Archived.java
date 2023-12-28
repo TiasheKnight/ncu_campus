@@ -35,8 +35,8 @@ public class Member_Activity_Archived {
     }
 
     public JSONObject update() {
-        JSONObject data = new JSONObject();
-        // ...
+        JSONObject data = new JSONObject();        
+
 
         return data;
     }

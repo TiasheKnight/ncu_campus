@@ -1,8 +1,8 @@
 package ncu.im3069.demo.app;
 import ncu.im3069.tools.JsonReader;
 
+
 import org.json.*;
-import java.io;
 import java.util.*;
 import javax.servlet.http.*;
 import javax.servlet.*;
@@ -20,13 +20,6 @@ public class Message {
         this.Message_Content = Message_Content;
         this.Message_TimeStamp = Message_TimeStamp;
         update();
-    }
-    public Message(int ID, int User_ID, int Friends_User_ID, String Message_Content, String Message_TimeStamp) {
-        this.ID = ID;
-        this.User_ID = User_ID;
-        this.Friends_User_ID = Friends_User_ID;
-        this.Message_Content = Message_Content;
-        this.Message_TimeStamp = Message_TimeStamp;
     }
 
     public int getID() {
