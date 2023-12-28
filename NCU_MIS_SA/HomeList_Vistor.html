@@ -156,7 +156,7 @@
                     if(response.status == 200){
                         updateActivityTable(response.response.data);
                     }
-                    console.log(response.response);
+                    console.log(response.response.data);
                 },
                 error: function () {
                     alert("無法連線到伺服器！");
@@ -170,12 +170,12 @@
         $.each(data, function(index, value) {
             table_html += '<tr>';
             table_html += '<td>' + value['activity_name'] + '</td>';
-            table_html += '<td>' + value['activity_title'] + '</td>';
+            table_html += '<td>' + value['activity_type'] + '</td>';
             table_html += '<td>' + value['activity_publisher_id'] + '</td>';
-            table_html += '<td>' + value['activity_location'] + '</td>';
+            table_html += '<td>' + value['activity_place'] + '</td>';
             table_html += '<td>' + value['start_date'] + '</td>';
             table_html += '<td>' + value['start_time'] + '-' + value['end_time'] + '</td>';             
-            table_html += '<td>' + value['participant_number'] + '</td>';
+            table_html += '<td>' + value['activity_participant'] + '</td>';
             table_html += '<td>' + value['maximun_participant'] + '</td>';    
             table_html += '<td><div class="btn-group d-flex" role="group">';
             table_html += '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail">'+ value['id'] +'詳細內容</button>';
