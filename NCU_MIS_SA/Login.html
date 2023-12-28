@@ -69,8 +69,12 @@
 
       //檢查是否有輸入密碼
       const isValidPassword = passwordInput.value.trim() !== "";
-
+      
       if(!isValidEmail){
+		  console.log(passwordInput);
+		  console.log(isValidEmail);
+		  console.log(passwordInput.value);
+		  console.log(isValidPassword);
           // stop submit behavior //阻止表單預設的提交行為
           event.preventDefault();
       }
@@ -100,7 +104,26 @@
                 console.log("Login failed");
             }
         };
-
+        
+    $.ajax({
+        type: "POST",
+        url: "api/member.do",
+        data: data_string,
+        crossDomain: true,
+        cache: false,
+        dataType: 'json',
+        timeout: 5000,
+        success: function (response) {
+            $('#flashMessage').html(response.message);
+            $('#flashMessage').show();
+            if(response.status == 200){
+                updateSQLTable(response.response);
+            }
+        },
+        error: function () {
+            alert("無法連線到伺服器！");
+        }
+    });
         xhr.onerror = function () {
             console.error("Error sending login request");
         };
