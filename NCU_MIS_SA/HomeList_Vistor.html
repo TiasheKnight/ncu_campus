@@ -87,7 +87,7 @@
                     <div id="ActivitiesInformation_Modal" class="ActivitiesInformation">
                         <div class="activity-detail-content">
                           <span class="detail-label">活動名稱：</span>
-                          <span id="activity_title" class="detail-value">{{actibity_title}}</span>
+                          <span id="activity_title" class="detail-value">{{activity_title}}</span>
                         </div>
                         <div class="activity-detail">
                             <span class="detail-label">發布型別：</span>
@@ -119,11 +119,11 @@
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數下限：</span>
-                          <span id="minimun_participant" class="detail-value">{{minimun_participant}}</span>
+                          <span id="minimum_participant" class="detail-value">{{minimun_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數上限：</span>
-                          <span id="maximun_participant" class="detail-value">{{maximum_participant}}</span>
+                          <span id="maximum_participant" class="detail-value">{{maximum_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動內容：</span>
@@ -155,16 +155,16 @@
                 success: function (response) {
                     if(response.status == 200){
                         updateActivityTable(response.response.data);
-                        // 監聽活動詳細內容按鈕的點擊事件
-                        $(".activity-detail-btn").on("click", function() {
-                        // 獲取按鈕上的活動ID
-                        var activityId = $(this).attr("id");
-                        // 直接在這裡處理模態框內容更新，不需要再發送請求
-                        var activityDetail = getActivityDetailById(response.response.data, activityId);
-                        updateActivityModalContent(activityDetail);
-                        // 顯示模態框
-                        $("#ActivityDetail").modal("show");
-                });
+                            // 監聽活動詳細內容按鈕的點擊事件
+                            $(".activity-detail-btn").on("click", function() {
+                                // 獲取按鈕上的活動ID
+                                var activityId = $(this).attr("id");
+                                // 直接在這裡處理模態框內容更新，不需要再發送請求
+                                var activityDetail = getActivityDetailById(response.response.data, activityId);
+                                updateActivityModalContent(activityDetail);
+                                // 顯示模態框
+                                $("#ActivityDetail").modal("show");
+                        });
                     }
                     console.log(response.response.data);
                 },
@@ -173,12 +173,25 @@
                 }
         });
     }
+    // 根據活動ID從資料中獲取詳細內容
+    function getActivityDetailById(data, activityId) {
+        var result = null;
+        var breakLoop = false;
+        $.each(data, function(index, value) {
+            if (value['id'] === activityId || breakLoop === false) {
+                result = value;
+                console.log(activityId);
+                console.log(result);
+                breakLoop = true;
+            }
+        });
+        return result;
+    }
     
     function updateActivityTable(data) {
         $("#activityTable > tbody").empty();
         var table_html = '';
         $.each(data, function(index, value) {
-			console.log(value['activity_name']);
             table_html += '<tr>';
             table_html += '<td>' + value['activity_name'] + '</td>';
             table_html += '<td>' + value['activity_type'] + '</td>';
@@ -186,31 +199,23 @@
             table_html += '<td>' + value['activity_place'] + '</td>';
             table_html += '<td>' + value['start_date'] + '</td>';
             table_html += '<td>' + value['start_time'] + '-' + value['end_time'] + '</td>';             
-            table_html += '<td>' + value['participant_number'] + '</td>';
-            table_html += '<td>' + value['maximun_participant'] + '</td>';    
+            table_html += '<td>' + value['activity_participant'] + '</td>';
+            table_html += '<td>' + value['maximum_participant'] + '</td>';    
             table_html += '<td><div class="btn-group d-flex" role="group">';
-            table_html += '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#ActivityDetail" id = "'+ value['id'] + '">' +'詳細內容</button>';
+            table_html += '<button type="button" class="activity-detail-btn btn btn-primary btn-sm" id = "'+ value['id'] + '">' +'詳細內容</button>';
             table_html += '<button class="btn btn-primary btn-sm" style="background-color: gray;">參加</button>';
             table_html += '</div></td>';
             table_html += '<tr>';
         })
         $("#activityTable > tbody").append(table_html);
-    
-    	// // 監聽活動詳細內容按鈕的點擊事件
-    	// $(".activity-detail-btn").on("click", function() {
-        // // 獲取按鈕上的活動ID
-        // var activityId = $(this).attr("id");
-        // // 根據活動ID發送請求獲取詳細內容，並更新模態框內容
-        // getActivityDetail(activityId);
-    	// });
     }
 
     // 更新活動詳細資訊模態框內容
     function updateActivityModalContent(activityDetail) {
-    // 在這裡更新模態框內容，例如：
-    $("#activity_title").text(activityDetail['activity_title']);
-    $("#activity_publish_type").text(activityDetail['activity_publish_type']);
-    // ...（更新其他詳細內容）
+        // 在這裡更新模態框內容，例如：
+        $("#activity_title").text(activityDetail['activity_title']);
+        $("#activity_publish_type").text(activityDetail['activity_publish_type']);
+        // ...（更新其他詳細內容）
     }
 
 

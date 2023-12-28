@@ -102,14 +102,15 @@ public class Member_ActivityController extends HttpServlet {
         
         // 使用正確的參數初始化 Member_Activity 物件
         Member_Activity ma = new Member_Activity(ma_id, User_ID, Activity_ID);
-        ArrayList<Member_Activity> memberid = new ArrayList<Member_Activity>(memberid);
+        //原本長這樣ArrayList<Member_Activity> memberid = new ArrayList<Member_Activity>(memberid);
+        ArrayList<Member_Activity> memberid = new ArrayList<>(memberid);
+
         
         if (User_ID <= 0 || Activity_ID <= 0) {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
             JSONArray data = mah.createByList(Activity_ID, memberid);
-            
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "會員活動新增成功");
@@ -120,4 +121,3 @@ public class Member_ActivityController extends HttpServlet {
     }
 
 }
-

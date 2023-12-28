@@ -19,7 +19,7 @@
                 <div class="text-center">
                     <h2 class="mt-3">Welcome</h2>
                     <h2 class="mt-3 font-monospace">Sign IN</h2>
-                    <h2 class="mb-5" style="font-size: xx-large;color:darkkhaki">中央大學校園雷達</h2>    
+                    <h2 class="mb-5" style="font-size: xx-large;color:darkkhaki">中央大學校園雷達</h2>
                 </div>
                 <!-- Input area -->
                 <!-- <form id="loginForm" action="HomeList_NormalUser.html" method="post"> -->
@@ -57,19 +57,59 @@
 <!-- JS function -->
 <script>
     const emailInput = document.getElementById("EmailInput");
+    const passwordInput = document.getElementById("PasswordInput");
     const emailValidationFeedback = document.getElementById("emailValidationFeedback");
+
     document.getElementById("loginForm").addEventListener("submit", function (event) {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const isValidEmail = emailPattern.test(emailInput.value);
-        emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
-                // Check wether email is fit
-        if(!isValidEmail){
-            // stop submit behavior /阻止表單預設的提交行為
-            event.preventDefault();
-        } else {
-            console.log("Yes")
-            // window.location.replace = "HomeList_NormaUser.html"
-        }
+
+      //檢查email格式
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValidEmail = emailPattern.test(emailInput.value);
+      emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
+
+      //檢查是否有輸入密碼
+      const isValidPassword = passwordInput.value.trim() !== "";
+
+      if(!isValidEmail){
+          // stop submit behavior //阻止表單預設的提交行為
+          event.preventDefault();
+      }
+      else if (isValidEmail && isValidPassword) {
+        loginUser(emailInput.value, passwordInput.value);
+      }
+
+      function loginUser(email, passwword){
+        const xhr = new XMLHttpRequest();
+        const loginEndpoint = "/api/MemberController.do";
+
+        xhr.open("POST", loginEndpoint, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                // 登入成功
+                console.log("Login successful");
+                if (xhr.authority == "Member"){
+                  window.location.replace("HomeList_NormaUser.html");
+                }
+                else if(xhr.authority == "SystemManager"){
+                  window.location.replace("HomeList_SystemManager.html");
+                }
+            } else {
+                // 登入失敗
+                console.log("Login failed");
+            }
+        };
+
+        xhr.onerror = function () {
+            console.error("Error sending login request");
+        };
+
+        // 將帳號密碼轉成 JSON 格式發送到後端
+        const data = JSON.stringify({ email: email, password: password });
+        xhr.send(data);
+      }
+
     });
 </script>
 </html>
