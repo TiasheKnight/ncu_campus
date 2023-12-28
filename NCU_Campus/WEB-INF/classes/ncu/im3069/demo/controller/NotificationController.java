@@ -57,7 +57,7 @@ public class NotificationController extends HttpServlet {
 
     // 處理 Http Method 請求 GET 方法（取得通知）
     public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
+            throws ServletException, IOException {
         // 解析 JSON 格式的 Request 參數
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
@@ -70,14 +70,14 @@ public class NotificationController extends HttpServlet {
 
         // 設定回傳訊息和輸出
         message = "成功! 取得通知";
-        output = query .toString();
-        
+        output = query.toString();
+
         // 回傳訊息
         responseMessage(response, 200, message);
     }
 
     // 回傳訊息的方法
-    private void responseMessage(HttpServletRequest request,HttpServletResponse response, int status, String message) throws IOException {
+    private void responseMessage(HttpServletRequest request, HttpServletResponse response, int status, String message) throws IOException {
         JSONObject resp = new JSONObject();
         resp.put("status", String.valueOf(status));
         resp.put("message", message);
@@ -87,6 +87,7 @@ public class NotificationController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         jsr.response(resp, response);
     }
+       
 }
 
 
