@@ -69,7 +69,7 @@ public class Member {
         update();
     }
     // 註冊帳號所新增   
-    public Member(String first_name,String last_name,String birthday) {
+    public Member(String first_name,String last_name,String birthdaym, String email,String password, String user_name) {
         this.email = email;
         this.password= password;
         update();
