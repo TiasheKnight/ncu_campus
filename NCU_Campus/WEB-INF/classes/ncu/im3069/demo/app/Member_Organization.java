@@ -1,8 +1,8 @@
 package ncu.im3069.demo.app;
 import ncu.im3069.tools.JsonReader;
 
+
 import org.json.*;
-import java.io;
 import java.util.*;
 import javax.servlet.http.*;
 import javax.servlet.*;
@@ -11,7 +11,7 @@ import java.sql.*;
 public class Member_Organization {
     private int ID, Organization_ID, User_ID;
     private String Authority;
-    private Organization org;
+    private ArrayList<Member_Organization> org = new ArrayList<Member_Organization>();
     private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
 
     public Member_Organization(int ID, int Organization_ID, int User_ID, String Authority) {
@@ -23,8 +23,9 @@ public class Member_Organization {
     } //Instantiates 一個新的Member_Organization 物件，採用Overload方法進行，此建構子用於
 
     private void getOrganizationFromDB(int Organization_ID){
-        String id = String.valueOf(Organization_ID);
-        this.org = MOH.getByID(id);
+        ArrayList<Member_Organization> data = MOH.getMemberOrganizationbyId(Organization_ID);
+        org = data;
+
     } //從DB中取得組織
 
     public int getID() {
