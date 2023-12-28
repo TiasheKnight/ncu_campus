@@ -9,13 +9,13 @@ import ncu.im3069.demo.app.Member_Activity;
 import ncu.im3069.demo.app.Member_ActivityHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/Member_Activity_Controller.do")
+@WebServlet("/api/Member_ActivityController.do")
 
 /**
- * The Class Member_Activity_Controller.
+ * The Class Member_ActivityController.
  * Member_Activity_Controller 類別（class）主要用於處理 Member_Activity 相關之 Http 請求（Request），繼承 HttpServlet
  */
-public class Member_Activity_Controller extends HttpServlet {
+public class Member_ActivityController extends HttpServlet {
     
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -34,9 +34,9 @@ public class Member_Activity_Controller extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
-        String ID = jsr.getParameter("id");
+        String activityID = jsr.getParameter("activity_id");
         
-        if (ID.isEmpty()) {
+        if (activityID.isEmpty()) {
             JSONObject query = mah.getAll();
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
@@ -44,7 +44,8 @@ public class Member_Activity_Controller extends HttpServlet {
             resp.put("response", query);
             jsr.response(resp, response);
         } else {
-            JSONObject query = mah.getByID(id);
+        	int activityIDValue = Integer.parseInt(activityID);
+            JSONObject query = ah.getByID(activityID);
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "會員活動資料取得成功");
@@ -65,9 +66,10 @@ public class Member_Activity_Controller extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-        int ID = jso.getInt("id");
         
-        JSONObject query = mah.deleteByID(ID);
+        int activityID = jso.getInt("activity_id");
+        
+        JSONObject query = mah.deleteByID(activityID);
         
         JSONObject resp = new JSONObject();
         resp.put("status", "200");
@@ -93,13 +95,13 @@ public class Member_Activity_Controller extends HttpServlet {
         int User_ID = jso.getInt("user_id");
         int Activity_ID = jso.getInt("activity_id");
         
-        Member_Activity ma = new Member_Activity(user_id, activity_id);
+        Member_Activity ma = new Member_Activity(User_ID, Activity_ID);
         
         if (User_ID <= 0 || Activity_ID <= 0) {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
-            JSONObject data = mah.create(ma);
+            JSONObject data = mah.createByList(long activtiy_id, List<Member_Activity> memberactivity);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
@@ -110,4 +112,6 @@ public class Member_Activity_Controller extends HttpServlet {
         }
     }
 }
+
+
 
