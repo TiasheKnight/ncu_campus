@@ -68,7 +68,7 @@ public class ReportHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Report`";
+            String sql = "SELECT * FROM `campus`.`report`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -138,7 +138,7 @@ public class ReportHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Report` WHERE `Report`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`report` WHERE `report`.`id` = ?";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -199,7 +199,7 @@ public class ReportHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Report`(`id`, `user_id`, `activity_id`)"
+            String sql = "INSERT INTO `campus`.`report`(`id`, `user_id`, `activity_id`)"
                     + " VALUES(?, ?, ?)";
 
             /** 取得所需之參數 */
@@ -261,7 +261,7 @@ public class ReportHelper {
             conn = DBMgr.getConnection();
 
             /** SQL指令 */
-            String sql = "DELETE FROM `campus`.`Report` WHERE `id` = ? LIMIT 1";
+            String sql = "DELETE FROM `campus`.`report` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -311,7 +311,7 @@ public class ReportHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`Report` SET `id` = ? ,`user_id` = ? , `activity_id` = ? WHERE `id` = ?";
+            String sql = "Update `campus`.`report` SET `id` = ? ,`user_id` = ? , `activity_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
             int  ID = r.getID();
             int  user_id = r.getUser_ID();
@@ -371,7 +371,7 @@ public class ReportHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Report`(`id`, `user_id`, `activity_id`)"
+                String sql = "INSERT INTO `campus`.`report`(`id`, `user_id`, `activity_id`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -419,7 +419,7 @@ public class ReportHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Report` WHERE `Report`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`report` WHERE `report`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
