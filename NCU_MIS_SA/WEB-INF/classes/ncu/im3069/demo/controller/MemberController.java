@@ -172,6 +172,9 @@ public class MemberController extends HttpServlet {
             String email = jso.getString("email");
             String password = jso.getString("password");
             String userName = jso.getString("username");
+            
+            // 註冊以新建帳號
+            Member m = new Member(lastName,firstName,birthday,email,password,userName);
             // 進行帳號密碼驗證，以及獲取使用者權限
             JSONObject loginResult = validateLogin(email, password);
 

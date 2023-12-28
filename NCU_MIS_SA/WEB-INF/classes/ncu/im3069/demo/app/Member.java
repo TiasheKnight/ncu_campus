@@ -68,6 +68,12 @@ public class Member {
         this.phone = phone;
         update();
     }
+    // 註冊帳號所新增   
+    public Member(String first_name,String last_name,String birthday) {
+        this.email = email;
+        this.password= password;
+        update();
+    }
     
     public Member(String email,String password) {
         this.email = email;

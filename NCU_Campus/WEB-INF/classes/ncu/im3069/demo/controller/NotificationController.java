@@ -52,7 +52,7 @@ public class NotificationController extends HttpServlet {
         output = data.toString();
         
         // 回傳訊息
-        responseMessage(response, 200, message);
+        jsr.response(response, 200, message);
     }
 
     // 處理 Http Method 請求 GET 方法（取得通知）
@@ -69,11 +69,11 @@ public class NotificationController extends HttpServlet {
         JSONObject query = nh.getByUserID(User_ID);
 
         // 設定回傳訊息和輸出
-        message = "成功! 取得通知";
-        output = query.toString();
-
         // 回傳訊息
-        responseMessage(response, 200, message);
+        resp.put("status", String.valueOf(status));
+        resp.put("message", 成功! 取得通知);
+        resp.put("response", output);
+        jsr.response(resp,response);
     }
 
     // 回傳訊息的方法
