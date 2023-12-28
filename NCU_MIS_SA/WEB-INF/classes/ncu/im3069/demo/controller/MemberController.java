@@ -179,7 +179,7 @@ public class MemberController extends HttpServlet {
             jsr.response(loginResult, response);
     }
 
-    private boolean validateLogin(String email, String password) {
+    private JSONObject validateLogin(String email, String password) {
 
         /** 儲存JDBC資料庫連線 */
         Connection conn = null;
