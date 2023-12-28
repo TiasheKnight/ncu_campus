@@ -70,7 +70,7 @@ public class MessageHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Message`";
+            String sql = "SELECT * FROM `campus`.`message`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -142,7 +142,7 @@ public class MessageHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Message` WHERE `Message`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`message` WHERE `message`.`id` = ?";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -206,7 +206,7 @@ public class MessageHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_stamp`)"
+            String sql = "INSERT INTO `campus`.`message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_stamp`)"
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -272,7 +272,7 @@ public class MessageHelper {
             conn = DBMgr.getConnection();
 
             /** SQL指令 */
-            String sql = "DELETE FROM `campus`.`Message` WHERE `id` = ? LIMIT 1";
+            String sql = "DELETE FROM `campus`.`message` WHERE `id` = ? LIMIT 1";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -322,7 +322,7 @@ public class MessageHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`Message` SET `id` = ? ,`user_id` = ? , `friend_user_id` = ? WHERE `id` = ?";
+            String sql = "Update `campus`.`message` SET `id` = ? ,`user_id` = ? , `friend_user_id` = ? WHERE `id` = ?";
             /** 取得所需之參數 */
             int  ID = m.getID();
             int  user_id = m.getUser_ID();
@@ -388,7 +388,7 @@ public class MessageHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_stamp`)"
+                String sql = "INSERT INTO `campus`.`message`(`id`, `user_id`, `friend_user_id`,`message_content`,`message_time_stamp`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -438,7 +438,7 @@ public class MessageHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Message` WHERE `Message`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`message` WHERE `message`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

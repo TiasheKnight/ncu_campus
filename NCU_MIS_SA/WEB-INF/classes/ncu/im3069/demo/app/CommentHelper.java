@@ -68,7 +68,7 @@ public class CommentHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Comment`";
+            String sql = "SELECT * FROM `campus`.`comment`";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -140,7 +140,7 @@ public class CommentHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Comment` WHERE `Comment`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`comment` WHERE `comment`.`id` = ?";
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -203,7 +203,7 @@ public class CommentHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`Comment`(`id`, `user_id`, `activity_id`,`content`,`timestamp`)"
+            String sql = "INSERT INTO `campus`.`comment`(`id`, `user_id`, `activity_id`,`content`,`timestamp`)"
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -272,7 +272,7 @@ public class CommentHelper {
                 /** 取得資料庫之連線 */
                 conn = DBMgr.getConnection();
                 /** SQL指令 */
-                String sql = "INSERT INTO `campus`.`Comment`(`id`, `user_id`, `activity_id`,`content`,`timestamp`)"
+                String sql = "INSERT INTO `campus`.`comment`(`id`, `user_id`, `activity_id`,`content`,`timestamp`)"
                         + " VALUES(?, ?, ?)";
 
                 /** 將參數回填至SQL指令當中 */
@@ -322,7 +322,7 @@ public class CommentHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`Comment` WHERE `Comment`.`id` = ?";
+            String sql = "SELECT * FROM `campus`.`comment` WHERE `comment`.`id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
