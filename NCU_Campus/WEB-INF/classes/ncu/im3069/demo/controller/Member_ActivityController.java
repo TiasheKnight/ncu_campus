@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import org.json.*;
 import ncu.im3069.demo.app.Member_Activity;
 import ncu.im3069.demo.app.Member_ActivityHelper;
+import ncu.im3069.demo.app.ActivityHelper;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/Member_ActivityController.do")
@@ -22,7 +23,7 @@ public class Member_ActivityController extends HttpServlet {
     
     /** mah，Member_ActivityHelper 之物件與 member_activity 相關之資料庫方法（Singleton） */
     private Member_ActivityHelper mah = Member_ActivityHelper.getHelper();
-    private ActivityHelper ah = ActivityHelper.getHelper();
+    private ActivityHelper ah = new ActivityHelper();
     /**
      * 處理 Http Method 請求 GET 方法（取得資料）。
      *
@@ -36,8 +37,7 @@ public class Member_ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         
         String activityID = jsr.getParameter("activity_id");
-        int member_id = jsr.getIntParameter("member_id");
-
+        int member_id = jsr.getParameter("member_id");
 
         if (activityID.isEmpty()) {
             JSONArray query = mah.getMemberActivity(member_id);
@@ -102,12 +102,13 @@ public class Member_ActivityController extends HttpServlet {
         
         // 使用正確的參數初始化 Member_Activity 物件
         Member_Activity ma = new Member_Activity(ma_id, User_ID, Activity_ID);
+        ArrayList<Member_Activity> memberid = new ArrayList<Member_Activity>(memberid);
         
         if (User_ID <= 0 || Activity_ID <= 0) {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
-            JSONArray data = mah.createByList(long activtiy_id, List<Member_Activity> memberactivity);
+            JSONArray data = mah.createByList(activtiy_id, memberid);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
