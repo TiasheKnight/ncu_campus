@@ -45,14 +45,14 @@ public class NotificationController extends HttpServlet {
         Notification n = new Notification(ID,Activity_ID, User_ID, Notification_Title, Notification_Content);
 
         // 將通知存入資料庫
-        JSONObject data = nh.create(n);
+        JSONObject data = nh.create();
 
         // 設定回傳訊息和輸出
-        message = "成功! 通知已發送";
-        output = data.toString();
-        
+        resp.put("status", "200");
+        resp.put("message", "成功! 通知已發送");
+        resp.put("response", data);
         // 回傳訊息
-        responseMessage(response, 200, message);
+        jsr.response(resp, response);
     }
 
     // 處理 Http Method 請求 GET 方法（取得通知）
@@ -83,8 +83,6 @@ public class NotificationController extends HttpServlet {
         resp.put("message", message);
         resp.put("response", output);
 
-        // 透過 JsonReader 物件回傳到前端（以 JSONObject 方式）
-        JsonReader jsr = new JsonReader(request);
         jsr.response(resp, response);
     }
        

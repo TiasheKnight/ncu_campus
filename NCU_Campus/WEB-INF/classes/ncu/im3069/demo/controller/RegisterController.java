@@ -53,11 +53,11 @@ public class RegisterController extends HttpServlet {
         
         Member m = new Member(ID, Authority, FirstName, LastName, Birthday, email, Phone, UserName, Password);
         
-        if(ID.isEmpty() || Authority.isEmpty() || FirstName.isEmpty() || LastName.isEmpty() || Birthday.isEmpty() || email.isEmpty() || Phone.isEmpty() || UserName.isEmpty() || Password.isEmpty()) {
+        if(ID == null || Authority.isEmpty() || FirstName.isEmpty() || LastName.isEmpty() || Birthday.isEmpty() || email.isEmpty() || Phone.isEmpty() || UserName.isEmpty() || Password.isEmpty()) {
             String resp = "{\"status\": \"400\", \"message\": \"格式錯誤，請再次確認\", \"response\": \"\"}";
             jsr.response(resp, response);
-        } else if (!mh.checkDuplicate(Member m)) {
-            JSONObject data = mh.create(Member m);
+        } else if (!mh.checkDuplicate(m)) {
+            JSONObject data = mh.create(m);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");

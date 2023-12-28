@@ -44,7 +44,7 @@ public class Member {
 
     private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
 
-	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
+	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();
 
     /**
      * Instantiates a new Member object using overloaded method for creating a new
@@ -58,16 +58,15 @@ public class Member {
      * @param phone      member phone
      * @param password
      */
-    public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone, String password) {
+    public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.birthday = birthday;
         this.email = email;
-        this.password= password;
         this.user_name = user_name;
         this.phone = phone;
         update();
-    }
+    } 
     
     public Member(String email,String password) {
         this.email = email;

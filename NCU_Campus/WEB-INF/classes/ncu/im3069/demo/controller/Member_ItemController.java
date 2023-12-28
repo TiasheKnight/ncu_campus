@@ -88,7 +88,7 @@ public class Member_ItemController extends HttpServlet {
         }
     }
 
-    private void responseMessage(HttpServletResponse response, int status, String message) throws IOException {
+    private void responseMessage(HttpServletRequest request, HttpServletResponse response, int status, String message) throws IOException {
         JSONObject resp = new JSONObject();
         resp.put("status", String.valueOf(status));
         resp.put("message", message);
@@ -97,5 +97,6 @@ public class Member_ItemController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         jsr.response(resp, response);
     }
+
 }
 

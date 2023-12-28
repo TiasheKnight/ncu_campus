@@ -14,7 +14,7 @@ import ncu.im3069.tools.JsonReader;
 public class FriendController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    private FriendHelper FH = FriendHelper.getHelper();
+    private FriendHelper fh = FriendHelper.getHelper();
 
     public FriendController() {
         super();
