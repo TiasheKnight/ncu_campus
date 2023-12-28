@@ -61,7 +61,7 @@ public class Member_ActivityHelper {
             /** 取得所需之參數 */
             int ma_id = ma.getID();
             int user_id = ma.getUser_ID();
-            int activity_id1 = ma.getActivity_ID();
+            int activity_id = ma.getActivity_ID();
 
             try {
                 /** 取得資料庫之連線 */
@@ -104,7 +104,7 @@ public class Member_ActivityHelper {
         return jsa;
     }
 
-    public ArrayList<Member_Activity> getMemberActivity(int member_id) {
+    public ArrayList<Member_Activity> getMemberActivity(int user_id) {
         ArrayList<Member_Activity> result = new ArrayList<Member_Activity>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -119,7 +119,7 @@ public class Member_ActivityHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, member_id);
+            pres.setInt(1, user_id);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             rs = pres.executeQuery();
