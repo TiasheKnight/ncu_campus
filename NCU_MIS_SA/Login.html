@@ -78,10 +78,11 @@
         loginUser(emailInput.value, passwordInput.value);
       }
 
-      function loginUser(email, passwword){
+      function loginUser(email, password){
         const xhr = new XMLHttpRequest();
         const loginEndpoint = "/api/MemberController.do";
 
+        console.log("email: " + email + "password:" + password);
         xhr.open("POST", loginEndpoint, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
