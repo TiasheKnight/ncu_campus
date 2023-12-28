@@ -63,7 +63,7 @@ public class Member_Activity_ArchivedHelper {
 
             /** 取得所需之參數 */
             int maa_id = maa.getID();
-            int activity_id = maa.getActivity_ID();
+            int a_id = maa.getActivity_ID();
             String user_id = maa.getUser_ID();
 
             try {
@@ -76,7 +76,7 @@ public class Member_Activity_ArchivedHelper {
                 /** 將參數回填至SQL指令當中 */
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 pres.setInt(1, maa_id);
-                pres.setInt(2, activity_id);
+                pres.setInt(2, a_id);
                 pres.setString(3, user_id);
 
                 /** 執行新增之SQL指令並記錄影響之行數 */
