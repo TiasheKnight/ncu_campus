@@ -165,7 +165,7 @@ public class MemberController extends HttpServlet {
 
             JsonReader jsr = new JsonReader(request);
             JSONObject jso = jsr.getObject();
-            
+
             String lastName = jso.getString("lastname");
             String firstName = jso.getString("firstname");
             String birthday = jso.getString("birthday");
@@ -234,7 +234,7 @@ public class MemberController extends HttpServlet {
             DBMgr.close(rs, pres, conn);
         }
 
-        if (email.equals(email) && pwd.equals(password)) {
+        if (email.equals(email) && pwd.equals(password) && email != null && pwd != null) {
             resp.put("status", "success");
             resp.put("message", "Login successful");
             resp.put("authority", authority); // 將使用者權限加入回應中
