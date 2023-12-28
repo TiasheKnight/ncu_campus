@@ -121,7 +121,7 @@ public class ReportHelper {
 
         return response;
     }
-    public JSONObject getById(String Report_id) {
+    public JSONObject getById(int Report_id) {
     	Report r = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -142,7 +142,7 @@ public class ReportHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, Report_id);
+            pres.setint(1, Report_id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
