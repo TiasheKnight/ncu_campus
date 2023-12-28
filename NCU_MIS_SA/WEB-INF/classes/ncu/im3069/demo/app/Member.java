@@ -43,7 +43,7 @@ public class Member {
     private MemberHelper MH = MemberHelper.getHelper();
 
     private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
-    
+
 	private ArrayList<Member_Organization> list = new ArrayList<Member_Organization>();;
 
     /**
@@ -56,7 +56,7 @@ public class Member {
      * @param email      member email
      * @param user_name  member username
      * @param phone      member phone
-     * @param password 
+     * @param password
      */
     public Member(String first_name, String last_name, String birthday, String email, String user_name, String phone, String password) {
         this.first_name = first_name;
@@ -102,7 +102,7 @@ public class Member {
         this.password= password;
         this.user_name = user_name;
         this.phone = phone;
-        
+
     }
 
     /**
@@ -205,7 +205,7 @@ public class Member {
      */
     public JSONObject update() {
     	JSONObject data = new JSONObject();
-        
+
         if(this.id != 0){
             data = MH.update(this);
         }

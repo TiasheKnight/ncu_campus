@@ -87,9 +87,14 @@
 
         xhr.onload = function () {
             if (xhr.status === 200) {
-                // 登入成功，
+                // 登入成功
                 console.log("Login successful");
-                window.location.replace("HomeList_NormaUser.html");
+                if (xhr.authority == "Member"){
+                  window.location.replace("HomeList_NormaUser.html");
+                }
+                else if(xhr.authority == "SystemManager"){
+                  window.location.replace("HomeList_SystemManager.html");
+                }
             } else {
                 // 登入失敗
                 console.log("Login failed");

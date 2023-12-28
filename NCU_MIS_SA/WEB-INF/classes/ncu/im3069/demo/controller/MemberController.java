@@ -162,26 +162,19 @@ public class MemberController extends HttpServlet {
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+
             JsonReader jsr = new JsonReader(request);
             JSONObject jso = jsr.getObject();
 
             String email = jso.getString("email");
             String password = jso.getString("password");
 
-            // 進行帳號密碼驗證
-            boolean isValidLogin = validateLogin(email, password);
+            // 進行帳號密碼驗證，以及獲取使用者權限
+            JSONObject loginResult = validateLogin(email, password);
 
-            JSONObject resp = new JSONObject();
-            if (isValidLogin) {
-                resp.put("status", "success");
-                resp.put("message", "Login successful");
-            } else {
-                resp.put("status", "error");
-                resp.put("message", "Invalid email or password");
-            }
-
-            jsr.response(resp, response);
-        }
+            // 回傳結果給前端
+            jsr.response(loginResult, response);
+    }
 
     private boolean validateLogin(String email, String password) {
 
@@ -195,6 +188,9 @@ public class MemberController extends HttpServlet {
         int row = -1;
 
         String pwd = null;
+        String authority = null;
+
+        JSONObject resp = new JSONObject();
 
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
@@ -203,7 +199,7 @@ public class MemberController extends HttpServlet {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT `count(*)`, `password` FROM `campus`.`members` WHERE `email` = ?";
+            String sql = "SELECT `count(*)`, `password`, `authority` FROM `campus`.`members` WHERE `email` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -218,6 +214,7 @@ public class MemberController extends HttpServlet {
 
             if(row == 0){
                 pwd = rs.getString("password");
+                authority = rs.getString("authority");
             }
             else{
                 pwd = null;
@@ -234,7 +231,17 @@ public class MemberController extends HttpServlet {
             DBMgr.close(rs, pres, conn);
         }
 
-        return email.equals(email) && pwd.equals(password);
+        if (email.equals(email) && pwd.equals(password)) {
+            resp.put("status", "success");
+            resp.put("message", "Login successful");
+            resp.put("authority", authority); // 將使用者權限加入回應中
+
+        } else {
+            // 登入失敗
+            resp.put("status", "error");
+            resp.put("message", "Invalid email or password");
+        }
+
+        return resp;
     }
 }
-
