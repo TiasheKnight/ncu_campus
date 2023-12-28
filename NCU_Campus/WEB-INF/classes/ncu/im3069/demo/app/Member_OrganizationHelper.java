@@ -64,7 +64,7 @@ public class Member_OrganizationHelper {
             /** 取得所需之參數 */
             int mo_id = mo.getID();
             int user_id = mo.getUser_ID();
-            int organization_id = mo.getOrganization_ID();
+            int o_id = mo.getOrganization_ID();
 
             try {
                 /** 取得資料庫之連線 */
@@ -77,7 +77,7 @@ public class Member_OrganizationHelper {
                 pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 pres.setInt(1, mo_id);
                 pres.setInt(2, user_id);
-                pres.setInt(3, organization_id);
+                pres.setInt(3, o_id);
 
                 /** 執行新增之SQL指令並記錄影響之行數 */
                 pres.executeUpdate();
