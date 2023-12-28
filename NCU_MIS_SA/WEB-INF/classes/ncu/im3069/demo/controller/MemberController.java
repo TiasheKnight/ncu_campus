@@ -173,7 +173,7 @@ public class MemberController extends HttpServlet {
             String cellphone = jso.getString("cellphone");
             String password = jso.getString("password");
             String userName = jso.getString("username");
-            
+
             // 註冊以新建帳號
             Member m = new Member(lastName,firstName,birthday,email,cellphone,password,userName);
             /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
@@ -187,13 +187,13 @@ public class MemberController extends HttpServlet {
             else if (!mh.checkDuplicate(m)) {
                 /** 透過MemberHelper物件的create()方法新建一個會員至資料庫 */
                 JSONObject data = mh.create(m);
-                
+
                 /** 新建一個JSONObject用於將回傳之資料進行封裝 */
                 JSONObject resp = new JSONObject();
                 resp.put("status", "200");
                 resp.put("message", "成功! 註冊會員資料...");
                 resp.put("response", data);
-                
+
                 /** 透過JsonReader物件回傳到前端（以JSONObject方式） */
                 jsr.response(resp, response);
             }
@@ -203,7 +203,7 @@ public class MemberController extends HttpServlet {
                 /** 透過JsonReader物件回傳到前端（以字串方式） */
                 jsr.response(resp, response);
             }
-            
+
             // 進行帳號密碼驗證，以及獲取使用者權限
             JSONObject loginResult = validateLogin(email, password);
 
@@ -266,7 +266,7 @@ public class MemberController extends HttpServlet {
             DBMgr.close(rs, pres, conn);
         }
 
-        if (email.equals(email) && pwd.equals(password) && email != null && pwd != null) {
+        if (email.equals(email) && pwd.equals(password) && (email == null || pwd == null)) {
             resp.put("status", "success");
             resp.put("message", "Login successful");
             resp.put("authority", authority); // 將使用者權限加入回應中
