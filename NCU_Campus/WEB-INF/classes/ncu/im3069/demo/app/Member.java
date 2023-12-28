@@ -66,6 +66,7 @@ public class Member {
         this.password= password;
         this.user_name = user_name;
         this.phone = phone;
+        update();
     }
 
     /**
@@ -103,6 +104,7 @@ public class Member {
         this.phone = phone;
         
     }
+
     /**
      * Instantiates a new Member object using overloaded method for querying a
      * member.
