@@ -92,7 +92,7 @@
                         <div class="activity-detail">
                             <span class="detail-label">發布型別：</span>
                             <span id="activity_publish_type" class="detail-value">{{activity_publish_type}}</span>
-                          </div>
+                        </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動類型：</span>
                           <span id="activity_type" class="detail-value">{{activity_type}}</span>
@@ -178,8 +178,12 @@
         var result = null;
         var breakLoop = false;
         $.each(data, function(index, value) {
-            if (value['id'] === activityId || breakLoop === false) {
+			console.log("value['id']: " + value['id']);
+        	console.log("activityId: " + activityId);
+            if (value['id'] === parseInt(activityId) && breakLoop === false) {
+                console.log("Match found:");
                 result = value;
+                console.log(value["id"]);
                 console.log(activityId);
                 console.log(result);
                 breakLoop = true;
@@ -213,8 +217,18 @@
     // 更新活動詳細資訊模態框內容
     function updateActivityModalContent(activityDetail) {
         // 在這裡更新模態框內容，例如：
-        $("#activity_title").text(activityDetail['activity_title']);
-        $("#activity_publish_type").text(activityDetail['activity_publish_type']);
+        $("#activity_title").text(activityDetail.activity_name);
+        $("#activity_publish_type").text(activityDetail.activity_status);
+        $("#activity_type").text(activityDetail.activity_type);
+        $("#activity_publisher_id").text(activityDetail.activity_publisher_id);
+        $("#start_date").text(activityDetail.start_date);
+        $("#Time").text(activityDetail.start_time+"-"+activityDetail.end_time);
+        $("#activity_location").text(activityDetail.activity_place);
+        $("#participant_number").text(activityDetail.activity_participant);
+        $("#minimum_participant").text(activityDetail.minimum_participant);
+        $("#maximum_participant").text(activityDetail.maximum_participant);
+        $("#activity_detail").text(activityDetail.activity_detail);
+
         // ...（更新其他詳細內容）
     }
 
