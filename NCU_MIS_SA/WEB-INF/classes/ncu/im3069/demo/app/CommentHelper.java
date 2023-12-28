@@ -144,7 +144,7 @@ public class CommentHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, id);
+            pres.setInt(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -156,7 +156,6 @@ public class CommentHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int activity_id = rs.getInt("activity_id");
                 String content=rs.getString("content");
@@ -208,7 +207,7 @@ public class CommentHelper {
                     + " VALUES(?, ?, ?, ?, ?)";
             
             /** 取得所需之參數 */
-            int id = Comment.getid();
+            int id = Comment.getID();
             int user_id = Comment.getUser_ID();
             int activity_id = Comment.getActivity_ID();
             String content=Comment.getContent();
@@ -264,7 +263,6 @@ public class CommentHelper {
         	Comment m = Comment.get(i);
 
             /** 取得所需之參數 */
-        	int id = m.getID();
             int user_id = m.getUser_ID();
             int activity_id = m.getActivity_ID();
             String content=m.getContent();
@@ -296,8 +294,8 @@ public class CommentHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int c_id = rs.getInt(1);
+                    jsa.put(c_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/
@@ -313,7 +311,7 @@ public class CommentHelper {
 
         return jsa;
     }
-    public ArrayList<Comment> getCommentByMemberId(int user_id) {
+    public ArrayList<Comment> getCommentByMemberId(int member_id) {
         ArrayList<Comment> result = new ArrayList<Comment>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -328,7 +326,7 @@ public class CommentHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, user_id);
+            pres.setInt(1, member_id);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             rs = pres.executeQuery();

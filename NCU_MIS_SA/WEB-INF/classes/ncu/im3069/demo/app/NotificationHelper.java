@@ -123,7 +123,7 @@ public class NotificationHelper {
 
         return response;
     }
-    public JSONObject getById(int n_id) {
+    public JSONObject getById(int id) {
     	Notification n = null;
     	/** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
@@ -144,7 +144,7 @@ public class NotificationHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, n_id);
+            pres.setInt(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -156,14 +156,14 @@ public class NotificationHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
+            	int n_id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int activity_id = rs.getInt("activity_id");
                 String notification_title=rs.getString("notification_title");
                 String notification_content=rs.getString("notification_content");
 
                 /** 將每一筆商品資料產生一名新Product物件 */
-                n = new Notification(id, user_id, activity_id,notification_title,notification_content);
+                n = new Notification(n_id, user_id, activity_id,notification_title,notification_content);
                 jsa.put(n.getData());
             }
 
@@ -368,7 +368,7 @@ public class NotificationHelper {
 
         return response;
     }
-    public JSONArray createByList(long n_id, List<Notification> Notification) {
+    public JSONArray createByList(int id, List<Notification> Notification) {
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -377,7 +377,6 @@ public class NotificationHelper {
         	Notification n = Notification.get(i);
 
             /** 取得所需之參數 */
-        	int id = n.getID();
             int user_id = n.getUser_ID();
             int activity_id = n.getActivity_ID();
             String notification_title=n.getNotification_Title();
@@ -409,8 +408,8 @@ public class NotificationHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int n_id = rs.getInt(1);
+                    jsa.put(n_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/

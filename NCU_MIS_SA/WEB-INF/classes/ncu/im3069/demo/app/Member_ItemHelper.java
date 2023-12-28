@@ -144,7 +144,7 @@ public class Member_ItemHelper {
 
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, id);
+            pres.setInt(1, id);
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
@@ -156,12 +156,12 @@ public class Member_ItemHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
+            	int m_id = rs.getInt("id");
                 int user_id = rs.getInt("user_id");
                 int item_id = rs.getInt("item_id");
                 int item_quantity = rs.getInt("item_quantity");
                 /** 將每一筆商品資料產生一名新Product物件 */
-                mi = new Member_Item(id, user_id, item_id,item_quantity);
+                mi = new Member_Item(m_id, user_id, item_id,item_quantity);
                 jsa.put(mi.getData());
             }
 
@@ -370,7 +370,6 @@ public class Member_ItemHelper {
         	Member_Item mi = member_item.get(i);
 
             /** 取得所需之參數 */
-            int  id = mi.getID();
             int  user_id = mi.getUser_ID();
             int  item_id = mi.getItem_ID();
             int  item_quantity = mi.getItem_Quantity();
@@ -400,8 +399,8 @@ public class Member_ItemHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int m_id = rs.getInt(1);
+                    jsa.put(m_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/
@@ -417,7 +416,7 @@ public class Member_ItemHelper {
 
         return jsa;
     }
-    public ArrayList<Member_Item> getMember_ItemByMemberId(int user_id) {
+    public ArrayList<Member_Item> getMember_ItemByMemberId(int member_id) {
         ArrayList<Member_Item> result = new ArrayList<Member_Item>();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
@@ -432,7 +431,7 @@ public class Member_ItemHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, user_id);
+            pres.setInt(1, member_id);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             rs = pres.executeQuery();

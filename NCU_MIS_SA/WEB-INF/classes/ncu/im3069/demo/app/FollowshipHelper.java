@@ -154,7 +154,6 @@ public class FollowshipHelper {
             while(rs.next()) {
                 /** 將 ResultSet 之資料取出 */
             	row += 1;
-            	int id = rs.getInt("id");
                 int follower_user_id = rs.getInt("follower_user_id");
                 int followed_user_id = rs.getInt("followed_user_id");
                 /** 將每一筆商品資料產生一名新Product物件 */
@@ -363,7 +362,6 @@ public class FollowshipHelper {
         	Followship r = followship.get(i);
 
             /** 取得所需之參數 */
-            int  id = r.getID();
             int  follower_user_id = r.getFollower_User_ID();
             int  followed_user_id = r.getFollowed_User_ID();
 
@@ -391,8 +389,8 @@ public class FollowshipHelper {
                 ResultSet rs = pres.getGeneratedKeys();
 
                 if (rs.next()) {
-                    int id = rs.getInt(1);
-                    jsa.put(id);
+                    int f_id = rs.getInt(1);
+                    jsa.put(f_id);
                 }
             } catch (SQLException e) {
                 /** 印出JDBC SQL指令錯誤 **/
