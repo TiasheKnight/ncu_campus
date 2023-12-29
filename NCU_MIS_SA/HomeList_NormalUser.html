@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="statics/css/Home.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="statics\js\loadBoostrap.js" defer></script>
 </head>
 <body>
@@ -74,8 +75,8 @@
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <button type="button" class="btn"><iconify-icon icon="iph:heart-bold" style="color:rgb(198, 218, 20)" width="50" height="50"></iconify-icon></button>
                         <button type="button" class="btn"><iconify-icon icon="icon-park-outline:people-bottom" style="color:rgb(156, 202, 31);" width="50" height="50"></iconify-icon></button>
-                        <button type="button" class="btn"><iconify-icon icon="ant-design:message-twotone" style="color:rgb(67, 160, 223);" width="50px" height="50"></iconify-icon></button>
-                        <button type="button" class="btn"><iconify-icon icon="zondicons:exclamation-solid" style="color:rgb(207, 61, 61);" width="50" height="50"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="ant-design:message-twotone" style="color:rgb(67, 160, 223);" width="50px" height="50" data-bs-toggle="modal" data-bs data-bs-target="#CommentBoard"></iconify-icon></button>
+                        <button type="button" class="btn"><iconify-icon icon="zondicons:exclamation-solid" style="color:rgb(207, 61, 61);" width="50" height="50" data-bs-toggle="modal" data-bs data-bs-target="#ReportBoard"></iconify-icon></button>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
                     </div>
                 </div>
@@ -83,47 +84,47 @@
                     <div class="ActivitiesInformation">
                         <div class="activity-detail-content">
                           <span class="detail-label">活動名稱：</span>
-                          <span id="activity_title" class="detail-value">運動會</span>
+                          <span id="activity_title" class="detail-value">{{activity_title}}</span>
                         </div>
                         <div class="activity-detail">
                             <span class="detail-label">發布型別：</span>
-                            <span id="activity_publish_type" class="detail-value">一般活動</span>
+                            <span id="activity_publish_type" class="detail-value">{{activity_publish_type}}</span>
                           </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動類型：</span>
-                          <span id="activity_type" class="detail-value">校級活動</span>
+                          <span id="activity_type" class="detail-value">{{activity_type}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動發起人：</span>
-                          <span id="activity_publisher_id" class="detail-value">xxx</span>
+                          <span id="activity_publisher_id" class="detail-value">{{activity_publisher_id}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動日期：</span>
-                          <span id="start_date" class="detail-value">2020/12/27</span>
+                          <span id="start_date" class="detail-value">{{start_date}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動時間：</span>
-                          <span id="Time" class="detail-value">oo:oo - oo:oo</span>
+                          <span id="Time" class="detail-value">{{Time}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動地點：</span>
-                          <span id="activity_location" class="detail-value">017教室</span>
+                          <span id="activity_location" class="detail-value">{{activity_location}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">目前參與人數：</span>
-                          <span id="participant_number" class="detail-value">120</span>
+                          <span id="participant_number" class="detail-value">{{participant_number}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數下限：</span>
-                          <span id="minimun_participant" class="detail-value">無</span>
+                          <span id="minimum_participant" class="detail-value">{{minimun_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動人數上限：</span>
-                          <span id="maximun_participant" class="detail-value">無</span>
+                          <span id="maximum_participant" class="detail-value">{{maximum_participant}}</span>
                         </div>
                         <div class="activity-detail">
                           <span class="detail-label">活動內容：</span>
-                          <span id="activity_detail" class="detail-value">ssdsxxxxxx</span>
+                          <span id="activity_detail" class="detail-value">{{activity-detail}}</span>
                         </div>
                     </div>
                 </div>
@@ -173,7 +174,7 @@
         <div class="modal-dialog">
             <div class="modal-content" style="max-height: 700px;">
                 <div class="modal-header" style="display: flex;justify-content:space-between ;align-items: center; background-color: black;">
-                    <button id="AttenButton" class="btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
+                    <button id="AttenButton" class="Join_Button btn btn-primary btn-lg" style="background-color: rgb(0, 180, 0);">參加</button>
                     <span style="align-items: center; color: #FFC700;font-size: xx-large;">檢舉內容</span>
                     <div style="display: flex; gap: 10px; align-items: center;">
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="width: 50; height: 50; background-color: aliceblue;"></button>
@@ -229,6 +230,11 @@
             // 獲取元素的背景顏色
             var computedStyle = window.getComputedStyle(Join_Button);
             var backgroundColor = computedStyle.backgroundColor;
+                   // 獲取按鈕的 ID
+        	var buttonId = Join_Button.id;
+
+        	// 假設你有一個函數 updateActivityById 可以根據活動 ID 更新該活動的內容
+        	updateActivityById(buttonId, backgroundColor);
             // 判斷元素的背景顏色，進行相應的操作
             if (backgroundColor === "rgb(0, 180, 0)" || backgroundColor === "#00B400") {
                 Join_Buttons.forEach(function(button) {
@@ -243,5 +249,100 @@
             }
         });
     });
+    function updateActivityById(buttonId, backgroundColor){
+		
+	};
+    window.onload = function () {
+    // 等文檔加載完畢後，再執行這個函數
+        getAllActivity();
+	};
+    function getAllActivity() {
+        // 發出POST的GET請求取得所有會員列表
+        $.ajax({
+                type: "GET",
+                url: "api/ActivityController.do",
+                crossDomain: true,
+                cache: false,
+                dataType: 'json',
+                timeout: 5000,
+                success: function (response) {
+                    if(response.status == 200){
+                        updateActivityTable(response.response.data);
+                            // 監聽活動詳細內容按鈕的點擊事件
+                            $(".activity-detail-btn").on("click", function() {
+                                // 獲取按鈕上的活動ID
+                                var activityId = $(this).attr("id");
+                                // 直接在這裡處理模態框內容更新，不需要再發送請求
+                                var activityDetail = getActivityDetailById(response.response.data, activityId);
+                                updateActivityModalContent(activityDetail);
+                                // 顯示模態框
+                                $("#ActivityDetail").modal("show");
+                        });
+                    }
+                    console.log(response.response.data);
+                },
+                error: function () {
+                    alert("無法連線到伺服器！");
+                }
+        });
+    }
+    // 根據活動ID從資料中獲取詳細內容
+    function getActivityDetailById(data, activityId) {
+        var result = null;
+        var breakLoop = false;
+        $.each(data, function(index, value) {
+			console.log("value['id']: " + value['id']);
+        	console.log("activityId: " + activityId);
+            if (value['id'] === parseInt(activityId) && breakLoop === false) {
+                console.log("Match found:");
+                result = value;
+                console.log(value["id"]);
+                console.log(activityId);
+                console.log(result);
+                breakLoop = true;
+            }
+        });
+        return result;
+    }
+    
+    function updateActivityTable(data) {
+        $("#activityTable > tbody").empty();
+        var table_html = '';
+        $.each(data, function(index, value) {
+            table_html += '<tr>';
+            table_html += '<td>' + value['activity_name'] + '</td>';
+            table_html += '<td>' + value['activity_type'] + '</td>';
+            table_html += '<td>' + value['activity_publisher_id'] + '</td>';
+            table_html += '<td>' + value['activity_place'] + '</td>';
+            table_html += '<td>' + value['start_date'] + '</td>';
+            table_html += '<td>' + value['start_time'] + '-' + value['end_time'] + '</td>';             
+            table_html += '<td>' + value['activity_participant'] + '</td>';
+            table_html += '<td>' + value['maximum_participant'] + '</td>';    
+            table_html += '<td><div class="btn-group d-flex" role="group">';
+            table_html += '<button type="button" class="activity-detail-btn btn btn-primary btn-sm" id = "'+ value['id'] + '">' +'詳細內容</button>';
+            table_html += '<button id = "' + value['id'] + '" class="Join_Button btn btn-primary btn-sm" style="background-color: rgb(0, 180, 0);">參加</button>';
+            table_html += '</div></td>';
+            table_html += '<tr>';
+        })
+        $("#activityTable > tbody").append(table_html);
+    }
+
+    // 更新活動詳細資訊模態框內容
+    function updateActivityModalContent(activityDetail) {
+        // 在這裡更新模態框內容，例如：
+        $("#activity_title").text(activityDetail.activity_name);
+        $("#activity_publish_type").text(activityDetail.activity_status);
+        $("#activity_type").text(activityDetail.activity_type);
+        $("#activity_publisher_id").text(activityDetail.activity_publisher_id);
+        $("#start_date").text(activityDetail.start_date);
+        $("#Time").text(activityDetail.start_time+"-"+activityDetail.end_time);
+        $("#activity_location").text(activityDetail.activity_place);
+        $("#participant_number").text(activityDetail.activity_participant);
+        $("#minimum_participant").text(activityDetail.minimum_participant);
+        $("#maximum_participant").text(activityDetail.maximum_participant);
+        $("#activity_detail").text(activityDetail.activity_detail);
+
+        // ...（更新其他詳細內容）
+    }
 </script>
 </html>

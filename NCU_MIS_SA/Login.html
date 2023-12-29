@@ -23,7 +23,7 @@
                 </div>
                 <!-- Input area -->
                 <!-- <form id="loginForm" action="HomeList_NormalUser.html" method="post"> -->
-                <form id="loginForm" action="HomeList_NormalUser.html">
+                <form id="loginForm">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="EmailInput">Email：</label>
                         <input id="EmailInput" type="text" class="form-control" placeholder="xxxx@xxxxx.xxx" aria-label="Email" required>
@@ -101,7 +101,7 @@
                 console.log("Login successful");
 
                 if(response.authority == "Member"){
-                  window.location.replace("HomeList_NormalUser.html");
+                  window.location.href= "HomeList_NormalUser.html";
                 }
                 else if(response.authority == "SystemManager"){
                   window.location.replace("HomeList_SystemManager.html");
