@@ -567,8 +567,7 @@ public class MemberHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`members` SET `password` = ? WHERE `email` = ?"
-                    + " VALUES(?,email)";
+            String sql = "UPDATE `campus`.`members` SET `password` = ? WHERE `email` = ?";
 
             /** 取得所需之參數 */
             String email = m.getEmail();

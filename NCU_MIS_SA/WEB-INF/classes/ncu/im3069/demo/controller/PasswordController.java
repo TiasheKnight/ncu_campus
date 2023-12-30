@@ -8,11 +8,11 @@ import org.json.*;
 import ncu.im3069.demo.app.Member;
 import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
-
+@WebServlet("/api/PasswordController.do")
 /**
  * Servlet implementation class PasswordController
  */
-@WebServlet("/PasswordController")
+
 public class PasswordController extends HttpServlet {
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
@@ -23,14 +23,6 @@ public class PasswordController extends HttpServlet {
     /** message，output，用於儲存回傳訊息與結果 */
     private String message = "";
     private String output = "";       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public PasswordController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest request, HttpServletResponse response)
 	 */
