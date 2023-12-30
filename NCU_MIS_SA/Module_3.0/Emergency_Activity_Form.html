@@ -26,18 +26,18 @@
         <form id="GeneralActivityForm" method="post">
             <div class="input-group mb-3 ">
                 <label class="input-group-text" for="ActivityNameInput">活動名稱：</label>
-                <input id="ActivityNameInput" type="text" class="form-control-p" placeholder="ex:請填入活動的名稱" aria-label="ActivityName" required>
+                <input name="ActivityNameInput" id="ActivityNameInput" type="text" class="form-control-p" placeholder="ex:請填入活動的名稱" aria-label="ActivityName" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動發布型別：</label>
-                <select id="PublishTypeInput" class="form-select">
+                <select name="PublishTypeInput" id="PublishTypeInput" class="form-select">
                     <option>緊急活動</option>
                 </select>
             </div>
             
             <div class="input-group mb-3">
                 <label class="input-group-text" for="MaxMemberInput">活動人數上限：</label>
-                <select id="disabledSelect" class="form-select">
+                <select name="disabledSelect" id="disabledSelect" class="form-select">
                     <option>校級活動</option>
                     <option>系級活動</option>
                     <option>社團活動</option>
@@ -49,24 +49,24 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動發起人：</label>
-                <input id="PublisherInput" type="text" class="form-control" placeholder="請填入您現在登入的使用者ID" aria-label="Publisher" required>
+                <input name="PublisherInput" id="PublisherInput" type="text" class="form-control" placeholder="請填入您現在登入的使用者ID" aria-label="Publisher" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動地點：</label>
-                <input id="LocationInput" type="text" class="form-control" placeholder="請填入活動的舉辦地點" aria-label="Location" required>
+                <input name="LocationInput" id="LocationInput" type="text" class="form-control" placeholder="請填入活動的舉辦地點" aria-label="Location" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動人數下限：</label>
-                <input id="MinMemberInput" type="text" class="form-control" placeholder="該活動最低需求人數是多少" aria-label="MinMember" required>
+                <input name="MinMemberInput" id="MinMemberInput" type="text" class="form-control" placeholder="該活動最低需求人數是多少" aria-label="MinMember" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="MaxMemberInput">活動人數上限：</label>
-                <input id="MaxMemberInput" type="text" class="form-control" placeholder="該活動最高可容納幾人參加" aria-label="MaxMember" required>
+                <input name="MaxMemberInput" id="MaxMemberInput" type="text" class="form-control" placeholder="該活動最高可容納幾人參加" aria-label="MaxMember" required>
             </div>
 
             <div class="input-group date mb-3" data-provide="datepicker" data-target-input="nearest">
                 <label class="input-group-text" for="StartDatePicker">活動開始日期：</label>
-                <input id="StartDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
+                <input name="StartDatePicker" id="StartDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
                 </div>
@@ -74,12 +74,12 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="StartTimeInput">活動開始時間</label>
-                <input id="StartTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="StarTime" required>
+                <input name="StartTimeInput" id="StartTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="StarTime" required>
             </div>
 
             <div class="input-group date mb-3" data-provide="datepicker">
                 <label class="input-group-text" for="EndDatePicker">活動結束日期：</label>
-                <input id="EndDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
+                <input name="EndDatePicker" id="EndDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
                 </div>
@@ -87,12 +87,12 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="EndTimeInput">活動結束時間</label>
-                <input id="EndTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="EndTime" required>
+                <input name="EndTimeInput"  id="EndTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="EndTime" required>
             </div>
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="ContentInput">活動內容：</label>
-                <textarea name="Conment" id="ContentInput" cols="100" rows="20" placeholder="請簡單描述您的活動" required></textarea>
+                <textarea name="Content" id="ContentInput" cols="100" rows="20" placeholder="請簡單描述您的活動" required></textarea>
             </div>
             <div class="col-md-12 p-0" >
                 <button id="Submit" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">確認發布</button>
@@ -195,7 +195,8 @@
 	        console.log(Activity_form_data_object);
 	        var Activity_form_data_string = JSON.stringify(Activity_form_data_object);
 			console.log(Activity_form_data_string);
-	        $.ajax({
+	        
+			$.ajax({
 	            type: "POST",
 	            url: "../api/ActivityController.do",
 	            data: Activity_form_data_string,
@@ -208,7 +209,8 @@
 	                $('#flashMessage').show();
 	            	if(response.status == 200){
 	                	console.log("Yes");
-	                	console.log(response.response);	                	
+	                	console.log(response.response);	
+	                	console.log(Activity_form_data_string);	
 	                	alert("Successfully published event");
 	                	window.location.href = "Activity_Mangement.html";
 	            	} else {

@@ -127,6 +127,13 @@ public class Activity {
     public String getEnd_Time() {
         return this.End_Time;
     }
+    public String getPublished_Date() {
+        return this.Published_Date;
+    }
+
+    public String getPublished_Time() {
+        return this.Published_Time;
+    }
 
     public String getActivity_Detail() {
         return this.Activity_Detail;

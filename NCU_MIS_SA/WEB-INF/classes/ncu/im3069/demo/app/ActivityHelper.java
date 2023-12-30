@@ -294,6 +294,7 @@ public class ActivityHelper {
      * @return the JSON object 回傳SQL指令執行之結果
      */
     public JSONObject create(Activity a) {
+
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
@@ -305,8 +306,8 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `activity_detail`, `activity_participant`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, published_date, published_time, `activity_detail`, `activity_participant`)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
             /** 取得所需之參數 */
             String status = a.getActivity_Status();
@@ -320,6 +321,8 @@ public class ActivityHelper {
             String start_time = a.getStart_Time();
             String end_date = a.getEnd_Date();
             String end_time = a.getEnd_Time();
+            String published_date = a.getPublished_Date();
+            String published_time = a.getPublished_Time();
             String detail = a.getActivity_Detail();
             int participant = a.getActivity_Participant();
 
@@ -336,8 +339,10 @@ public class ActivityHelper {
             pres.setString(9, start_time);
             pres.setString(10, end_date);
             pres.setString(11, end_time);
-            pres.setString(12, detail);
-            pres.setInt(13, participant);
+            pres.setString(12, published_date);
+            pres.setString(13, published_time);
+            pres.setString(14, detail);
+            pres.setInt(15, participant);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
