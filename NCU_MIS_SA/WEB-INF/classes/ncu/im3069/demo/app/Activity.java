@@ -19,6 +19,8 @@ public class Activity {
     private String Activity_Detail;
     private ActivityHelper AH = ActivityHelper.getHelper();
     private int Activity_Participant;
+	private String Published_Date;
+	private String Published_Time;
 
     public Activity(int ID, String Activity_Status, String Activity_Name, String Activity_Type, String Activity_Place,
             int Activity_Publisher_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,

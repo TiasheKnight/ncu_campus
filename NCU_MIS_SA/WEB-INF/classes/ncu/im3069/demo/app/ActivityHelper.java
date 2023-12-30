@@ -337,6 +337,7 @@ public class ActivityHelper {
             pres.setString(10, end_date);
             pres.setString(11, end_time);
             pres.setString(12, detail);
+            pres.setInt(13, participant);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
