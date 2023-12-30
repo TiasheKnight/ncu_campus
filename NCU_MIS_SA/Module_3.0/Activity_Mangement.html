@@ -230,9 +230,13 @@ function getCookieValue(cookieName) {
 	return null;
 }
 function getByID(user_id){
+	var url = "api/ActivityController.do";
+	
+	url = window.location.pathname.replace(/\/[^/]+$/, '') + '/' + url;
+	console.log(url);
 		$.ajax({
 			type:"GET",
-			url: "./api/ActivityController.do",
+			url: "../api/ActivityController.do",
 			data: user_id,
 			crossDomain: true,
 			cache: false,
@@ -243,8 +247,10 @@ function getByID(user_id){
             	if(response.status == 200){
                 	updateActivityTable(response.response.data);
                     // 監聽活動詳細內容按鈕的點擊事件
-			}
-		}
+				}else{
+					window.alert("未連接上伺服器");
+				}
+		},
 })};
 function updateActivityTable(data) {
         $("#activityTable > tbody").empty();
@@ -260,8 +266,8 @@ function updateActivityTable(data) {
             table_html += '<td>' + value['activity_participant'] + '</td>';
             table_html += '<td>' + value['maximum_participant'] + '</td>';    
             table_html += '<td><div class="btn-group d-flex" role="group">';
-            table_html += '<button type="button" class="activity-detail-btn btn btn-primary btn-sm" id = "'+ value['id'] + '">' +'詳細內容</button>';
-            table_html += '<button id = "' + value['id'] + '" class="Join_Button' + 'Join_Button' + value['id'] + '" btn btn-primary btn-sm" style="background-color: rgb(0, 180, 0);">參加</button>';
+            table_html += '<button type="button" class="activity-detail-btn btn btn-primary btn-sm" id = "'+ value['id'] + '">' +'修改</button>';
+            table_html += '<button id = "' + value['id'] + '" class="Join_Button' + 'Join_Button' + value['id'] + '" btn btn-primary btn-sm" style="background-color: #D91621);">刪除</button>';
             table_html += '</div></td>';
             table_html += '<tr>';
         })
@@ -269,6 +275,15 @@ function updateActivityTable(data) {
 }
 document.getElementById("Home").addEventListener("click", function() {
         window.location.href = "../HomeList_NormalUser.html";
+});
+document.getElementById("EmergencyCYes").addEventListener("click", function() {    // if(道具不足){
+        // if(){
+
+        // } else{
+
+        // }
+            // }
+        window.location.href = "Emergency_Activity_Form.html";
 });
 </script>
 </html>
