@@ -309,8 +309,8 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `published_date`, `published_time`, `activity_detail`, `activity_participant`, `modified`, `created`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `published_date`, `published_time`, `activity_detail`, `activity_participant`)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
             String status = a.getActivity_Status();
@@ -327,6 +327,7 @@ public class ActivityHelper {
             String published_date = a.getPublished_Date();
             String published_time = a.getPublished_Time();
             String detail = a.getActivity_Detail();
+            int participant = a.getActivity_Participant();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -344,8 +345,8 @@ public class ActivityHelper {
             pres.setString(12, published_date);
             pres.setString(13, published_time);
             pres.setString(14, detail);
-            pres.setTimestamp(15, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setTimestamp(16, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setInt(15, participant);
+            
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();

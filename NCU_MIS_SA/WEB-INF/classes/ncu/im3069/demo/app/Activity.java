@@ -45,6 +45,28 @@ public class Activity {
     }
     public Activity(String Activity_Status, String Activity_Name, String Activity_Type, String Activity_Place,
             int Activity_Publisher_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,
+            String Start_Time,
+            String End_Date, String End_Time, String Published_Date, String Published_Time, String Activity_Detail, int Activity_Participant) {
+        this.Activity_Status = Activity_Status;
+        this.Activity_Name = Activity_Name;
+        this.Activity_Type = Activity_Type;
+        this.Activity_Place = Activity_Place;
+        this.Activity_Publisher_ID = Activity_Publisher_ID;
+        this.Maximum_Participant = Maximum_Participant;
+        this.Minimum_Participant = Minimum_Participant;
+        this.Start_Date = Start_Date;
+        this.Start_Time = Start_Time;
+        this.End_Date = End_Date;
+        this.End_Time = End_Time;
+        this.Published_Date = Published_Date;
+        this.Published_Time = Published_Time;
+        this.Activity_Detail = Activity_Detail;
+        this.Activity_Participant = Activity_Participant;
+        update();
+    }
+    
+    public Activity(String Activity_Status, String Activity_Name, String Activity_Type, String Activity_Place,
+            int Activity_Publisher_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,
             String Start_Time,String End_Date, String End_Time, String Activity_Detail) {
         this.Activity_Status = Activity_Status;
         this.Activity_Name = Activity_Name;
@@ -127,10 +149,10 @@ public class Activity {
     public JSONObject getData() {
         JSONObject jso = new JSONObject();
         jso.put("id", getID());
-        jso.put("activity_status", getActivity_Status());
-        jso.put("activity_name", getActivity_Name());
+        jso.put("activity_publish_type", getActivity_Status());
+        jso.put("activity_title", getActivity_Name());
         jso.put("activity_type", getActivity_Type());
-        jso.put("activity_place", getActivity_Place());
+        jso.put("activity_location", getActivity_Place());
         jso.put("activity_publisher_id", getActivity_Publisher_ID());
         jso.put("maximum_participant", getMaximum_Participant());
         jso.put("minimum_participant", getMinimum_Participant());
@@ -141,7 +163,7 @@ public class Activity {
         jso.put("published_date", getPublished_Date());
         jso.put("published_time", getPublished_Time());
         jso.put("activity_detail", getActivity_Detail());
-        jso.put("activity_participant", getActivity_Participant());
+        jso.put("participant_number", getActivity_Participant());
         return jso;
     }
 
