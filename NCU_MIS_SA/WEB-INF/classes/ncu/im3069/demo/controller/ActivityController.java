@@ -15,19 +15,19 @@ import ncu.im3069.tools.JsonReader;
  * The Class ActivityController.
  * ActivityController 類別用於處理與活動相關的 HTTP 請求。
  * 它繼承自 HttpServlet。
- * 
+ *
  * @author IPLab
  * @version 1.0.0
  * @since 1.0.0
  */
 public class ActivityController extends HttpServlet {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    
+
     /** ah，ActivityHelper 類別與活動資料庫相關的方法（單例模式） */
     private ActivityHelper ah = ActivityHelper.getHelper();
-    
+
     /**
      * 處理 HTTP POST 請求（新增資料）。
      *
@@ -40,7 +40,7 @@ public class ActivityController extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-        
+
         String activity_name = jso.getString("activity_title");
         String activity_type = jso.getString("activity_type");
         String activity_publish_type = jso.getString("activity_publish_type");
@@ -56,7 +56,7 @@ public class ActivityController extends HttpServlet {
         String published_time = jso.getString("published_time");
         String detail = jso.getString("activity_detail");
         int participant_number = jso.getInt("participant_number");
-        
+
         Activity a = new Activity(activity_publish_type, activity_name, activity_type, activity_place,
         		activity_publisher_id, max_participant, min_participant, start_date,
         		start_time, end_date, end_time, published_date, published_time, detail, participant_number);
@@ -89,7 +89,7 @@ public class ActivityController extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         String activityID = jsr.getParameter("activity_id");
-        
+
         if (activityID.isEmpty()) {
             // 如果 Activity_ID 為空，表示取得所有活動的資料
             JSONObject query = ah.getAll();
@@ -101,9 +101,8 @@ public class ActivityController extends HttpServlet {
         } else {
             // 根據指定的 activity_id 取得單一活動的資料
             int activityIDValue = Integer.parseInt(activityID);
-            JSONObject query = ah.getByID(Integer.class.cast(activityIDValue));
-//            JSONObject query = ah.getByID(Integer.class.cast(activityID));
-            
+            JSONObject query = ah.getByID(activityIDValue);
+
             if (query != null) {
                 JSONObject resp = new JSONObject();
                 resp.put("status", "200");
@@ -133,11 +132,11 @@ public class ActivityController extends HttpServlet {
             throws ServletException, IOException {
             JsonReader jsr = new JsonReader(request);
             JSONObject jso = jsr.getObject();
-            
+
             int activityID = jso.getInt("activity_id");
             /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
             JSONObject query = ah.deleteByID(activityID);
-            
+
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
@@ -151,7 +150,7 @@ public class ActivityController extends HttpServlet {
 //                jsr.response(resp, response);
 //            } else {
 //                boolean result = ah.deleteByID(activityID);
-//                
+//
 //                if (result) {
 //                    String resp = "{\"status\": \"200\", \"message\": \"刪除活動成功\", \"response\": \"\"}";
 //                    jsr.response(resp, response);
@@ -167,7 +166,7 @@ public class ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-  
+
         String activity_name = jso.getString("name");
         String activity_publish_type = jso.getString("activity_publish_type");
         String activity_type = jso.getString("type");
@@ -180,7 +179,7 @@ public class ActivityController extends HttpServlet {
         String end_date = jso.getString("end_date");
         String end_time = jso.getString("end_time");
         String detail = jso.getString("detail");
-            
+
         // 根據 activityID 取得現有活動資料
         Activity a = new Activity(activity_publish_type, activity_name, activity_type, activity_place,
         		activity_publisher_id, max_participant, min_participant, start_date,

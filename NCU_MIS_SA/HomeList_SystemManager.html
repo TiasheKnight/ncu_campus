@@ -257,39 +257,27 @@
     </div>
 </body>
 <script>
-    var Join_Button = document.getElementById("Join_Button");
-    Join_Button.addEventListener("click", function(){
-    if(Join_Button.style["backgroundColor"] === "rgb(0, 180, 0)"){
-        Join_Button.style.backgroundColor = "#D91621";
-    } else{
-        Join_Button.style.backgroundColor = "#00B400";
-    }
-    });
-    // 獲取所有擁有 class="Join_Button" 的按鈕
-    var Join_Buttons = document.querySelectorAll(".Join_Button");
-    Join_Buttons.forEach(function(Join_Button) {
-        Join_Button.addEventListener("click", function() {
-            // 獲取元素的背景顏色
-            var computedStyle = window.getComputedStyle(Join_Button);
-            var backgroundColor = computedStyle.backgroundColor;
-            // 判斷元素的背景顏色，進行相應的操作
-            if (backgroundColor === "rgb(0, 180, 0)" || backgroundColor === "#00B400") {
-                Join_Buttons.forEach(function(button) {
-                    button.style.backgroundColor = "#D91621";
-
-                });
-            } else {
-                Join_Buttons.forEach(function(button) {
-                    button.style.backgroundColor = "#00B400";
-                });
-            }
-        });
-    });
-
-    window.onload = function () {
-    // 等文檔加載完畢後，再執行這個函數
-        getAllActivity();
-	};
+$(document).ready(function(){
+	// 使用函數獲取 user_id 和 user_name 的值
+	var user_id = getCookieValue('user_id');
+	var user_name = getCookieValue('user_name');
+	// 使用 user_id 做其他處理
+	$("#showUserID").text(user_id);
+	$("#showUserName").text(user_name);
+	console.log(user_id);
+	console.log(user_name);
+    getAllActivity();
+    function getCookieValue(cookieName) {
+	    const cookies = document.cookie.split(';');
+	    const cookie = cookies.find(cookie => cookie.trim().startsWith(`${cookieName}=`));
+	
+	    if (cookie) {
+	        const [, value] = cookie.split('=');
+	        return decodeURIComponent(value);
+	    }
+	
+	    return null;
+	}
     function getAllActivity() {
         // 發出POST的GET請求取得所有會員列表
         $.ajax({
@@ -354,13 +342,12 @@
             table_html += '<td>' + value['maximum_participant'] + '</td>';    
             table_html += '<td><div class="btn-group d-flex" role="group">';
             table_html += '<button type="button" class="activity-detail-btn btn btn-primary btn-sm" id = "'+ value['id'] + '">' +'詳細內容</button>';
-            table_html += '<button class="btn btn-primary btn-sm" style="background-color: gray;">參加</button>';
+            table_html += '<button id = "' + value['id'] + '" class="Join_Button' + 'Join_Button' + value['id'] + '" btn btn-primary btn-sm" style="background-color: rgb(0, 180, 0);">參加</button>';
             table_html += '</div></td>';
             table_html += '<tr>';
         })
         $("#activityTable > tbody").append(table_html);
     }
-
     // 更新活動詳細資訊模態框內容
     function updateActivityModalContent(activityDetail) {
         // 在這裡更新模態框內容，例如：
@@ -378,5 +365,34 @@
 
         // ...（更新其他詳細內容）
     }
+});
+    // 獲取所有擁有 class="Join_Button" 的按鈕
+    var Join_Buttons = document.querySelectorAll(".Join_Button");
+    Join_Buttons.forEach(function(Join_Button) {
+        Join_Button.addEventListener("click", function() {
+
+            // 獲取該Join_Button 的類別
+            var joinActivityNumber = "Join_Button"+Join_Button.id;
+            var joinActivityNumbers = document.querySelectorAll("."+joinActivityNumber);
+            // 獲取元素的背景顏色   
+            var computedStyle = window.getComputedStyle(Join_Button);
+            var backgroundColor = computedStyle.backgroundColor;
+
+			console.log(joinActivityNumber);
+			console.log(joinActivityNumbers);
+            // 判斷元素的背景顏色，進行相應的操作
+            if (backgroundColor === "rgb(0, 180, 0)" || backgroundColor === "#00B400") {
+                joinActivityNumbers.forEach(function(button) {
+                    button.style.backgroundColor = "#D91621";
+                    button.innerHTML = "取消參加";
+                });
+            } else {
+                joinActivityNumbers.forEach(function(button) {
+                    button.style.backgroundColor = "#00B400";
+                    button.innerHTML = "參加";
+                });
+            }
+        });
+    });
 </script>
 </html>

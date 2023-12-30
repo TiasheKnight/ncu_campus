@@ -160,7 +160,8 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, authority, first_name, last_name, birthday, email, user_name, phone, password);
+                m = new Member(member_id, authority, first_name, last_name, birthday, email, user_name, phone,
+                        password);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -233,7 +234,7 @@ public class MemberHelper {
                 /** 每執行一次迴圈表示有一筆資料 */
                 row += 1;
 
-                //** 將 ResultSet 之資料取出 */
+                // ** 將 ResultSet 之資料取出 */
                 int member_id = rs.getInt("id");
                 String first_name = rs.getString("first_name");
                 String last_name = rs.getString("last_name");
@@ -245,7 +246,8 @@ public class MemberHelper {
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
-                m = new Member(member_id, authority, first_name, last_name, birthday, email, user_name, phone, password);
+                m = new Member(member_id, authority, first_name, last_name, birthday, email, user_name, phone,
+                        password);
                 /** 取出該名會員之資料並封裝至 JSONsonArray 內 */
                 jsa.put(m.getData());
             }
@@ -407,7 +409,6 @@ public class MemberHelper {
         return response;
     }
 
-    
     // Login
     public JSONObject Login(String email, String password) {
         /** 儲存JDBC資料庫連線 */
@@ -419,6 +420,9 @@ public class MemberHelper {
         String pwd = null;
         String authority = null;
         boolean validEmail = false;
+
+        String user_id = null;
+        String user_name = null;
 
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
@@ -441,6 +445,8 @@ public class MemberHelper {
                 validEmail = true;
                 pwd = rs.getString("password");
                 authority = rs.getString("authority");
+                user_id = rs.getString("id");
+                user_name = rs.getString("user_name");
             } else {
                 // 如果沒有符合條件的資料
                 pwd = null;
@@ -458,27 +464,27 @@ public class MemberHelper {
         }
 
         JSONObject resp = new JSONObject();
-        if(validEmail && pwd.equals(password)) {
+        if (validEmail && pwd.equals(password)) {
             if ("Member".equals(authority)) {
                 resp.put("status", "success");
                 resp.put("message", "Login successful");
                 resp.put("authority", authority); // 將使用者權限加入回應中
+                resp.put("user_id", user_id);
+                resp.put("user_name", user_name);
 
-            } 
-            else {
+            } else {
                 resp.put("status", "success");
                 resp.put("message", "Login successful");
                 resp.put("authority", authority); // 將使用者權限加入回應中
             }
-        }
-        else {
+        } else {
             // 登入失敗
             resp.put("status", "error");
             resp.put("message", "Invalid email or password");
         }
         return resp;
     }
-    
+
     /**
      * 更新一名會員之會員資料
      *
@@ -553,6 +559,54 @@ public class MemberHelper {
         return response;
     }
 
+    try
 
+    {
+        /** 取得資料庫之連線 */
+        conn = DBMgr.getConnection();
+        /** SQL指令 */
+        String sql = "UPDATE `campus`.`members` SET `password` = ? WHERE `email` = ?";
+
+        /** 取得所需之參數 */
+        String email = m.getEmail();
+        String password = m.getPassword();
+
+        /** 將參數回填至SQL指令當中 */
+        pres = conn.prepareStatement(sql);
+        pres.setString(1, password);
+        pres.setString(2, email);
+        /** 執行更新之SQL指令並記錄影響之行數 */
+        row = pres.executeUpdate();
+
+        /** 紀錄真實執行的SQL指令，並印出 **/
+        exexcute_sql = pres.toString();
+        System.out.println(exexcute_sql);
+
+    }catch(
+    SQLException e)
+    {
+        /** 印出JDBC SQL指令錯誤 **/
+        System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+    }catch(
+    Exception e)
+    {
+        /** 若錯誤則印出錯誤訊息 */
+        e.printStackTrace();
+    }finally
+    {
+        /** 關閉連線並釋放所有資料庫相關之資源 **/
+        DBMgr.close(pres, conn);
+    }
+
+    /** 紀錄程式結束執行時間 */
+    long end_time = System.nanoTime();
+    /** 紀錄程式執行時間 */
+    long duration = (end_time - start_time);
+
+    /** 將SQL指令、花費時間與影響行數，封裝成JSONObject回傳 */
+    JSONObject response = new JSONObject();response.put("sql",exexcute_sql);response.put("row",row);response.put("time",duration);response.put("data",jsa);
+
+    return response;
+}
 
 }

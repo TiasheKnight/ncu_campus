@@ -206,25 +206,69 @@
     </div>
 </body>
 <script>
+var user_id = getCookieValue('user_id');
+var user_name = getCookieValue('user_name');
+$(document).ready(function(){
+	// 使用函數獲取 user_id 和 user_name 的值
 
-    document.getElementById("Home").addEventListener("click", function() {
-        // if(authication=="一般使用者"){
-
-        // }
-        // else{}
+	// 使用 user_id 做其他處理
+	$("#showUserID").text(user_id);
+	$("#showUserName").text(user_name);
+	console.log(user_id);
+	console.log(user_name);
+	getByID(user_id);
+})
+function getCookieValue(cookieName) {
+	const cookies = document.cookie.split(';');
+	const cookie = cookies.find(cookie => cookie.trim().startsWith(`${cookieName}=`));
+	
+	if (cookie) {
+		const [, value] = cookie.split('=');
+	    return decodeURIComponent(value);
+	}
+	
+	return null;
+}
+function getByID(user_id){
+		$.ajax({
+			type:"GET",
+			url: "./api/ActivityController.do",
+			data: user_id,
+			crossDomain: true,
+			cache: false,
+			dataType: 'json',
+			timeout: 5000,
+			success: function (response){
+				console.log(response);
+            	if(response.status == 200){
+                	updateActivityTable(response.response.data);
+                    // 監聽活動詳細內容按鈕的點擊事件
+			}
+		}
+})};
+function updateActivityTable(data) {
+        $("#activityTable > tbody").empty();
+        var table_html = '';
+        $.each(data, function(index, value) {
+            table_html += '<tr>';
+            table_html += '<td>' + value['activity_name'] + '</td>';
+            table_html += '<td>' + value['activity_type'] + '</td>';
+            table_html += '<td>' + value['activity_publisher_id'] + '</td>';
+            table_html += '<td>' + value['activity_place'] + '</td>';
+            table_html += '<td>' + value['start_date'] + '</td>';
+            table_html += '<td>' + value['start_time'] + '-' + value['end_time'] + '</td>';             
+            table_html += '<td>' + value['activity_participant'] + '</td>';
+            table_html += '<td>' + value['maximum_participant'] + '</td>';    
+            table_html += '<td><div class="btn-group d-flex" role="group">';
+            table_html += '<button type="button" class="activity-detail-btn btn btn-primary btn-sm" id = "'+ value['id'] + '">' +'詳細內容</button>';
+            table_html += '<button id = "' + value['id'] + '" class="Join_Button' + 'Join_Button' + value['id'] + '" btn btn-primary btn-sm" style="background-color: rgb(0, 180, 0);">參加</button>';
+            table_html += '</div></td>';
+            table_html += '<tr>';
+        })
+        $("#activityTable > tbody").append(table_html);
+}
+document.getElementById("Home").addEventListener("click", function() {
         window.location.href = "../HomeList_NormalUser.html";
-    });
-
-    
-    document.getElementById("EmergencyCYes").addEventListener("click", function() {    // if(道具不足){
-        // if(){
-
-        // } else{
-
-        // }
-            // }
-        window.location.href = "Emergency_Activity_Form.html";
-    });
-    
+});
 </script>
 </html>

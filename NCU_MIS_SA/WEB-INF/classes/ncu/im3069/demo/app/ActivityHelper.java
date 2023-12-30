@@ -160,14 +160,12 @@ public class ActivityHelper {
                 String start_time = rs.getString("start_time");
                 String end_date = rs.getString("end_date");
                 String end_time = rs.getString("end_time");
-                String published_date = rs.getString("published_date");
-                String published_time = rs.getString("published_time");
                 String detail = rs.getString("activity_detail");
                 int activity_participant = rs.getInt("participant_number");
 
                 /** 將每一筆活動資料產生一名新Activity物件 */
                 a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time,
-                                end_date, end_time, published_date, published_time, detail, activity_participant);
+                                end_date, end_time, detail, activity_participant);
                 /** 取出該名活動之資料並封裝至 JSONsonArray 內 */
                 jsa.put(a.getData());
             }
@@ -222,7 +220,7 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `campus`.`activities` WHERE `id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `campus`.`activities` WHERE `activity_publisher_id` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -253,14 +251,12 @@ public class ActivityHelper {
                 String start_time = rs.getString("start_time");
                 String end_date = rs.getString("end_date");
                 String end_time = rs.getString("end_time");
-                String published_date = rs.getString("published_date");
-                String published_time = rs.getString("published_time");
                 String detail = rs.getString("activity_detail");
                 int activity_participant = rs.getInt("activity_particpant");
 
                 /** 將每一筆活動資料產生一名新Activity物件 */
                 a = new Activity(activity_id, status, name, type, place, holder_id, max_participant, min_participant, start_date, start_time, end_date,
-                                end_time, published_date, published_time, detail, activity_participant);
+                                end_time, detail, activity_participant);
                 /** 取出該名活動之資料並封裝至 JSONsonArray 內 */
                 jsa.put(a.getData());
             }
@@ -309,8 +305,8 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `published_date`, `published_time`, `activity_detail`, `activity_participant`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `campus`.`activities`(`activity_publish_type`, `activity_title`, `activity_type`, `activity_location`, `activity_publisher_id`, `maximum_participant`, `minimum_participant`, `start_date`, `start_time`, `end_date`, `end_time`, `activity_detail`, `activity_participant`)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
             String status = a.getActivity_Status();
@@ -324,8 +320,6 @@ public class ActivityHelper {
             String start_time = a.getStart_Time();
             String end_date = a.getEnd_Date();
             String end_time = a.getEnd_Time();
-            String published_date = a.getPublished_Date();
-            String published_time = a.getPublished_Time();
             String detail = a.getActivity_Detail();
             int participant = a.getActivity_Participant();
 
@@ -342,11 +336,7 @@ public class ActivityHelper {
             pres.setString(9, start_time);
             pres.setString(10, end_date);
             pres.setString(11, end_time);
-            pres.setString(12, published_date);
-            pres.setString(13, published_time);
-            pres.setString(14, detail);
-            pres.setInt(15, participant);
-            
+            pres.setString(12, detail);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -400,7 +390,7 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`activities` SET `activity_publish_type` = ? ,`activity_title` = ? , `activity_type` = ?, `activity_location` = ?, `activity_publisher_id` = ?, `maximum_participant` = ?, `minimum_participant` = ?, `start_date` = ?, `start_time` = ?, `end_date` = ?, `end_time` = ?, `published_date` = ?, `published_time` = ?, `activity_detail` = ?, `participant_number` = ? ,WHERE `id` = ?";
+            String sql = "Update `campus`.`activities` SET `activity_publish_type` = ? ,`activity_title` = ? , `activity_type` = ?, `activity_location` = ?, `activity_publisher_id` = ?, `maximum_participant` = ?, `minimum_participant` = ?, `start_date` = ?, `start_time` = ?, `end_date` = ?, `end_time` = ?, `activity_detail` = ?, `participant_number` = ? ,WHERE `id` = ?";
 
             /** 取得所需之參數 */
             int activity_id = a.getID();
@@ -415,8 +405,6 @@ public class ActivityHelper {
             String start_time = a.getStart_Time();
             String end_date = a.getEnd_Date();
             String end_time = a.getEnd_Time();
-            String published_date = a.getPublished_Date();
-            String published_time = a.getPublished_Time();
             String detail = a.getActivity_Detail();
             int participant_number = a.getActivity_Participant();
 
@@ -433,12 +421,8 @@ public class ActivityHelper {
             pres.setString(9, start_time);
             pres.setString(10, end_date);
             pres.setString(11, end_time);
-            pres.setString(12, published_date);
-            pres.setString(13, published_time);
-            pres.setString(14, detail);
-            pres.setInt(15, participant_number);
-            pres.setTimestamp(16, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setTimestamp(17, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setString(12, detail);
+            pres.setInt(13, participant_number);
 
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
