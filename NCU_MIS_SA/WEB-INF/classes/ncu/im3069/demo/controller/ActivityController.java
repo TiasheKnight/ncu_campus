@@ -44,10 +44,10 @@ public class ActivityController extends HttpServlet {
         String activity_name = jso.getString("activity_title");
         String activity_type = jso.getString("activity_type");
         String activity_publish_type = jso.getString("activity_publish_type");
-        String activity_place = jso.getString("place");
+        String activity_place = jso.getString("activity_location");
         int activity_publisher_id = jso.getInt("activity_publisher_id");
-        int max_participant = jso.getInt("max_participant");
-        int min_participant = jso.getInt("min_participant");
+        int max_participant = jso.getInt("maximum_participant");
+        int min_participant = jso.getInt("minimum_participant");
         String start_date = jso.getString("start_date");
         String start_time = jso.getString("start_time");
         String end_date = jso.getString("end_date");
