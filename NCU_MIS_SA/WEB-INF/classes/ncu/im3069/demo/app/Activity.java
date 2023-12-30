@@ -16,8 +16,6 @@ public class Activity {
     private String Start_Time;
     private String End_Date;
     private String End_Time;
-    private String Published_Date;
-    private String Published_Time;
     private String Activity_Detail;
     private ActivityHelper AH = ActivityHelper.getHelper();
     private int Activity_Participant;
@@ -25,7 +23,7 @@ public class Activity {
     public Activity(int ID, String Activity_Status, String Activity_Name, String Activity_Type, String Activity_Place,
             int Activity_Publisher_ID, int Maximum_Participant, int Minimum_Participant, String Start_Date,
             String Start_Time,
-            String End_Date, String End_Time, String Published_Date, String Published_Time, String Activity_Detail, int Activity_Participant) {
+            String End_Date, String End_Time, String Activity_Detail, int Activity_Participant) {
         this.ID = ID;
         this.Activity_Status = Activity_Status;
         this.Activity_Name = Activity_Name;
@@ -38,8 +36,6 @@ public class Activity {
         this.Start_Time = Start_Time;
         this.End_Date = End_Date;
         this.End_Time = End_Time;
-        this.Published_Date = Published_Date;
-        this.Published_Time = Published_Time;
         this.Activity_Detail = Activity_Detail;
         this.Activity_Participant = Activity_Participant; // Initialize to 0, assuming no participants initially
     }
@@ -106,14 +102,6 @@ public class Activity {
 
     public String getEnd_Time() {
         return this.End_Time;
-    }
-
-    public String getPublished_Date() {
-        return this.Published_Date;
-    }
-
-    public String getPublished_Time() {
-        return this.Published_Time;
     }
 
     public String getActivity_Detail() {

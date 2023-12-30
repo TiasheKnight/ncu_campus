@@ -105,8 +105,7 @@ public class ActivityController extends HttpServlet {
         } else {
             // 根據指定的 activity_id 取得單一活動的資料
             int activityIDValue = Integer.parseInt(activityID);
-            JSONObject query = ah.getByID(Integer.class.cast(activityIDValue));
-//            JSONObject query = ah.getByID(Integer.class.cast(activityID));
+            JSONObject query = ah.getByID(activityIDValue);
             
             if (query != null) {
                 JSONObject resp = new JSONObject();
