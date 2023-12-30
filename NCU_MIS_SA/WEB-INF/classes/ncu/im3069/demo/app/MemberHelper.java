@@ -419,6 +419,9 @@ public class MemberHelper {
         String pwd = null;
         String authority = null;
         boolean validEmail = false;
+        
+        String user_id = null;
+        String user_name = null;
 
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
@@ -440,6 +443,8 @@ public class MemberHelper {
                 validEmail = true;
                 pwd = rs.getString("password");
                 authority = rs.getString("authority");
+                user_id = rs.getString("id");
+                user_name = rs.getString("user_name");
             } else {
                 // 如果沒有符合條件的資料
                 pwd = null;
@@ -462,6 +467,8 @@ public class MemberHelper {
                 resp.put("status", "success");
                 resp.put("message", "Login successful");
                 resp.put("authority", authority); // 將使用者權限加入回應中
+                resp.put("user_id",user_id);
+                resp.put("user_name", user_name);
 
             } 
             else {

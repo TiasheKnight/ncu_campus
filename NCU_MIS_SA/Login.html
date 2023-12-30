@@ -105,12 +105,14 @@ $(document).ready(function(){
                 if(response.response.status == "success"){
                     // 登入成功
                     console.log("Login successful");
-
+                    var user_id = response.response.user_id;
+                    var user_name =response.response.user_name;
+					document.cookie = "user_id=" + user_id + ";user_name=" + user_name + ";expires=" + new Date(new Date().getTime() + 10 * 60 * 1000).toUTCString();
                     if(response.response.authority == "Member"){
-                        window.location.href = "HomeList_NormalUser.html";
+                        window.location.href = "HomeList_NormalUser.html?user_name="+user_name;
                     }
                     else if(response.response.authority == "SystemManager"){
-                        window.location.href = "HomeList_SystemManager.html";
+                        window.location.href = "HomeList_SystemManager.html?user_id=" + response.response.user_i;
                     }
                 }else{
 					alert("Login Failed");
