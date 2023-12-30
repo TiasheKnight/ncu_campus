@@ -321,6 +321,7 @@ public class ActivityHelper {
             String end_date = a.getEnd_Date();
             String end_time = a.getEnd_Time();
             String detail = a.getActivity_Detail();
+            int participant = a.getActivity_Participant();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -336,6 +337,7 @@ public class ActivityHelper {
             pres.setString(10, end_date);
             pres.setString(11, end_time);
             pres.setString(12, detail);
+            pres.setInt(13, participant);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();

@@ -15,19 +15,19 @@ import ncu.im3069.tools.JsonReader;
  * The Class ActivityController.
  * ActivityController 類別用於處理與活動相關的 HTTP 請求。
  * 它繼承自 HttpServlet。
- * 
+ *
  * @author IPLab
  * @version 1.0.0
  * @since 1.0.0
  */
 public class ActivityController extends HttpServlet {
-    
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
-    
+
     /** ah，ActivityHelper 類別與活動資料庫相關的方法（單例模式） */
     private ActivityHelper ah = ActivityHelper.getHelper();
-    
+
     /**
      * 處理 HTTP POST 請求（新增資料）。
      *
@@ -40,32 +40,29 @@ public class ActivityController extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
-        
-        int Activity_ID = jso.getInt("id");
-        String Activity_Status = jso.getString("activity_status");
-        String Activity_Name = jso.getString("activity_name");
-        String Activity_Type = jso.getString("activity_type");
-        String Activity_Place = jso.getString("activity_place");
-        int Activity_Holder_ID = jso.getInt("activity_holder_id");
-        int Maximum_Participant = jso.getInt("maximum_participant");
-        int Minimum_Participant = jso.getInt("minimum_participant");
-        String Start_Date = jso.getString("start_date");
-        String Start_Time = jso.getString("start_time");
-        String End_Date = jso.getString("end_date");
-        String End_Time = jso.getString("end_time");
-        String Published_Date = jso.getString("published_date");
-        String Published_Time = jso.getString("published_time");
-        String Activity_Detail = jso.getString("activity_detail");
-        int Activity_Participant = jso.getInt("activity_participant");
-        
-        Activity a = new Activity(Activity_ID, Activity_Status, Activity_Name, Activity_Type, Activity_Place, Activity_Holder_ID,
-                Maximum_Participant, Minimum_Participant, Start_Date, Start_Time, End_Date, End_Time, Activity_Detail, Activity_Participant);
-        
-        if (Activity_ID == 0 || Activity_Status.isEmpty() || Activity_Name.isEmpty() || Activity_Type.isEmpty()
-                || Activity_Place.isEmpty() || Activity_Holder_ID == 0 || Maximum_Participant == 0
-                || Minimum_Participant == 0 || Start_Date.isEmpty() || Start_Time.isEmpty() || End_Date.isEmpty()
-                || End_Time.isEmpty() || Published_Date.isEmpty() || Published_Time.isEmpty()
-                || Activity_Detail.isEmpty() || Activity_Participant == 0) {
+
+        String activity_name = jso.getString("activity_title");
+        String activity_type = jso.getString("activity_type");
+        String activity_publish_type = jso.getString("activity_publish_type");
+        String activity_place = jso.getString("place");
+        int activity_publisher_id = jso.getInt("activity_publisher_id");
+        int max_participant = jso.getInt("max_participant");
+        int min_participant = jso.getInt("min_participant");
+        String start_date = jso.getString("start_date");
+        String start_time = jso.getString("start_time");
+        String end_date = jso.getString("end_date");
+        String end_time = jso.getString("end_time");
+        String published_date = jso.getString("published_date");
+        String published_time = jso.getString("published_time");
+        String detail = jso.getString("activity_detail");
+        int participant_number = jso.getInt("participant_number");
+
+        Activity a = new Activity(activity_publish_type, activity_name, activity_type, activity_place,
+        		activity_publisher_id, max_participant, min_participant, start_date,
+        		start_time, end_date, end_time, published_date, published_time, detail, participant_number);
+        /** 後端檢查是否有欄位為空值，若有則回傳錯誤訊息 */
+        if (activity_publish_type.isEmpty() || activity_name.isEmpty() || activity_type.isEmpty() || activity_place.isEmpty() || start_date.isEmpty() || start_time.isEmpty() || end_date.isEmpty() || end_time.isEmpty() || published_date.isEmpty() || published_time.isEmpty() || detail.isEmpty()) {
+        	/** 以字串組出JSON格式之資料 */
             String resp = "{\"status\": \"400\", \"message\": \"格式錯誤，請再次確認\", \"response\": \"\"}";
             jsr.response(resp, response);
         } else {
@@ -92,7 +89,7 @@ public class ActivityController extends HttpServlet {
         throws ServletException, IOException {
         JsonReader jsr = new JsonReader(request);
         String activityID = jsr.getParameter("activity_id");
-        
+
         if (activityID.isEmpty()) {
             // 如果 Activity_ID 為空，表示取得所有活動的資料
             JSONObject query = ah.getAll();
@@ -105,7 +102,7 @@ public class ActivityController extends HttpServlet {
             // 根據指定的 activity_id 取得單一活動的資料
             int activityIDValue = Integer.parseInt(activityID);
             JSONObject query = ah.getByID(activityIDValue);
-            
+
             if (query != null) {
                 JSONObject resp = new JSONObject();
                 resp.put("status", "200");
@@ -135,11 +132,11 @@ public class ActivityController extends HttpServlet {
             throws ServletException, IOException {
             JsonReader jsr = new JsonReader(request);
             JSONObject jso = jsr.getObject();
-            
+
             int activityID = jso.getInt("activity_id");
             /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
             JSONObject query = ah.deleteByID(activityID);
-            
+
             /** 新建一個JSONObject用於將回傳之資料進行封裝 */
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
@@ -153,7 +150,7 @@ public class ActivityController extends HttpServlet {
 //                jsr.response(resp, response);
 //            } else {
 //                boolean result = ah.deleteByID(activityID);
-//                
+//
 //                if (result) {
 //                    String resp = "{\"status\": \"200\", \"message\": \"刪除活動成功\", \"response\": \"\"}";
 //                    jsr.response(resp, response);
@@ -169,8 +166,9 @@ public class ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
 
-        int activityID = jso.getInt("activity_id");
+
         String activity_name = jso.getString("name");
+        String activity_publish_type = jso.getString("activity_publish_type");
         String activity_type = jso.getString("type");
         String activity_place = jso.getString("place");
         int activity_publisher_id = jso.getInt("activity_publisher_id");
@@ -181,9 +179,11 @@ public class ActivityController extends HttpServlet {
         String end_date = jso.getString("end_date");
         String end_time = jso.getString("end_time");
         String detail = jso.getString("detail");
-            
+
         // 根據 activityID 取得現有活動資料
-        Activity a = new Activity(activityID,activity_name,activity_type,activity_place,activity_publisher_id,max_participant,min_participant,start_date,start_time,end_date,end_time,detail);
+        Activity a = new Activity(activity_publish_type, activity_name, activity_type, activity_place,
+        		activity_publisher_id, max_participant, min_participant, start_date,
+        		start_time, end_date, end_time, detail);
 
             // 呼叫 update 方法更新活動資料
             JSONObject data = a.update();

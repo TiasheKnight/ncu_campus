@@ -1,12 +1,18 @@
 package ncu.im3069.demo.controller;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.WebServlet;
 import org.json.*;
 import ncu.im3069.demo.app.Member;
 import ncu.im3069.demo.app.MemberHelper;
+import ncu.im3069.demo.util.DBMgr;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/MemberController.do")

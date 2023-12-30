@@ -72,10 +72,10 @@ public class Member {
         update();
     } 
     
-    // Forget password
     public Member(String email,String password) {
         this.email = email;
         this.password= password;
+        update();
     }
 
     /**
