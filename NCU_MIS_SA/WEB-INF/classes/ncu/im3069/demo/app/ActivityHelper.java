@@ -399,7 +399,7 @@ public class ActivityHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `campus`.`activities` SET `activity_publish_type` = ? ,`activity_title` = ? , `activity_type` = ?, `activity_location` = ?, `activity_publisher_id` = ?, `maximum_participant` = ?, `minimum_participant` = ?, `start_date` = ?, `start_time` = ?, `end_date` = ?, `end_time` = ?, `published_date` = ?, `published_time` = ?, `activity_detail` = ?, `activity_participant` = ? ,WHERE `id` = ?";
+            String sql = "Update `campus`.`activities` SET `activity_publish_type` = ? ,`activity_title` = ? , `activity_type` = ?, `activity_location` = ?, `activity_publisher_id` = ?, `maximum_participant` = ?, `minimum_participant` = ?, `start_date` = ?, `start_time` = ?, `end_date` = ?, `end_time` = ?, `published_date` = ?, `published_time` = ?, `activity_detail` = ?, `participant_number` = ? ,WHERE `id` = ?";
 
             /** 取得所需之參數 */
             int activity_id = a.getID();
@@ -417,7 +417,7 @@ public class ActivityHelper {
             String published_date = a.getPublished_Date();
             String published_time = a.getPublished_Time();
             String detail = a.getActivity_Detail();
-            int activity_participant = a.getActivity_Participant();
+            int participant_number = a.getActivity_Participant();
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -435,8 +435,9 @@ public class ActivityHelper {
             pres.setString(12, published_date);
             pres.setString(13, published_time);
             pres.setString(14, detail);
-            pres.setTimestamp(15, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setInt(15, participant_number);
             pres.setTimestamp(16, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setTimestamp(17, Timestamp.valueOf(LocalDateTime.now()));
 
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();

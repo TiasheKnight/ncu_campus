@@ -7,8 +7,13 @@ public class Member_Activity {
     private int ID;
     private int User_ID;
     private int Activity_ID;
-    private Member_ActivityHelper MAH = Member_ActivityHelper.getHelper();
+    private Member_ActivityHelper mah = Member_ActivityHelper.getHelper();
 
+    public Member_Activity(int User_ID, int Activity_ID) {
+        this.User_ID = User_ID;
+        this.Activity_ID = Activity_ID;
+    }
+    
     public Member_Activity(int ID, int User_ID, int Activity_ID) {
         this.ID = ID;
         this.User_ID = User_ID;

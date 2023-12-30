@@ -157,7 +157,6 @@ public class MemberHelper {
                 String phone = rs.getString("phone");
                 String password = rs.getString("password");
                 String user_name = rs.getString("user_name");
-                int login_times = rs.getInt("login_times");
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
@@ -243,7 +242,6 @@ public class MemberHelper {
                 String phone = rs.getString("phone");
                 String password = rs.getString("password");
                 String user_name = rs.getString("user_name");
-                int login_times = rs.getInt("login_times");
                 String authority = rs.getString("authority");
 
                 /** 將每一筆會員資料產生一名新Member物件 */
@@ -353,10 +351,11 @@ public class MemberHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `campus`.`members`(`first_name`, `last_name`, `birthday`, `email`, `phone`, `password`, `user_name`, `modified`, `created`)"
-                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO `campus`.`members`(`authority`, `first_name`, `last_name`, `birthday`, `email`, `phone`, `password`, `user_name`)"
+                    + " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 
             /** 取得所需之參數 */
+            String authority = m.getAuthority();
             String first_name = m.getFirstName();
             String last_name = m.getLastName();
             String birthday = m.getBirthday();
@@ -367,15 +366,14 @@ public class MemberHelper {
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setString(1, first_name);
-            pres.setString(2, last_name);
-            pres.setString(3, birthday);
-            pres.setString(4, email);
-            pres.setString(5, phone);
-            pres.setString(6, password);
-            pres.setString(7, user_name);
-            pres.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
-            pres.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+            pres.setString(1, authority);
+            pres.setString(2, first_name);
+            pres.setString(3, last_name);
+            pres.setString(4, birthday);
+            pres.setString(5, email);
+            pres.setString(6, phone);
+            pres.setString(7, password);
+            pres.setString(8, user_name);
 
             /** 執行新增之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
@@ -409,6 +407,86 @@ public class MemberHelper {
         return response;
     }
 
+    
+    // Login
+    public JSONObject Login(String email, String password) {
+        /** 儲存JDBC資料庫連線 */
+        Connection conn = null;
+
+        /** 儲存JDBC預準備之SQL指令 */
+        PreparedStatement pres = null;
+
+        /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
+        int row = -1;
+
+        String pwd = null;
+        String authority = null;
+        boolean validEmail = false;
+
+        System.out.printf("SSSSSSSS");
+
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT `count(*)`, `password`, `authority` FROM `campus`.`members` WHERE `email` = ?";
+
+            /** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql);
+            pres.setString(1, email);
+
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            /** 讓指標移往最後一列，取得目前有幾行在資料庫內 */
+            rs.next();
+            row = rs.getInt("count(*)");
+
+            if(row == 0){
+            	validEmail = true;
+                pwd = rs.getString("password");
+                authority = rs.getString("authority");
+            }
+            else{
+                pwd = null;
+            }
+
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+
+        JSONObject resp = new JSONObject();
+        if(validEmail) {
+            if (pwd.equals(password) && "Member".equals(authority)) {
+                resp.put("status", "success");
+                resp.put("message", "Login successful");
+                resp.put("authority", "Member"); // 將使用者權限加入回應中
+
+            } 
+            else {
+                resp.put("status", "success");
+                resp.put("message", "Login successful");
+                resp.put("authority", "SysteManager"); // 將使用者權限加入回應中
+            }
+        }
+        else {
+            // 登入失敗
+            resp.put("status", "error");
+            resp.put("message", "Invalid email or password");
+        }
+        return resp;
+    }
+    
     /**
      * 更新一名會員之會員資料
      *
@@ -439,7 +517,6 @@ public class MemberHelper {
             String birthday = m.getBirthday();
             String email = m.getEmail();
             String phone = m.getPhone();
-            String password = m.getPassword();
             String user_name = m.getUser_Name();
 
             /** 將參數回填至SQL指令當中 */

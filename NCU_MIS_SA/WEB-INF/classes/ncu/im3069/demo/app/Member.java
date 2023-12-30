@@ -40,7 +40,7 @@ public class Member {
     private String user_name;
 
     /** mh, MemberHelper object with methods related to Member (Singleton) */
-    private MemberHelper MH = MemberHelper.getHelper();
+    private MemberHelper mh = MemberHelper.getHelper();
 
     private Member_OrganizationHelper MOH = Member_OrganizationHelper.getHelper();
 
@@ -58,13 +58,17 @@ public class Member {
      * @param phone      member phone
      * @param password
      */
-    public Member(String first_name, String last_name, String birthday, String email, String user_name,String password , String phone) {
-        this.first_name = first_name;
+	
+	// Create New Member
+    public Member(String last_name, String first_name, String birthday, String email, String phone,String password , String user_name) {
+    	this.authority = "Member";
+    	this.first_name = first_name;
         this.last_name = last_name;
         this.birthday = birthday;
-        this.email = email;
-        this.user_name = user_name;
         this.phone = phone;
+        this.email = email;
+        this.password = password;
+        this.user_name = user_name;
         update();
     } 
     
@@ -212,7 +216,7 @@ public class Member {
     	JSONObject data = new JSONObject();
 
         if(this.id != 0){
-            data = MH.update(this);
+            data = mh.update(this);
         }
         return data;
     }
@@ -233,7 +237,6 @@ public class Member {
         jso.put("email", getEmail());
         jso.put("phone", getPhone());
         jso.put("user_name", getUser_Name());
-
         return jso;
     }
 

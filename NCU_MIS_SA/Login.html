@@ -26,14 +26,14 @@
                 <form id="loginForm">
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="EmailInput">Email：</label>
-                        <input id="EmailInput" type="text" class="form-control" placeholder="xxxx@xxxxx.xxx" aria-label="Email" required>
+                        <input name="email" id="EmailInput" type="text" class="form-control" placeholder="xxxx@xxxxx.xxx" aria-label="Email" required>
                         <div id="emailValidationFeedback" class="invalid-feedback">
                             請輸入有效的 Email 地址。
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="PasswordInput">密碼：</label>
-                        <input id="PasswordInput" type="password" class="form-control" placeholder="xxxxxxxxxx" aria-label="Password" required>
+                        <input name="password" id="PasswordInput" type="password" class="form-control" placeholder="xxxxxxxxxx" aria-label="Password" required>
                     </div>
 
                 <!-- Main Button area -->
@@ -86,7 +86,7 @@
     function loginUser(email, password){
       $.ajax({
           type: "POST",
-          url: "/api/MemberController.do",
+          url: "api/AuthenticationController.do",
           data: {
             "email": email,
             "password": password
@@ -100,10 +100,10 @@
                 // 登入成功
                 console.log("Login successful");
 
-                if(response.authority == "Member"){
+                if(response.response.authority == "Member"){
                   window.location.href= "HomeList_NormalUser.html";
                 }
-                else if(response.authority == "SystemManager"){
+                else if(response.response.authority == "SystemManager"){
                   window.location.replace("HomeList_SystemManager.html");
                 }
               }

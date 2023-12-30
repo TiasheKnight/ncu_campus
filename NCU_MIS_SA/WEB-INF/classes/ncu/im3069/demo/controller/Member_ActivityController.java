@@ -45,7 +45,7 @@ public class Member_ActivityController extends HttpServlet {
             jsr.response(resp, response);
         } else {
         	int activityIDValue = Integer.parseInt(activityID);
-            JSONObject query = ah.getByID(activityID);
+            JSONObject query = mah.getByID(activityIDValue);
             JSONObject resp = new JSONObject();
             resp.put("status", "200");
             resp.put("message", "會員活動資料取得成功");
@@ -92,6 +92,7 @@ public class Member_ActivityController extends HttpServlet {
         JsonReader jsr = new JsonReader(request);
         JSONObject jso = jsr.getObject();
         
+        
         int User_ID = jso.getInt("user_id");
         int Activity_ID = jso.getInt("activity_id");
         
@@ -101,7 +102,7 @@ public class Member_ActivityController extends HttpServlet {
             String resp = "{\"status\": '400', \"message\": '格式錯誤\\n請再次確認', 'response': ''}";
             jsr.response(resp, response);
         } else {
-            JSONObject data = mah.createByList(long activtiy_id, List<Member_Activity> memberactivity);
+            JSONObject data = mah.create(long activtiy_id, List<Member_Activity> memberactivity);
             
             JSONObject resp = new JSONObject();
             resp.put("status", "200");

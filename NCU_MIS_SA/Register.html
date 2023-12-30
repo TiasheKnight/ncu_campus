@@ -22,47 +22,47 @@
                     <h2 class="mb-5" style="font-size: xx-large;color:darkkhaki">中央大學校園雷達</h2>    
                 </div>
                 <!-- Register input personal data -->
-                <form id="registerForm">
+                <form id="registerForm" method="post">
                     <div class="input-group mb-3 ">
                         <label class="input-group-text" for="LastNameInput">姓：</label>
-                        <input id="LastNameInput" type="text" class="form-control" placeholder="ex:葉" aria-label="LastName" required>
+                        <input name="last_name" id="LastNameInput" type="text" class="form-control" placeholder="ex:葉" aria-label="LastName" required>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="FirstNameInput">名：</label>
-                        <input id="FirstNameInput" type="text" class="form-control" placeholder="ex:秋" aria-label="FirstName" required>
+                        <input name="first_name" id="FirstNameInput" type="text" class="form-control" placeholder="ex:秋" aria-label="FirstName" required>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="BirthdayInput">出生日期：</label>
-                        <input id="BirthdayInput" type="text" class="form-control" placeholder="ex:2002-08-12" aria-label="Birthday_Front" required>
+                        <input name="birthday" id="BirthdayInput" type="text" class="form-control" placeholder="ex:2002-08-12" aria-label="Birthday_Front" required>
                         <div id="birthdayValidationFeedback" class="invalid-feedback">
                             請輸入有效的出生日期。
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="EmailInput">Email：</label>
-                        <input id="EmailInput" type="text" class="form-control" placeholder="xxxx@xxxxx.xxx" aria-label="Email" required>
+                        <input name="email" id="EmailInput" type="text" class="form-control" placeholder="xxxx@xxxxx.xxx" aria-label="Email" required>
                         <div id="emailValidationFeedback" class="invalid-feedback">
                             請輸入有效的 Email 地址。
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="CellphoneInput">電話：</label>
-                        <input id="CellphoneInput" type="text" class="form-control" placeholder="09xx-xxxxxx" aria-label="Cellphone" required>
+                        <input name="cellphone" id="CellphoneInput" type="text" class="form-control" placeholder="09xx-xxxxxx" aria-label="Cellphone" required>
                         <div id="cellphoneValidationFeedback" class="invalid-feedback">
                             請輸入有效的電話號碼。
                         </div>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="PasswordInput">密碼：</label>
-                        <input id="PasswordInput" type="password" class="form-control" placeholder="xxxxxxxxxx" aria-label="Password" required>
+                        <input name="password" id="PasswordInput" type="password" class="form-control" placeholder="xxxxxxxxxx" aria-label="Password" required>
                     </div>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="UserNameInput">使用者名稱：</label>
-                        <input id="UserNameInput" type="text" class="form-control" placeholder="ex:一夜秋" aria-label="UserName" required>
+                        <input name="user_name" id="UserNameInput" type="text" class="form-control" placeholder="ex:一夜秋" aria-label="UserName" required>
                     </div>
                     <!-- Main Button area-->
                     <div class="col-md-12 p-0" >
-                        <button id="Submit" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">提交</button>
+                        <button id="Submit_Button" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">提交</button>
                     </div>
                 </form>
                 <div id="flashMessage" class="message" style="display: none;"></div>
@@ -76,83 +76,89 @@
 </body>
 
 <!-- JS function -->
-<script>
-    // get email input and verify the feedback element /獲取 email 輸入框和驗證反饋元素
-    const birthdayInput = document.getElementById("BirthdayInput");
-    const birthdayValidationFeedback = document.getElementById("birthdayValidationFeedback");
-    const emailInput = document.getElementById("EmailInput");
-    const emailValidationFeedback = document.getElementById("emailValidationFeedback");
-    const cellphoneInput = document.getElementById("CellphoneInput");
-    const cellphoneValidationFeedback = document.getElementById("cellphoneValidationFeedback");
-
-    // Submit data and check
-    document.getElementById("registerForm").addEventListener("submit", function (event) {
-        // // Use regular expressions to verify the email format /使用正則表達式驗證 email 格式
-        const birthdayPattern = /^\d{4}-\d{2}-\d{2}$/;
-        let isValidBirthday = birthdayPattern.test(birthdayInput.value);
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        let isValidEmail = emailPattern.test(emailInput.value);
-        const cellphonePattern = /^09\d{2}-\d{6}$/;
-        let isValidCellphone = cellphonePattern.test(cellphoneInput.value);
-
-        // // Update validation feedback /更新驗證反饋
-        birthdayValidationFeedback.style.display = isValidBirthday ? "none" : "block";
-        emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
-        cellphoneValidationFeedback.style.display = isValidCellphone ? "none" : "block";        
-
-        // Check wether email is fit
-        if(!isValidBirthday || !isValidEmail || !isValidCellphone){
-            // stop submit behavior /阻止表單預設的提交行為
-            event.preventDefault();
-        } else{
-            console.log("Yes");
-            register();
-            
-        }
-    });
-    function register(){
-        var lastName = $('#LastNameInput').val();
-        var firstName = $('#FirstNameInput').val();
-        var birthday = $('#BirthdayInput').val();
-        var email = $('#EmailInput').val();
-        var cellphone = $('#CellphoneInput').val();
-        var password = $('#PasswordInput').val();
-        var userName = $('#UserNameInput').val();
-        
-        var register_data_object = {
-            "lastName": lastName,
-            "firstName": firstName,
-            "birthday": birthday,
-            "email": email,
-            "cellphone": cellphone,
-            "password": password,
-            "userName": userName,
-        };
-        console.log(register_data_object);
-        var register_data_string = JSON.stringify(register_data_object);
-
-        $.ajax({
-            type: "POST",
-            url: "/api/Member.do",
-            data: register_data_string,
-            crossDomain: true,
-            cache: false,
-            dataType: 'json',
-            timeout: 5000,
-            success: function (response) {
-                $('#flashMessage').html(response.message);
-                $('#flashMessage').show();
-                if(response.status == 200){
-                    console.log("Yes");
-                    $(document).ready(function() {
-                        window.location.href = "Login.html";
-                    });
-                }
-            },
-            error: function () {
-                alert("無法連線到伺服器！");
-            }
-        })
-    }
+<script tppe="text/javascript">
+	$(document).ready(function(){
+		$("#registerForm").submit(function (e){
+			e.preventDefault();
+			formcheck();
+		});
+	    // get email input and verify the feedback element /獲取 email 輸入框和驗證反饋元素
+	
+	    // Submit data and check
+	    function formcheck() {
+			const birthdayInput = document.getElementById("BirthdayInput");
+		    const birthdayValidationFeedback = document.getElementById("birthdayValidationFeedback");
+		    const emailInput = document.getElementById("EmailInput");
+		    const emailValidationFeedback = document.getElementById("emailValidationFeedback");
+		    const cellphoneInput = document.getElementById("CellphoneInput");
+		    const cellphoneValidationFeedback = document.getElementById("cellphoneValidationFeedback");
+	        // // Use regular expressions to verify the email format /使用正則表達式驗證 email 格式
+	        const birthdayPattern = /^\d{4}-\d{2}-\d{2}$/;
+	        let isValidBirthday = birthdayPattern.test(birthdayInput.value);
+	        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	        let isValidEmail = emailPattern.test(emailInput.value);
+	        const cellphonePattern = /^09\d{2}-\d{6}$/;
+	        let isValidCellphone = cellphonePattern.test(cellphoneInput.value);
+	
+	        // // Update validation feedback /更新驗證反饋
+	        birthdayValidationFeedback.style.display = isValidBirthday ? "none" : "block";
+	        emailValidationFeedback.style.display = isValidEmail ? "none" : "block";
+	        cellphoneValidationFeedback.style.display = isValidCellphone ? "none" : "block";        
+	
+	        // Check wether email is fit
+	        console.log(isValidBirthday);
+	        if(!isValidBirthday || !isValidEmail || !isValidCellphone){
+	            // stop submit behavior /阻止表單預設的提交行為
+	            event.preventDefault();
+	        } else{
+	            console.log("Yes");
+	            register();
+	        }
+	    };
+	    function register(){
+	        var last_name = $('#LastNameInput').val();
+	        var first_name = $('#FirstNameInput').val();
+	        var birthday = $('#BirthdayInput').val();
+	        var email = $('#EmailInput').val();
+	        var cellphone = $('#CellphoneInput').val();
+	        var password = $('#PasswordInput').val();
+	        var user_name = $('#UserNameInput').val();
+	        
+	        var register_data_object = {
+	            "last_name": last_name,
+	            "first_name": first_name,
+	            "birthday": birthday,
+	            "email": email,
+	            "cellphone": cellphone,
+	            "password": password,
+	            "user_name": user_name,
+	        };
+	        console.log(register_data_object);
+	        var register_data_string = JSON.stringify(register_data_object);
+			console.log(register_data_string);
+	        $.ajax({
+	            type: "POST",
+	            url: "api/MemberController.do",
+	            data: register_data_string,
+	            crossDomain: true,
+	            cache: false,
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {
+	                $('#flashMessage').html(response.message);
+	                $('#flashMessage').show();
+	            	if(response.status == 200){
+	                	console.log("Yes");
+	                	window.location.href = "Login.html";
+	            	} else {
+						alert("have problem");
+					}
+	            },
+	            error: function () {
+	                alert("無法連線到伺服器！");
+	            }
+	        })
+	    }
+	})
 </script>
 </html>

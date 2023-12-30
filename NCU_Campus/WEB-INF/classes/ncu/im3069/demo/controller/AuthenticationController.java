@@ -40,6 +40,12 @@ public class AuthenticationController extends HttpServlet {
         String UserName = request.getParameter("user_name");
         Authentication auth = mh.getAuthentication(UserName);
 
+        
+        // 進行帳號密碼驗證，以及獲取使用者權限
+        JSONObject loginResult = mh.validateLogin(email, password);
+
+        // 回傳結果給前端
+        jsr.response(loginResult, response);
         // 判斷使用者類型
         if (auth != null) {
             // 使用者已登入，可以根據權限進行不同的處理
