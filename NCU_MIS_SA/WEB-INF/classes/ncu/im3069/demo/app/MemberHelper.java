@@ -412,18 +412,13 @@ public class MemberHelper {
     public JSONObject Login(String email, String password) {
         /** 儲存JDBC資料庫連線 */
         Connection conn = null;
-
         /** 儲存JDBC預準備之SQL指令 */
         PreparedStatement pres = null;
-
         /** 紀錄SQL總行數，若為「-1」代表資料庫檢索尚未完成 */
-        int row = -1;
 
         String pwd = null;
         String authority = null;
         boolean validEmail = false;
-
-        System.out.printf("SSSSSSSS");
 
         /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
         ResultSet rs = null;
@@ -432,7 +427,7 @@ public class MemberHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT `count(*)`, `password`, `authority` FROM `campus`.`members` WHERE `email` = ?";
+            String sql = "SELECT * FROM `campus`.`members` WHERE `email` = ?";
 
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -441,16 +436,13 @@ public class MemberHelper {
             /** 執行查詢之SQL指令並記錄其回傳之資料 */
             rs = pres.executeQuery();
 
-            /** 讓指標移往最後一列，取得目前有幾行在資料庫內 */
-            rs.next();
-            row = rs.getInt("count(*)");
-
-            if(row == 0){
-            	validEmail = true;
+            if (rs.next()) {
+                // 如果有符合條件的資料
+                validEmail = true;
                 pwd = rs.getString("password");
                 authority = rs.getString("authority");
-            }
-            else{
+            } else {
+                // 如果沒有符合條件的資料
                 pwd = null;
             }
 
@@ -466,17 +458,17 @@ public class MemberHelper {
         }
 
         JSONObject resp = new JSONObject();
-        if(validEmail) {
-            if (pwd.equals(password) && "Member".equals(authority)) {
+        if(validEmail && pwd.equals(password)) {
+            if ("Member".equals(authority)) {
                 resp.put("status", "success");
                 resp.put("message", "Login successful");
-                resp.put("authority", "Member"); // 將使用者權限加入回應中
+                resp.put("authority", authority); // 將使用者權限加入回應中
 
             } 
             else {
                 resp.put("status", "success");
                 resp.put("message", "Login successful");
-                resp.put("authority", "SysteManager"); // 將使用者權限加入回應中
+                resp.put("authority", authority); // 將使用者權限加入回應中
             }
         }
         else {

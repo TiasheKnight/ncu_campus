@@ -81,6 +81,7 @@
 		$("#registerForm").submit(function (e){
 			e.preventDefault();
 			formcheck();
+			register();
 		});
 	    // get email input and verify the feedback element /獲取 email 輸入框和驗證反饋元素
 	
@@ -112,7 +113,6 @@
 	            event.preventDefault();
 	        } else{
 	            console.log("Yes");
-	            register();
 	        }
 	    };
 	    function register(){
