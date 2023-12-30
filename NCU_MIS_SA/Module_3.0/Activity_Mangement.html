@@ -206,32 +206,34 @@
     </div>
 </body>
 <script>
+var user_id = getCookieValue('user_id');
+var user_name = getCookieValue('user_name');
 $(document).ready(function(){
 	// 使用函數獲取 user_id 和 user_name 的值
-	var user_id = getCookieValue('user_id');
-	var user_name = getCookieValue('user_name');
+
 	// 使用 user_id 做其他處理
 	$("#showUserID").text(user_id);
 	$("#showUserName").text(user_name);
 	console.log(user_id);
 	console.log(user_name);
-    getAllActivity();
-    function getCookieValue(cookieName) {
-	    const cookies = document.cookie.split(';');
-	    const cookie = cookies.find(cookie => cookie.trim().startsWith(`${cookieName}=`));
+	getByID(user_id);
+})
+function getCookieValue(cookieName) {
+	const cookies = document.cookie.split(';');
+	const cookie = cookies.find(cookie => cookie.trim().startsWith(`${cookieName}=`));
 	
-	    if (cookie) {
-	        const [, value] = cookie.split('=');
-	        return decodeURIComponent(value);
-	    }
-	
-	    return null;
+	if (cookie) {
+		const [, value] = cookie.split('=');
+	    return decodeURIComponent(value);
 	}
 	
-	function getByID(user_id){
+	return null;
+}
+function getByID(user_id){
 		$.ajax({
 			type:"GET",
-			url: "api/ActivityController.do",
+			url: "./api/ActivityController.do",
+			data: user_id,
 			crossDomain: true,
 			cache: false,
 			dataType: 'json',
@@ -243,57 +245,8 @@ $(document).ready(function(){
                     // 監聽活動詳細內容按鈕的點擊事件
 			}
 		}
-	});
-    function getAllActivity() {
-        // 發出POST的GET請求取得所有會員列表
-        $.ajax({
-                type: "GET",
-                url: "api/ActivityController.do",
-                crossDomain: true,
-                cache: false,
-                dataType: 'json',
-                timeout: 5000,
-                success: function (response) {
-                    if(response.status == 200){
-                        updateActivityTable(response.response.data);
-                            // 監聽活動詳細內容按鈕的點擊事件
-                            $(".activity-detail-btn").on("click", function() {
-                                // 獲取按鈕上的活動ID
-                                var activityId = $(this).attr("id");
-                                // 直接在這裡處理模態框內容更新，不需要再發送請求
-                                var activityDetail = getActivityDetailById(response.response.data, activityId);
-                                updateActivityModalContent(activityDetail);
-                                // 顯示模態框
-                                $("#ActivityDetail").modal("show");
-                        });
-                    }
-                    console.log(response.response.data);
-                },
-                error: function () {
-                    alert("無法連線到伺服器！");
-                }
-        });
-    }
-    // 根據活動ID從資料中獲取詳細內容
-    function getActivityDetailById(data, activityId) {
-        var result = null;
-        var breakLoop = false;
-        $.each(data, function(index, value) {
-			console.log("value['id']: " + value['id']);
-        	console.log("activityId: " + activityId);
-            if (value['id'] === parseInt(activityId) && breakLoop === false) {
-                console.log("Match found:");
-                result = value;
-                console.log(value["id"]);
-                console.log(activityId);
-                console.log(result);
-                breakLoop = true;
-            }
-        });
-        return result;
-    }
-    
-    function updateActivityTable(data) {
+})};
+function updateActivityTable(data) {
         $("#activityTable > tbody").empty();
         var table_html = '';
         $.each(data, function(index, value) {
@@ -313,72 +266,9 @@ $(document).ready(function(){
             table_html += '<tr>';
         })
         $("#activityTable > tbody").append(table_html);
-    }
-    // 更新活動詳細資訊模態框內容
-    function updateActivityModalContent(activityDetail) {
-        // 在這裡更新模態框內容，例如：
-        $("#activity_title").text(activityDetail.activity_name);
-        $("#activity_publish_type").text(activityDetail.activity_status);
-        $("#activity_type").text(activityDetail.activity_type);
-        $("#activity_publisher_id").text(activityDetail.activity_publisher_id);
-        $("#start_date").text(activityDetail.start_date);
-        $("#Time").text(activityDetail.start_time+"-"+activityDetail.end_time);
-        $("#activity_location").text(activityDetail.activity_place);
-        $("#participant_number").text(activityDetail.activity_participant);
-        $("#minimum_participant").text(activityDetail.minimum_participant);
-        $("#maximum_participant").text(activityDetail.maximum_participant);
-        $("#activity_detail").text(activityDetail.activity_detail);
-
-        // ...（更新其他詳細內容）
-    }
-});
-    // 獲取所有擁有 class="Join_Button" 的按鈕
-    var Join_Buttons = document.querySelectorAll(".Join_Button");
-    Join_Buttons.forEach(function(Join_Button) {
-        Join_Button.addEventListener("click", function() {
-
-            // 獲取該Join_Button 的類別
-            var joinActivityNumber = "Join_Button"+Join_Button.id;
-            var joinActivityNumbers = document.querySelectorAll("."+joinActivityNumber);
-            // 獲取元素的背景顏色   
-            var computedStyle = window.getComputedStyle(Join_Button);
-            var backgroundColor = computedStyle.backgroundColor;
-
-			console.log(joinActivityNumber);
-			console.log(joinActivityNumbers);
-            // 判斷元素的背景顏色，進行相應的操作
-            if (backgroundColor === "rgb(0, 180, 0)" || backgroundColor === "#00B400") {
-                joinActivityNumbers.forEach(function(button) {
-                    button.style.backgroundColor = "#D91621";
-                    button.innerHTML = "取消參加";
-                });
-            } else {
-                joinActivityNumbers.forEach(function(button) {
-                    button.style.backgroundColor = "#00B400";
-                    button.innerHTML = "參加";
-                });
-            }
-        });
-    });
-    
-    document.getElementById("Home").addEventListener("click", function() {
-        // if(authication=="一般使用者"){
-
-        // }
-        // else{}
+}
+document.getElementById("Home").addEventListener("click", function() {
         window.location.href = "../HomeList_NormalUser.html";
-    });
-
-    
-    document.getElementById("EmergencyCYes").addEventListener("click", function() {    // if(道具不足){
-        // if(){
-
-        // } else{
-
-        // }
-            // }
-        window.location.href = "Emergency_Activity_Form.html";
-    });
-    
+});
 </script>
 </html>

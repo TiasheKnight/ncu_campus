@@ -59,8 +59,7 @@ public class ActivityController extends HttpServlet {
         int Activity_Participant = jso.getInt("activity_participant");
         
         Activity a = new Activity(Activity_ID, Activity_Status, Activity_Name, Activity_Type, Activity_Place, Activity_Holder_ID,
-                Maximum_Participant, Minimum_Participant, Start_Date, Start_Time, End_Date, End_Time, Published_Date,
-                Published_Time, Activity_Detail, Activity_Participant);
+                Maximum_Participant, Minimum_Participant, Start_Date, Start_Time, End_Date, End_Time, Activity_Detail, Activity_Participant);
         
         if (Activity_ID == 0 || Activity_Status.isEmpty() || Activity_Name.isEmpty() || Activity_Type.isEmpty()
                 || Activity_Place.isEmpty() || Activity_Holder_ID == 0 || Maximum_Participant == 0

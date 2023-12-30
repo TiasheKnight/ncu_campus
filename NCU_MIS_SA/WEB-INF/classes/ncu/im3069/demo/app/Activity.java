@@ -126,8 +126,6 @@ public class Activity {
         jso.put("start_time", getStart_Time());
         jso.put("end_date", getEnd_Date());
         jso.put("end_time", getEnd_Time());
-        jso.put("published_date", getPublished_Date());
-        jso.put("published_time", getPublished_Time());
         jso.put("activity_detail", getActivity_Detail());
         jso.put("activity_participant", getActivity_Participant());
         return jso;
