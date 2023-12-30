@@ -26,18 +26,18 @@
         <form id="GeneralActivityForm" action="">
             <div class="input-group mb-3 ">
                 <label class="input-group-text" for="ActivityNameInput">活動名稱：</label>
-                <input id="ActivityNameInput" type="text" class="form-control-p" placeholder="ex:請填入活動的名稱" aria-label="ActivityName" required>
+                <input name="ActivityNameInput"  id="ActivityNameInput" type="text" class="form-control-p" placeholder="ex:請填入活動的名稱" aria-label="ActivityName" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動發布型別：</label>
-                <select id="PublishTypeInput" class="form-select">
+                <select name="PublishTypeInput" id="PublishTypeInput" class="form-select">
                     <option>一般活動</option>
                 </select>
             </div>
             
             <div class="input-group mb-3">
                 <label class="input-group-text" for="MaxMemberInput">活動人數上限：</label>
-                <select id="disabledSelect" class="form-select">
+                <select name="disabledSelect" id="disabledSelect" class="form-select">
                     <option>校級活動</option>
                     <option>系級活動</option>
                     <option>社團活動</option>
@@ -49,24 +49,24 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動發起人：</label>
-                <input id="PublisherInput" type="text" class="form-control" placeholder="請填入您現在登入的使用者名稱" aria-label="Publisher" required>
+                <input name="PublisherInput" id="PublisherInput" type="text" class="form-control" placeholder="請填入您現在登入的使用者ID" aria-label="Publisher" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動地點：</label>
-                <input id="LocationInput" type="text" class="form-control" placeholder="請填入活動的舉辦地點" aria-label="Location" required>
+                <input name="LocationInput" id="LocationInput" type="text" class="form-control" placeholder="請填入活動的舉辦地點" aria-label="Location" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="FirstNameInput">活動人數下限：</label>
-                <input id="MinMemberInput" type="text" class="form-control" placeholder="該活動最低需求人數是多少" aria-label="MinMember" required>
+                <input name="MinMemberInput" id="MinMemberInput" type="text" class="form-control" placeholder="該活動最低需求人數是多少" aria-label="MinMember" required>
             </div>
             <div class="input-group mb-3">
                 <label class="input-group-text" for="MaxMemberInput">活動人數上限：</label>
-                <input id="MaxMemberInput" type="text" class="form-control" placeholder="該活動最高可容納幾人參加" aria-label="MaxMember" required>
+                <input name="MaxMemberInput" id="MaxMemberInput" type="text" class="form-control" placeholder="該活動最高可容納幾人參加" aria-label="MaxMember" required>
             </div>
 
             <div class="input-group date mb-3" data-provide="datepicker" data-target-input="nearest">
                 <label class="input-group-text" for="StartDatePicker">活動開始日期：</label>
-                <input id="StartDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
+                <input name="StartDatePicker" id="StartDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
                 </div>
@@ -74,12 +74,12 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="StartTimeInput">活動開始時間</label>
-                <input id="StartTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="StarTime" required>
+                <input name="StartTimeInput" id="StartTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="StarTime" required>
             </div>
 
             <div class="input-group date mb-3" data-provide="datepicker">
                 <label class="input-group-text" for="EndDatePicker">活動結束日期：</label>
-                <input id="EndDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
+                <input name="EndDatePicker" id="EndDatePicker" type="text" class="form-control" placeholder="月/日/年" required>
                 <div class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
                 </div>
@@ -87,15 +87,15 @@
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="EndTimeInput">活動結束時間</label>
-                <input id="EndTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="EndTime" required>
+                <input name="EndTimeInput"  id="EndTimeInput" type="text" class="form-control" placeholder="(24小時制) ex: 21:00" aria-label="EndTime" required>
             </div>
 
             <div class="input-group mb-3">
                 <label class="input-group-text" for="ContentInput">活動內容：</label>
-                <textarea name="Conment" id="ContentInput" cols="100" rows="20" placeholder="請簡單描述您的活動" required></textarea>
+                <textarea name="Content" id="ContentInput" cols="100" rows="20" placeholder="請簡單描述您的活動" required></textarea>
             </div>
             <div class="col-md-12 p-0" >
-                <button id="Submit" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">確認發佈</button>
+                <button id="Submit" type="submit" class="btn btn-primary btn-lg mb-3" style="width:100% ;font-size:x-large; background-color:rgba(193, 17, 209, 0.856);">確認發布</button>
             </div>
         </form>
     </div>
@@ -111,5 +111,117 @@
     document.getElementById("reback").addEventListener("click", function() {
         window.history.back();
     });
+    //
+    	$(document).ready(function(){
+		$("#GeneralActivityForm").submit(function (e){
+			e.preventDefault();
+			formcheck();
+			postevent();
+		});
+	    // get email input and verify the feedback element /獲取 email 輸入框和驗證反饋元素
+	
+	    // Submit data and check
+	    function formcheck() {
+	    	const ActivityNameInput = document.getElementById("ActivityNameInput");
+	    	const PublishTypeInput = document.getElementById("PublishTypeInput");
+	    	const disabledSelect = document.getElementById("disabledSelect");
+			const PublisherInput = document.getElementById("PublisherInput");
+		    const LocationInput = document.getElementById("LocationInput");
+		    const MinMemberInput = document.getElementById("MinMemberInput");
+		    const MaxMemberInput = document.getElementById("MaxMemberInput");
+		    const StartDatePicker = document.getElementById("StartDatePicker");
+		    const StartTimeInput = document.getElementById("StartTimeInput");
+		    const EndDatePicker = document.getElementById("EndDatePicker");
+		    const EndTimeInput = document.getElementById("EndTimeInput");
+		    const ContentInput = document.getElementById("ContentInput");
+		    //const StartTimeValidationFeedback = document.getElementById("StartTimeValidationFeedback");
+	        //const EndTimeValidationFeedback = document.getElementById("EndTimeValidationFeedback");
+	        // // Use regular expressions to verify the email format /使用正則表達式驗證 email 格式
+	        //const Timepattern = /^\d{2}:\d{2}$/;
+	        //let isValidStartTime = Timepattern.test(StartTimeInput.value);
+	        //let isValidEndTime = Timepattern.test(EndTimeInput.value);
+	
+	        // // Update validation feedback /更新驗證反饋
+	        //StartTimeValidationFeedback.style.display = isValidStartTime ? "none" : "block";
+	        //EndTimeValidationFeedback.style.display = isValidEndTime ? "none" : "block";       
+	        
+
+	        // Check wether email is fit
+	        //console.log(isValidStartTime);
+	        //console.log(isValidEndTime);
+	        //if(!isValidStartTime || !isValidEndTime ){
+	            // stop submit behavior /阻止表單預設的提交行為
+	        //    event.preventDefault();
+	        //} else{
+	        //    console.log("Yes");
+	        //}
+	    };
+	    function postevent(){
+	    	var activity_title = $('#ActivityNameInput').val();
+	        var activity_publish_type = $('#PublishTypeInput').val();
+	        var activity_type = $('#disabledSelect').val();
+	        var activity_publisher_id = $('#PublisherInput').val();
+	        var activity_location = $('#LocationInput').val();
+	        var minimum_participant = $('#MinMemberInput').val();
+	        var maximum_participant = $('#MaxMemberInput').val();
+	        var start_date = $('#StartDatePicker').val();
+	        var start_time = $('#StartTimeInput').val();
+	        var end_date = $('#EndDatePicker').val();
+	        var end_time = $('#EndTimeInput').val();
+	        var activity_detail = $('#ContentInput').val();
+	        var published_date = new Date().toLocaleDateString();
+	        var published_time = new Date().toLocaleTimeString();
+	        var participant_number = 0;
+
+	        
+	        
+	        var Activity_form_data_object = {
+	        	"activity_title": activity_title,
+	        	"activity_publish_type": activity_publish_type,
+	        	"activity_publisher_id": activity_publisher_id,
+	            "activity_type": activity_type,
+	            "activity_location": activity_location,
+	            "maximum_participant": maximum_participant,
+	            "minimum_participant": minimum_participant,
+	            "start_date": start_date,
+	            "start_time": start_time,
+	            "end_date": end_date,
+	            "end_time": end_time,
+	            "activity_detail": activity_detail,
+	            "published_date": published_date,
+	            "published_time": published_time,
+	            "participant_number": participant_number,
+	        };
+	        console.log(Activity_form_data_object);
+	        var Activity_form_data_string = JSON.stringify(Activity_form_data_object);
+			console.log(Activity_form_data_string);
+	        
+			$.ajax({
+	            type: "POST",
+	            url: "../api/ActivityController.do",
+	            data: Activity_form_data_string,
+	            crossDomain: true,
+	            cache: false,
+	            dataType: 'json',
+	            timeout: 5000,
+	            success: function (response) {
+	                $('#flashMessage').html(response.message);
+	                $('#flashMessage').show();
+	            	if(response.status == 200){
+	                	console.log("Yes");
+	                	console.log(response.response);	
+	                	console.log(Activity_form_data_string);	
+	                	alert("Successfully published event");
+	                	window.location.href = "Activity_Mangement.html";
+	            	} else {
+						alert("Unable to publish event");
+					}
+	            },
+	            error: function () {
+	                alert("無法連線到伺服器！");
+	            }
+	        })
+	    }
+	})
 </script>
 </html>
